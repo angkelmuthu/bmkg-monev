@@ -17,10 +17,14 @@
 
                         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 
-                            <table class='table table-bordered'>
+                            <table class='table'>
                                 <tr>
-                                    <td width='200'>Nama Lengkap <?php echo form_error('full_name') ?></td>
-                                    <td><input type="text" class="form-control" name="full_name" id="full_name" placeholder="Full Name" value="<?php echo $full_name; ?>" required /></td>
+                                    <td width='200'>Satker <?php echo form_error('full_name') ?></td>
+                                    <!-- <td><input type="text" class="form-control" name="full_name" id="full_name" placeholder="Full Name" value="<?php echo $full_name; ?>" required /></td> -->
+                                    <td>
+                                        <?php echo select2_dinamis('username', 'ref_satker', 'kode_satker', 'nama_satker', $username, '', 'nama_satker ASC') ?>
+                                        <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Email <?php echo form_error('email') ?></td>
@@ -54,14 +58,14 @@
                                 <tr id="es1" style="display: none;">
                                     <td width='200'>Eselon I <?php echo form_error('id_user_level') ?></td>
                                     <td>
-                                        <?php echo select2_dinamis('kode_unit_eselon_1', 'm_unit_eselon_1', 'kode_unit_eselon_1', 'nama_unit_eselon_1', '', '', 'nama_unit_eselon_1 ASC') ?>
+                                        <?php echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', '', '', 'nama_satker ASC') ?>
                                         <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
                                     </td>
                                 </tr>
                                 <tr id="es2" style="display: none;">
                                     <td width='200'>Eselon II <?php echo form_error('id_user_level') ?></td>
                                     <td>
-                                        <?php echo select2_dinamis('kode_unit_eselon_2', 'm_unit_eselon_2', 'kode_unit_eselon_2', 'nama_unit_eselon_2', '', '', 'nama_unit_eselon_2 ASC') ?>
+                                        <?php echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', '', '', 'nama_satker ASC') ?>
                                         <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
                                     </td>
                                 </tr>
@@ -94,6 +98,9 @@
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("es1").style.display = "none";
