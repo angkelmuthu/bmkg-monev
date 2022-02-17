@@ -31,15 +31,10 @@ class User extends CI_Controller
         if ($row) {
             $data = array(
                 'id_users'      => $row->id_users,
-                'full_name'     => $row->full_name,
                 'username'     => $row->username,
-                'email'         => $row->email,
                 'password'      => $row->password,
                 'images'        => $row->images,
                 'id_user_level' => $row->id_user_level,
-                'kode_unit_eselon_1' => $row->kode_unit_eselon_1,
-                'kode_unit_eselon_2' => $row->kode_unit_eselon_2,
-                'id_unit' => $row->id_unit,
                 'is_aktif'      => $row->is_aktif,
             );
             $this->template->load('template', 'user/tbl_user_read', $data);
@@ -56,14 +51,9 @@ class User extends CI_Controller
             'action'        => site_url('user/create_action'),
             'id_users'      => set_value('id_users'),
             'username'     => set_value('username'),
-            'full_name'     => set_value('full_name'),
-            'email'         => set_value('email'),
             'password'      => set_value('password'),
             'images'        => set_value('images'),
-            //'id_unit' => set_value('id_unit'),
             'id_user_level' => set_value('id_user_level'),
-            'kode_unit_eselon_1' => set_value('kode_unit_eselon_1'),
-            'kode_unit_eselon_2' => set_value('kode_unit_eselon_2'),
             'is_aktif'      => set_value('is_aktif'),
         );
         $this->template->load('template', 'user/tbl_user_form', $data);
@@ -82,14 +72,10 @@ class User extends CI_Controller
             $hashPassword   = password_hash($password, PASSWORD_BCRYPT, $options);
 
             $data = array(
-                'full_name'     => $this->input->post('full_name', TRUE),
                 'username'     => $this->input->post('username', TRUE),
-                'email'         => $this->input->post('email', TRUE),
                 'password'      => $hashPassword,
                 'images'        => $foto['file_name'],
                 'id_user_level' => $this->input->post('id_user_level', TRUE),
-                'kode_unit_eselon_1' => $this->input->post('kode_unit_eselon_1', TRUE),
-                'kode_unit_eselon_2' => $this->input->post('kode_unit_eselon_2', TRUE),
                 'is_aktif'      => $this->input->post('is_aktif', TRUE),
             );
 
@@ -109,13 +95,9 @@ class User extends CI_Controller
                 'action'        => site_url('user/update_action'),
                 'id_users'      => set_value('id_users', $row->id_users),
                 'username'     => set_value('username', $row->username),
-                'full_name'     => set_value('full_name', $row->full_name),
-                'email'         => set_value('email', $row->email),
                 'password'      => set_value('password', $row->password),
                 'images'        => set_value('images', $row->images),
                 'id_user_level' => set_value('id_user_level', $row->id_user_level),
-                'kode_unit_eselon_1' => set_value('kode_unit_eselon_1', $row->kode_unit_eselon_1),
-                'kode_unit_eselon_2' => set_value('kode_unit_eselon_2', $row->kode_unit_eselon_2),
                 'is_aktif'      => set_value('is_aktif', $row->is_aktif),
             );
             $this->template->load('template', 'user/tbl_user_form', $data);
@@ -135,22 +117,14 @@ class User extends CI_Controller
             if ($foto['file_name'] == '') {
                 $data = array(
                     'username'     => $this->input->post('username', TRUE),
-                    'full_name'     => $this->input->post('full_name', TRUE),
-                    'email'         => $this->input->post('email', TRUE),
                     'id_user_level' => $this->input->post('id_user_level', TRUE),
-                    'kode_unit_eselon_1' => $this->input->post('kode_unit_eselon_1', TRUE),
-                    'kode_unit_eselon_2' => $this->input->post('kode_unit_eselon_2', TRUE),
                     'is_aktif'      => $this->input->post('is_aktif', TRUE)
                 );
             } else {
                 $data = array(
                     'username'     => $this->input->post('username', TRUE),
-                    'full_name'     => $this->input->post('full_name', TRUE),
-                    'email'         => $this->input->post('email', TRUE),
                     'images'        => $foto['file_name'],
                     'id_user_level' => $this->input->post('id_user_level', TRUE),
-                    'kode_unit_eselon_1' => $this->input->post('kode_unit_eselon_1', TRUE),
-                    'kode_unit_eselon_2' => $this->input->post('kode_unit_eselon_2', TRUE),
                     'is_aktif'      => $this->input->post('is_aktif', TRUE)
                 );
 
@@ -193,7 +167,7 @@ class User extends CI_Controller
 
     public function _rules()
     {
-        $this->form_validation->set_rules('full_name', 'full name', 'trim|required');
+        $this->form_validation->set_rules('username', 'full name', 'trim|required');
         // $this->form_validation->set_rules('email', 'email', 'trim|required');
         //$this->form_validation->set_rules('password', 'password', 'trim|required');
         //$this->form_validation->set_rules('images', 'images', 'trim|required');

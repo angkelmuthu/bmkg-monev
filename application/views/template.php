@@ -134,9 +134,9 @@
                         <div>
                             <a href="#" data-toggle="dropdown" title="drlantern@gotbootstrap.com" class="header-icon d-flex align-items-center justify-content-center ml-2">
                                 <?php if (empty($this->session->userdata('images'))) { ?>
-                                    <img src="<?php echo base_url() ?>assets/foto_profil/default_pp.jpg" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('full_name'); ?>">
+                                    <img src="<?php echo base_url() ?>assets/foto_profil/avatar.jpg" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('username'); ?>">
                                 <?php } else { ?>
-                                    <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('full_name'); ?>">
+                                    <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('username'); ?>">
                                 <?php } ?>
                                 <!-- you can also add username next to the avatar with the codes below:
 									<span class="ml-1 mr-1 text-truncate text-truncate-header hidden-xs-down">Me</span>
@@ -147,14 +147,14 @@
                                     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                                         <span class="mr-2">
                                             <?php if (empty($this->session->userdata('images'))) { ?>
-                                                <img src="<?php echo base_url() ?>assets/foto_profil/default_pp.jpg" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('full_name'); ?>">
+                                                <img src="<?php echo base_url() ?>assets/foto_profil/avatar.jpg" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('username'); ?>">
                                             <?php } else { ?>
-                                                <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('full_name'); ?>">
+                                                <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('username'); ?>">
                                             <?php } ?>
                                         </span>
                                         <div class="info-card-text">
-                                            <div class="fs-lg text-truncate text-truncate-lg"><?php echo $this->session->userdata('full_name'); ?></div>
-                                            <span class="text-truncate text-truncate-md opacity-80"><?php echo $this->session->userdata('email'); ?></span>
+                                            <div class="fs-lg text-truncate text-truncate-lg"><?php echo $this->session->userdata('username'); ?></div>
+                                            <span class="text-truncate text-truncate-md opacity-80"><?php echo $this->session->userdata('nama_satker'); ?></span>
                                         </div>
                                     </div>
 

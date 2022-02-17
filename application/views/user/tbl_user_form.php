@@ -19,23 +19,8 @@
 
                             <table class='table'>
                                 <tr>
-                                    <td width='200'>Satker <?php echo form_error('full_name') ?></td>
-                                    <!-- <td><input type="text" class="form-control" name="full_name" id="full_name" placeholder="Full Name" value="<?php echo $full_name; ?>" required /></td> -->
-                                    <td>
-                                        <?php echo select2_dinamis('username', 'ref_satker', 'kode_satker', 'nama_satker', $username, '', 'nama_satker ASC') ?>
-                                        <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width='200'>Email <?php echo form_error('email') ?></td>
-                                    <td>
-
-                                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email; ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td width='200'>Username <?php echo form_error('full_name') ?></td>
-                                    <td><input type="text" class="form-control" name="username" id="username" placeholder="Full Name" value="<?php echo $username; ?>" required /></td>
+                                    <td><?php echo select2_dinamis('username', 'ref_satker', 'kode_satker', 'nama_satker', $username, '', 'nama_satker ASC') ?></td>
                                 </tr>
                                 <?php
                                 if ($this->uri->segment(2) == 'create') {
@@ -52,20 +37,6 @@
                                     <td width='200'>Level User <?php echo form_error('id_user_level') ?></td>
                                     <td>
                                         <?php echo select2_dinamis('id_user_level', 'tbl_user_level', 'id_user_level', 'nama_level', $id_user_level, '', 'nama_level DESC') ?>
-                                        <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
-                                    </td>
-                                </tr>
-                                <tr id="es1" style="display: none;">
-                                    <td width='200'>Eselon I <?php echo form_error('id_user_level') ?></td>
-                                    <td>
-                                        <?php echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', '', '', 'nama_satker ASC') ?>
-                                        <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
-                                    </td>
-                                </tr>
-                                <tr id="es2" style="display: none;">
-                                    <td width='200'>Eselon II <?php echo form_error('id_user_level') ?></td>
-                                    <td>
-                                        <?php echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', '', '', 'nama_satker ASC') ?>
                                         <!--<input type="text" class="form-control" name="id_user_level" id="id_user_level" placeholder="Id User Level" value="<?php echo $id_user_level; ?>" />-->
                                     </td>
                                 </tr>

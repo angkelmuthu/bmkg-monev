@@ -19,7 +19,7 @@ class Auth extends CI_Controller
         // query chek users
         $this->db->where('username', $email);
         //$this->db->where('password',  $test);
-        $users       = $this->db->get('tbl_user');
+        $users       = $this->db->get('v_login');
         if ($users->num_rows() > 0) {
             $user = $users->row_array();
             if (password_verify($password, $user['password'])) {

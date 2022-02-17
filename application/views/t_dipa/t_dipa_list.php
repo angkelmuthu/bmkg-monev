@@ -3,9 +3,7 @@
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
-                    <h2>
-                        KELOLA DATA USER
-                    </h2>
+                    <h2>KELOLA DATA DIPA</h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
                         <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
@@ -15,17 +13,18 @@
                 <div class="panel-container show">
                     <div class="panel-content">
                         <div class="text-center">
-                            <?php echo anchor(site_url('user/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm"'); ?>
-                            <?php echo anchor(site_url('user/excel'), '<i class="fal fa-file-excel" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-outline-success btn-sm waves-effect waves-themed"'); ?>
-                            <?php echo anchor(site_url('user/word'), '<i class="fal fa-file-word" aria-hidden="true"></i> Export Ms Word', 'class="btn btn-outline-primary btn-sm waves-effect waves-themed"'); ?>
-                        </div>
-                        <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
+                            <?php echo anchor(site_url('t_dipa/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?></div>
+                        <table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
                             <thead>
                                 <tr>
                                     <th width="30px">No</th>
-                                    <th>Username</th>
-                                    <th>Nama Level</th>
-                                    <th>Status</th>
+                                    <th>No Dipa</th>
+                                    <th>Tahun Anggaran</th>
+                                    <th>Pagu</th>
+                                    <th>Dept</th>
+                                    <th>Unit Kerja</th>
+                                    <th>Satker</th>
+                                    <th>Create Date</th>
                                     <th width="200px">Action</th>
                                 </tr>
                             </thead>
@@ -72,18 +71,26 @@
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "user/json",
+                "url": "t_dipa/json",
                 "type": "POST"
             },
             columns: [{
-                    "data": "id_users",
+                    "data": "id_dipa",
                     "orderable": false
                 }, {
-                    "data": "username"
+                    "data": "no_dipa"
                 }, {
-                    "data": "nama_level"
+                    "data": "tahun_anggaran"
                 }, {
-                    "data": "is_aktif"
+                    "data": "pagu"
+                }, {
+                    "data": "nama_dept"
+                }, {
+                    "data": "nama_unit_kerja"
+                }, {
+                    "data": "nama_satker"
+                }, {
+                    "data": "create_date"
                 },
                 {
                     "data": "action",
