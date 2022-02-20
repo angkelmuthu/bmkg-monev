@@ -45,19 +45,32 @@
                                 <h3>Sign In</h3>
                                 <p class="mb-4"><?php echo $message ?></p>
                             </div>
-                            <?php echo form_open('auth/cheklogin'); ?>
-                            <div class="form-group first">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" name="username" id="username">
 
-                            </div>
-                            <div class="form-group last mb-4">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" name="password" id="password">
+                            <form action="<?php echo site_url('auth/cheklogin'); ?>" method="post">
+                                <div class="form-group">
+                                    <!-- <label for="ta">Tahun Anggaran</label> -->
+                                    <select class="form-control" name="ta" id="ta" required>
+                                        <option value="">Tahun Anggaran</option>
+                                        <?php
+                                        for ($i = date('Y'); $i >= date('Y') - 10; $i -= 1) {
+                                            echo "<option value='$i'> $i </option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
 
-                            </div>
+                                <div class="form-group first">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" name="username" id="username" required>
 
-                            <!-- <div class="d-flex mb-5 align-items-center">
+                                </div>
+                                <div class="form-group last mb-4">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" name="password" id="password" required>
+
+                                </div>
+
+                                <!-- <div class="d-flex mb-5 align-items-center">
                                 <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
                                     <input type="checkbox" checked="checked" />
                                     <div class="control__indicator"></div>
@@ -65,9 +78,9 @@
                                 <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                             </div> -->
 
-                            <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                                <button type="submit" class="btn btn-block btn-primary">Log In</button>
 
-                            <!-- <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
+                                <!-- <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
 
                                 <div class="social-login">
                                     <a href="#" class="facebook">

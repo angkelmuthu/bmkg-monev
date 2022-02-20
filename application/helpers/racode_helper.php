@@ -106,7 +106,7 @@ function select2_custom_2($name, $table, $pk, $field1, $field2, $selected = null
 {
     $ci = get_instance();
     $select2 = '<select name="' . $name . '" id="' . $name . '" class="select2 form-control w-100" required="">';
-    $select2 .= '<option value=""></option>';
+    //$select2 .= '<option value=""></option>';
     if ($where) {
         $ci->db->where($where);
     }

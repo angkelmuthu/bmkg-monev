@@ -11,6 +11,7 @@ class Auth extends CI_Controller
 
     function cheklogin()
     {
+        $ta      = $this->input->post('ta');
         $email      = $this->input->post('username');
         //$password   = $this->input->post('password');
         $password = $this->input->post('password', TRUE);
@@ -21,10 +22,14 @@ class Auth extends CI_Controller
         //$this->db->where('password',  $test);
         $users       = $this->db->get('v_login');
         if ($users->num_rows() > 0) {
+            $array_ta = array(
+                'ta' => $this->input->post('ta'),
+            );
             $user = $users->row_array();
+            $merger = array_merge($user, $array_ta);
             if (password_verify($password, $user['password'])) {
                 // retrive user data to session
-                $this->session->set_userdata($user);
+                $this->session->set_userdata($merger);
                 redirect('welcome');
             } else {
                 redirect('auth');
