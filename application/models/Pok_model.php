@@ -99,7 +99,6 @@ class Pok_model extends CI_Model
     function get_komponen($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro)
     {
         $this->db->where('aktif', 'y');
-        $this->db->where('aktif', 'y');
         $this->db->where('kode_dept', $kode_dept);
         $this->db->where('kode_unit_kerja', $kode_unit_kerja);
         $this->db->where('kode_kegiatan', $kode_kegiatan);
@@ -118,23 +117,59 @@ class Pok_model extends CI_Model
         return $this->db->get('ref_komponen')->row();
     }
 
-    function get_komponen_sub($kode_komponen)
+    function get_komponen_sub($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen)
     {
         $this->db->where('aktif', 'y');
-        $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
-        $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+        $this->db->where('kode_dept', $kode_dept);
+        $this->db->where('kode_unit_kerja', $kode_unit_kerja);
+        $this->db->where('kode_kegiatan', $kode_kegiatan);
+        $this->db->where('kode_kro', $kode_kro);
+        $this->db->where('kode_ro', $kode_ro);
         $this->db->where('kode_komponen', $kode_komponen);
         $this->db->order_by('nama_komponen_sub', 'ASC');
         return $this->db->get('ref_komponen_sub')->result();
     }
 
-    function cek_komponen_sub($kode_komponen_sub)
+    function cek_komponen_sub($id_komponen_sub)
     {
         $this->db->where('aktif', 'y');
-        $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
-        $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
-        $this->db->where('kode_komponen_sub', $kode_komponen_sub);
+        // $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
+        // $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+        $this->db->where('id_komponen_sub', $id_komponen_sub);
         return $this->db->get('ref_komponen_sub')->row();
+    }
+
+    function get_akun($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen, $kode_komponen_sub)
+    {
+        $this->db->where('aktif', 'y');
+        $this->db->order_by('nama_akun', 'ASC');
+        return $this->db->get('ref_akun')->result();
+    }
+
+    function cek_akun($id_akun)
+    {
+        $this->db->where('aktif', 'y');
+        // $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
+        // $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+        $this->db->where('id_akun', $id_akun);
+        return $this->db->get('ref_akun')->row();
+    }
+
+    function get_item_head($kode_dept, $kode_unit_kerja, $kode_program, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen, $kode_komponen_sub, $kode_akun)
+    {
+        $this->db->where('kode_dept', $kode_dept);
+        $this->db->where('kode_unit_kerja', $kode_unit_kerja);
+        $this->db->where('kode_program', $kode_program);
+        $this->db->where('kode_kegiatan', $kode_kegiatan);
+        $this->db->where('kode_kro', $kode_kro);
+        $this->db->where('kode_ro', $kode_ro);
+        $this->db->where('kode_komponen', $kode_komponen);
+        $this->db->where('kode_komponen_sub', $kode_komponen_sub);
+        $this->db->where('kode_akun', $kode_akun);
+        $this->db->where('item_title !=', '');
+        $this->db->group_by('item_title', 'ASC');
+        $this->db->order_by('item_title', 'ASC');
+        return $this->db->get('t_item')->result();
     }
 }
 

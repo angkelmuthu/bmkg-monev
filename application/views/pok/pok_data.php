@@ -50,9 +50,10 @@
         </div>
     </div>
 </div>
-<table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
+<table class="table table-sm table-bordered table-hover table-striped w-100" id="dt-basic-example">
     <thead class="thead-themed">
         <tr>
+            <th class="text-center" rowspan="2"></th>
             <th class="text-center" rowspan="2">Kode</th>
             <th class="text-center" rowspan="2">Program/Kegiatan/Output/Komponen/Sub Komponen/Akun/Detil</th>
             <th class="text-center" colspan="2">Rincian Perhitungan</th>
@@ -67,6 +68,7 @@
     </thead>
     <tbody>
         <tr>
+            <td class="text-center"></td>
             <td class="text-center">1</td>
             <td class="text-center">2</td>
             <td class="text-center">3</td>
@@ -86,8 +88,9 @@
         $list_program = $this->db->get('t_program')->result();
         foreach ($list_program as $program) { ?>
             <tr>
+                <td class="text-center"><span class="badge badge-success">Program</span></td>
                 <td class="text-right"><?php echo $program->kode_dept . '.' . $program->kode_unit_kerja . '.' . $program->kode_program ?></td>
-                <td class="text-left"><?php echo $program->nama_program ?></td>
+                <td class="text-left fw-700"><?php echo $program->nama_program ?></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -104,8 +107,9 @@
             $list_kegiatan = $this->db->get('t_kegiatan')->result();
             foreach ($list_kegiatan as $kegiatan) { ?>
                 <tr>
+                    <td class="text-center"><span class="badge badge-success">Kegiatan</span></td>
                     <td class="text-right"><?php echo $kegiatan->kode_kegiatan ?></td>
-                    <td class="text-left"><i class="fal fa-angle-right ml-1 mr-1"></i><?php echo $kegiatan->nama_kegiatan ?></td>
+                    <td class="text-left fw-500"><?php echo $kegiatan->nama_kegiatan ?></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -129,8 +133,9 @@
                 $list_kro = $this->db->get('t_output')->result();
                 foreach ($list_kro as $kro) { ?>
                     <tr>
+                        <td class="text-center"><span class="badge badge-success">KRO</span></td>
                         <td class="text-right"><?php echo $kro->kode_kro ?></td>
-                        <td class="text-left"><i class="fal fa-angle-right ml-2 mr-1"></i><?php echo $kro->nama_kro ?></td>
+                        <td class="text-left"><i class="fal fa-angle-right mr-1"></i><?php echo $kro->nama_kro ?></td>
                         <td class="text-center"><?php echo $kro->volume ?></td>
                         <td></td>
                         <td></td>
@@ -155,8 +160,9 @@
                     $list_ro = $this->db->get('t_output_sub')->result();
                     foreach ($list_ro as $ro) { ?>
                         <tr>
+                            <td class="text-center"><span class="badge badge-success">RO</span></td>
                             <td class="text-right"><?php echo $ro->kode_ro ?></td>
-                            <td class="text-left"><i class="fal fa-angle-right ml-3 mr-1"> <?php echo $ro->nama_ro ?></td>
+                            <td class="text-left"><i class="fal fa-angle-right ml-1 mr-1"> <?php echo $ro->nama_ro ?></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -182,15 +188,16 @@
                         $list_komponen = $this->db->get('t_komponen')->result();
                         foreach ($list_komponen as $komponen) { ?>
                             <tr>
+                                <td class="text-center"><span class="badge badge-success">Komponen</span></td>
                                 <td class="text-right"><?php echo $komponen->kode_komponen ?></td>
-                                <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"> <?php echo $komponen->nama_komponen ?></td>
+                                <td class="text-left"><i class="fal fa-angle-right ml-2 mr-1"> <?php echo $komponen->nama_komponen ?></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <div class="text-center">
-                                        <button type="button" kode_komponen="<?php echo $komponen->kode_komponen; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
+                                        <button type="button" kode_dept="<?php echo $komponen->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $komponen->kode_kegiatan; ?>" kode_kro="<?php echo $komponen->kode_kro; ?>" kode_ro="<?php echo $komponen->kode_ro; ?>" kode_komponen="<?php echo $komponen->kode_komponen; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
                                         <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button>
                                         <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
                                     </div>
@@ -210,20 +217,119 @@
                             $list_komponen_sub = $this->db->get('t_komponen_sub')->result();
                             foreach ($list_komponen_sub as $komponen_sub) { ?>
                                 <tr>
+                                    <td class="text-center"><span class="badge badge-success">Sub Komponen</span></td>
                                     <td class="text-right"><?php echo $komponen_sub->kode_komponen_sub ?></td>
-                                    <td class="text-left"><?php echo $komponen_sub->nama_komponen_sub ?></td>
+                                    <td class="text-left"><i class="fal fa-angle-right ml-3 mr-1"> <?php echo $komponen_sub->nama_komponen_sub ?></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
                                         <div class="text-center">
-                                            <button type="button" kode_komponen_sub="<?php echo $komponen_sub->kode_komponen_sub; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
+                                            <button type="button" kode_dept="<?php echo $komponen_sub->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen_sub->kode_unit_kerja; ?>" kode_program="<?php echo $komponen_sub->kode_program; ?>" kode_kegiatan="<?php echo $komponen_sub->kode_kegiatan; ?>" kode_kro="<?php echo $komponen_sub->kode_kro; ?>" kode_ro="<?php echo $komponen_sub->kode_ro; ?>" kode_komponen="<?php echo $komponen_sub->kode_komponen; ?>" kode_komponen_sub="<?php echo $komponen_sub->kode_komponen_sub; ?>" class="akun btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
                                             <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button>
                                             <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
+                                <!-- Akun-->
+                                <?php
+                                $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
+                                $this->db->where('kode_komponen', $komponen->kode_komponen);
+                                $this->db->where('kode_ro', $ro->kode_ro);
+                                $this->db->where('kode_kro', $kro->kode_kro);
+                                $this->db->where('kode_kegiatan', $kegiatan->kode_kegiatan);
+                                $this->db->where('kode_program', $program->kode_program);
+                                $this->db->where('kode_dept', $program->kode_dept);
+                                $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
+                                $this->db->where('kode_satker', $program->kode_satker);
+                                $this->db->where('tahun_anggaran', $program->tahun_anggaran);
+                                $list_akun = $this->db->get('t_akun')->result();
+                                foreach ($list_akun as $akun) { ?>
+                                    <tr>
+                                        <td class="text-center"><span class="badge badge-success">Akun</span></td>
+                                        <td class="text-right"><?php echo $akun->kode_akun ?></td>
+                                        <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"> <?php echo $akun->nama_akun ?></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <div class="text-center">
+                                                <button type="button" kode_dept="<?php echo $akun->kode_dept; ?>" kode_unit_kerja="<?php echo $akun->kode_unit_kerja; ?>" kode_program="<?php echo $akun->kode_program; ?>" kode_kegiatan="<?php echo $akun->kode_kegiatan; ?>" kode_kro="<?php echo $akun->kode_kro; ?>" kode_ro="<?php echo $akun->kode_ro; ?>" kode_komponen="<?php echo $akun->kode_komponen; ?>" kode_komponen_sub="<?php echo $akun->kode_komponen_sub; ?>" kode_akun="<?php echo $akun->kode_akun; ?>" class="item btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
+                                                <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button>
+                                                <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Item-->
+                                    <?php
+                                    $this->db->where('kode_akun', $akun->kode_akun);
+                                    $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
+                                    $this->db->where('kode_komponen', $komponen->kode_komponen);
+                                    $this->db->where('kode_ro', $ro->kode_ro);
+                                    $this->db->where('kode_kro', $kro->kode_kro);
+                                    $this->db->where('kode_kegiatan', $kegiatan->kode_kegiatan);
+                                    $this->db->where('kode_program', $program->kode_program);
+                                    $this->db->where('kode_dept', $program->kode_dept);
+                                    $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
+                                    $this->db->where('kode_satker', $program->kode_satker);
+                                    $this->db->where('tahun_anggaran', $program->tahun_anggaran);
+                                    $this->db->group_by('item_title');
+                                    $this->db->order_by('id_item');
+                                    $list_item_title = $this->db->get('t_item')->result();
+                                    foreach ($list_item_title as $item_title) {
+                                        if (!empty($item_title->item_title)) {
+                                    ?>
+                                            <tr>
+                                                <td class="text-center"><span class="badge badge-success">Judul Item</span></td>
+                                                <td class="text-right"></td>
+                                                <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item_title->item_title ?></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        <?php } ?>
+                                        <?php
+                                        $this->db->where('item_title', $item_title->item_title);
+                                        $this->db->where('kode_akun', $akun->kode_akun);
+                                        $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
+                                        $this->db->where('kode_komponen', $komponen->kode_komponen);
+                                        $this->db->where('kode_ro', $ro->kode_ro);
+                                        $this->db->where('kode_kro', $kro->kode_kro);
+                                        $this->db->where('kode_kegiatan', $kegiatan->kode_kegiatan);
+                                        $this->db->where('kode_program', $program->kode_program);
+                                        $this->db->where('kode_dept', $program->kode_dept);
+                                        $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
+                                        $this->db->where('kode_satker', $program->kode_satker);
+                                        $this->db->where('tahun_anggaran', $program->tahun_anggaran);
+                                        $list_item = $this->db->get('t_item')->result();
+                                        foreach ($list_item as $item) {
+                                        ?>
+                                            <tr>
+                                                <td class="text-center"><span class="badge badge-success">Item</span></td>
+                                                <td class="text-right"></td>
+                                                <?php if (!empty($item->item_title)) { ?>
+                                                    <td class="text-left"><i class="fal fa-angle-right ml-6 mr-1"> <?php echo $item->item ?></td>
+                                                <?php } else { ?>
+                                                    <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item->item ?></td>
+                                                <?php } ?>
+                                                <td class="text-center"><?php echo $item->volume ?></td>
+                                                <td class="text-center"><?php echo $item->satuan ?></td>
+                                                <td class="text-right"><?php echo angka($item->harga_satuan) ?></td>
+                                                <td class="text-right"><?php echo angka($item->jumlah) ?></td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button>
+                                                        <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    <?php } ?>
+                                <?php } ?>
                             <?php } ?>
                         <?php } ?>
                     <?php } ?>
@@ -302,6 +408,44 @@
             </div>
             <div class="modal-body">
                 <div id="Komponen_sub_modal">
+                    <!-- Data akan di tampilkan disini-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Akun -->
+<div class="modal fade" id="Akun" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Akun</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="Akun_modal">
+                    <!-- Data akan di tampilkan disini-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Item -->
+<div class="modal fade" id="Item" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Item</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="Item_modal">
                     <!-- Data akan di tampilkan disini-->
                 </div>
             </div>
@@ -390,16 +534,86 @@
         });
     });
     $('.komponen_sub').click(function() {
+        var kode_dept = $(this).attr("kode_dept");
+        var kode_unit_kerja = $(this).attr("kode_unit_kerja");
+        var kode_kegiatan = $(this).attr("kode_kegiatan");
+        var kode_kro = $(this).attr("kode_kro");
+        var kode_ro = $(this).attr("kode_ro");
         var kode_komponen = $(this).attr("kode_komponen");
         $.ajax({
             url: '<?php echo base_url(); ?>pok/get_komponen_sub',
             method: 'post',
             data: {
+                kode_dept: kode_dept,
+                kode_unit_kerja: kode_unit_kerja,
+                kode_kegiatan: kode_kegiatan,
+                kode_kro: kode_kro,
+                kode_ro: kode_ro,
                 kode_komponen: kode_komponen
             },
             success: function(data) {
                 $('#Komponen_sub').modal("show");
                 $('#Komponen_sub_modal').html(data);
+            }
+        });
+    });
+
+    $('.akun').click(function() {
+        var kode_dept = $(this).attr("kode_dept");
+        var kode_unit_kerja = $(this).attr("kode_unit_kerja");
+        var kode_program = $(this).attr("kode_program");
+        var kode_kegiatan = $(this).attr("kode_kegiatan");
+        var kode_kro = $(this).attr("kode_kro");
+        var kode_ro = $(this).attr("kode_ro");
+        var kode_komponen = $(this).attr("kode_komponen");
+        var kode_komponen_sub = $(this).attr("kode_komponen_sub");
+        $.ajax({
+            url: '<?php echo base_url(); ?>pok/get_akun',
+            method: 'post',
+            data: {
+                kode_dept: kode_dept,
+                kode_unit_kerja: kode_unit_kerja,
+                kode_program: kode_program,
+                kode_kegiatan: kode_kegiatan,
+                kode_kro: kode_kro,
+                kode_ro: kode_ro,
+                kode_komponen: kode_komponen,
+                kode_komponen_sub: kode_komponen_sub
+            },
+            success: function(data) {
+                $('#Akun').modal("show");
+                $('#Akun_modal').html(data);
+            }
+        });
+    });
+
+    $('.item').click(function() {
+        var kode_dept = $(this).attr("kode_dept");
+        var kode_unit_kerja = $(this).attr("kode_unit_kerja");
+        var kode_program = $(this).attr("kode_program");
+        var kode_kegiatan = $(this).attr("kode_kegiatan");
+        var kode_kro = $(this).attr("kode_kro");
+        var kode_ro = $(this).attr("kode_ro");
+        var kode_komponen = $(this).attr("kode_komponen");
+        var kode_komponen_sub = $(this).attr("kode_komponen_sub");
+        var kode_akun = $(this).attr("kode_akun");
+        $.ajax({
+            url: '<?php echo base_url(); ?>pok/get_item',
+            method: 'post',
+            data: {
+                kode_dept: kode_dept,
+                kode_unit_kerja: kode_unit_kerja,
+                kode_program: kode_program,
+                kode_kegiatan: kode_kegiatan,
+                kode_kro: kode_kro,
+                kode_ro: kode_ro,
+                kode_komponen: kode_komponen,
+                kode_komponen_sub: kode_komponen_sub,
+                kode_akun: kode_akun
+            },
+            success: function(data) {
+                $('#Item').modal("show");
+                $('#Item_modal').html(data);
             }
         });
     });

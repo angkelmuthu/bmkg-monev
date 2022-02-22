@@ -1,11 +1,16 @@
+<style>
+    body .select2-container {
+        z-index: 9999 !important;
+    }
+</style>
 <form method="post" id="form">
     <div class="form-group">
         <div class="form-group">
             <label class="form-label">Sub Komponen</label>
-            <select name="kode_komponen_sub" class="select2 form-control" id="kode_komponen_sub" required>
+            <select name="id_komponen_sub" class="select2 form-control" id="id_komponen_sub" required>
                 <?php
                 foreach ($dt_komponen_sub as $row) {
-                    echo '<option value="' . $row->kode_komponen_sub . '">' . $row->nama_komponen_sub . '</option>';
+                    echo '<option value="' . $row->id_komponen_sub . '">' . $row->kode_komponen_sub . ' - ' . $row->nama_komponen_sub . '</option>';
                 }
                 ?>
             </select>
@@ -16,6 +21,9 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#id_komponen_sub').select2({
+            dropdownParent: $('#Komponen_sub .modal-content')
+        });
         $("#tambah_komponen_sub").click(function() {
             var data = $('#form').serialize();
             $.ajax({

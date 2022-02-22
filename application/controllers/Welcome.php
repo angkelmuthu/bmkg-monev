@@ -13,8 +13,6 @@ class Welcome extends CI_Controller
     }
     public function index()
     {
-        $data['ttl_risk'] = $this->Welcome_model->ttl_risk();
-        $data['peta_risk'] = $this->Welcome_model->peta_risk();
-        $this->template->load('template', 'welcome', $data);
+        $this->template->load('template', 'welcome');
     }
 }

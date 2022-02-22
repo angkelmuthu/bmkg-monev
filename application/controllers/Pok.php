@@ -187,15 +187,21 @@ class Pok extends CI_Controller
 
     function get_komponen_sub()
     {
+        $kode_dept = $this->input->post('kode_dept');
+        $kode_unit_kerja = $this->input->post('kode_unit_kerja');
+        $kode_kegiatan = $this->input->post('kode_kegiatan');
+        $kode_kro = $this->input->post('kode_kro');
+        $kode_ro = $this->input->post('kode_ro');
+        $kode_komponen = $this->input->post('kode_komponen');
         $data = array(
-            'dt_komponen_sub' => $this->Pok_model->get_komponen_sub($this->input->post('kode_komponen')),
+            'dt_komponen_sub' => $this->Pok_model->get_komponen_sub($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen),
         );
         $this->load->view('pok/pok_modal_komponen_sub', $data);
     }
 
     function tambah_komponen_sub()
     {
-        $row = $this->Pok_model->cek_komponen_sub($this->input->post('kode_komponen_sub'));
+        $row = $this->Pok_model->cek_komponen_sub($this->input->post('id_komponen_sub'));
         if ($row) {
             $arr = array(
                 'kode_dept' => $row->kode_dept,
@@ -219,6 +225,107 @@ class Pok extends CI_Controller
         </button><strong> Record Not Found</strong></div>');
             redirect(site_url('pok'));
         }
+    }
+
+
+    function get_akun()
+    {
+        $kode_dept = $this->input->post('kode_dept');
+        $kode_unit_kerja = $this->input->post('kode_unit_kerja');
+        $kode_kegiatan = $this->input->post('kode_kegiatan');
+        $kode_kro = $this->input->post('kode_kro');
+        $kode_ro = $this->input->post('kode_ro');
+        $kode_komponen = $this->input->post('kode_komponen');
+        $kode_komponen_sub = $this->input->post('kode_komponen_sub');
+        $data = array(
+            'kode_dept' => $this->input->post('kode_dept'),
+            'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
+            'kode_program' => $this->input->post('kode_program'),
+            'kode_kegiatan' => $this->input->post('kode_kegiatan'),
+            'kode_kro' => $this->input->post('kode_kro'),
+            'kode_ro' => $this->input->post('kode_ro'),
+            'kode_komponen' => $this->input->post('kode_komponen'),
+            'kode_komponen_sub' => $this->input->post('kode_komponen_sub'),
+            'dt_akun' => $this->Pok_model->get_akun($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen, $kode_komponen_sub),
+        );
+        $this->load->view('pok/pok_modal_akun', $data);
+    }
+
+    function tambah_akun()
+    {
+        $str_akun = $this->input->post('akun');
+        $akun = explode('|', $str_akun);
+        $arr = array(
+            'kode_dept' => $this->input->post('kode_dept'),
+            'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
+            'kode_program' => $this->input->post('kode_program'),
+            'kode_kegiatan' => $this->input->post('kode_kegiatan'),
+            'kode_kro' => $this->input->post('kode_kro'),
+            'kode_ro' => $this->input->post('kode_ro'),
+            'kode_komponen' => $this->input->post('kode_komponen'),
+            'kode_komponen_sub' => $this->input->post('kode_komponen_sub'),
+            'kode_akun' => $akun['0'],
+            'nama_akun' => $akun['1'],
+            'tahun_anggaran' => $this->session->userdata('ta'),
+            'kode_satker' => $this->session->userdata('kode_satker'),
+            'create_date' => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('t_akun', $arr);
+    }
+
+    function get_item()
+    {
+        $kode_dept = $this->input->post('kode_dept');
+        $kode_unit_kerja = $this->input->post('kode_unit_kerja');
+        $kode_program = $this->input->post('kode_program');
+        $kode_kegiatan = $this->input->post('kode_kegiatan');
+        $kode_kro = $this->input->post('kode_kro');
+        $kode_ro = $this->input->post('kode_ro');
+        $kode_komponen = $this->input->post('kode_komponen');
+        $kode_komponen_sub = $this->input->post('kode_komponen_sub');
+        $kode_akun = $this->input->post('kode_akun');
+        $data = array(
+            'kode_dept' => $this->input->post('kode_dept'),
+            'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
+            'kode_program' => $this->input->post('kode_program'),
+            'kode_kegiatan' => $this->input->post('kode_kegiatan'),
+            'kode_kro' => $this->input->post('kode_kro'),
+            'kode_ro' => $this->input->post('kode_ro'),
+            'kode_komponen' => $this->input->post('kode_komponen'),
+            'kode_komponen_sub' => $this->input->post('kode_komponen_sub'),
+            'kode_akun' => $this->input->post('kode_akun'),
+            'dt_item_head' => $this->Pok_model->get_item_head($kode_dept, $kode_unit_kerja, $kode_program, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen, $kode_komponen_sub, $kode_akun),
+        );
+        $this->load->view('pok/pok_modal_item', $data);
+    }
+
+    function tambah_item()
+    {
+        if ($this->input->post('item_title') == '0') {
+            $item_title = $this->input->post('item_title_baru');
+        } else {
+            $item_title = $this->input->post('item_title');
+        }
+        $arr = array(
+            'kode_dept' => $this->input->post('kode_dept'),
+            'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
+            'kode_program' => $this->input->post('kode_program'),
+            'kode_kegiatan' => $this->input->post('kode_kegiatan'),
+            'kode_kro' => $this->input->post('kode_kro'),
+            'kode_ro' => $this->input->post('kode_ro'),
+            'kode_komponen' => $this->input->post('kode_komponen'),
+            'kode_komponen_sub' => $this->input->post('kode_komponen_sub'),
+            'kode_akun' => $this->input->post('kode_akun'),
+            'item_title' => $item_title,
+            'item' => $this->input->post('item'),
+            'volume' => $this->input->post('volume'),
+            'harga_satuan' => $this->input->post('harga_satuan'),
+            'jumlah' => $this->input->post('total'),
+            'tahun_anggaran' => $this->session->userdata('ta'),
+            'kode_satker' => $this->session->userdata('kode_satker'),
+            'create_date' => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('t_item', $arr);
     }
 }
 
