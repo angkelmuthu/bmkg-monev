@@ -21,6 +21,11 @@
                                 <td>Satker</td>
                                 <td><?php echo $this->session->userdata('nama_satker'); ?></td>
                             </tr>
+                            <tr>
+                                <td>PLAFON/PAGU ANGGARAN</td>
+                                <td>Rp. <?php echo angka($pagu) ?></td>
+                            </tr>
+
                         </table>
 
                         <div id="tampil"></div>

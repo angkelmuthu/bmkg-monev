@@ -27,7 +27,11 @@ class Pok extends CI_Controller
 
     public function read()
     {
-        $this->template->load('template', 'pok/pok_read');
+        $row = $this->Pok_model->read();
+        $data = array(
+            'pagu' => $row->total,
+        );
+        $this->template->load('template', 'pok/pok_read', $data);
     }
 
     public function pok_data()
@@ -326,6 +330,12 @@ class Pok extends CI_Controller
             'create_date' => date('Y-m-d H:i:s'),
         );
         $this->db->insert('t_item', $arr);
+    }
+
+    function hapus_item()
+    {
+        $this->db->where('id_item', $this->input->post('id'));
+        $this->db->delete('t_item');
     }
 }
 

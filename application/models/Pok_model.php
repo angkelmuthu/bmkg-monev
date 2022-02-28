@@ -35,6 +35,16 @@ class Pok_model extends CI_Model
     }
 
     // get data by id
+    function read()
+    {
+        $this->db->select('sum(jumlah) as total');
+        $this->db->where('kode_satker', $this->session->userdata('kode_satker'));
+        $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
+        $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+        $this->db->where('tahun_anggaran', $this->session->userdata('ta'));
+        return $this->db->get('t_item')->row();
+    }
+
     function cek_kegiatan($kode_kegiatan)
     {
         $this->db->select('a.*,b.nama_program');
