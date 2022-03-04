@@ -79,7 +79,14 @@
         </tr>
         <!-- program -->
         <?php
-        $this->db->select('a.*,sum(b.jumlah) as total');
+        $this->db->select('a.*,
+        (SELECT count(*) FROM t_kegiatan c
+        WHERE`a`.`kode_dept` = `c`.`kode_dept`
+        AND `a`.`kode_unit_kerja` = `c`.`kode_unit_kerja`
+        AND `a`.`kode_satker` = `c`.`kode_satker`
+        AND `a`.`tahun_anggaran` = `c`.`tahun_anggaran`
+        AND `a`.`kode_program` = `c`.`kode_program`) as anak
+        ,sum(b.jumlah) as total');
         $this->db->from('t_program a');
         $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
         $this->db->where('a.kode_dept', $this->session->userdata('kode_dept'));
@@ -100,11 +107,47 @@
                 <td></td>
                 <td></td>
                 <td class="text-right fw-700"><?php echo angka($program->total) ?></td>
-                <td></td>
+                <td>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-program-<?php echo $program->id_program ?>"><i class="fal fa-trash"></i></button>
+                    </div>
+
+                    <div class="modal fade" id="hapus-program-<?php echo $program->id_program ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Konfirmasi Data</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                    </button>
+                                </div>
+                                <?php if ($program->anak > 0) { ?>
+                                    <div class="modal-body">
+                                        <p>Maaf, data tidak bisa dihapus</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="modal-body">
+                                        <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                        <button key="<?php echo $program->id_program ?>" type=" button" class="hapus-program btn btn-primary">Ya, Hapus</button>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
             <!-- kegiatan -->
             <?php
-            $this->db->select('a.*,sum(b.jumlah) as total');
+            $this->db->select('a.*,
+            (SELECT count(*) FROM t_output c
+            WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
+            ,sum(b.jumlah) as total');
             $this->db->from('t_kegiatan a');
             $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
             $this->db->where('a.kode_program', $program->kode_program);
@@ -126,14 +169,45 @@
                     <td>
                         <div class="text-center">
                             <button type="button" kode_dept="<?php echo $kegiatan->kode_dept; ?>" kode_unit_kerja="<?php echo $kegiatan->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $kegiatan->kode_kegiatan; ?>" class="kro btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
-                            <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
-                            <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+
+                            <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-kegiatan-<?php echo $kegiatan->id_kegiatan ?>"><i class="fal fa-trash"></i></button>
+                            <div class="modal fade" id="hapus-kegiatan-<?php echo $kegiatan->id_kegiatan ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Konfirmasi Data</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                            </button>
+                                        </div>
+                                        <?php if ($kegiatan->anak > 0) { ?>
+                                            <div class="modal-body">
+                                                <p>Maaf, data tidak bisa dihapus</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class="modal-body">
+                                                <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                <button key="<?php echo $kegiatan->id_kegiatan ?>" type=" button" class="hapus-kegiatan btn btn-primary">Ya, Hapus</button>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </tr>
                 <!-- kro -->
                 <?php
-                $this->db->select('a.*,sum(b.jumlah) as total');
+                $this->db->select('a.*,
+                (SELECT count(*) FROM t_output_sub c
+                WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
+                ,sum(b.jumlah) as total');
                 $this->db->from('t_output a');
                 $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                 $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
@@ -157,14 +231,45 @@
                         <td>
                             <div class="text-center">
                                 <button type="button" kode_dept="<?php echo $kro->kode_dept; ?>" kode_unit_kerja="<?php echo $kro->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $kro->kode_kegiatan; ?>" kode_kro="<?php echo $kro->kode_kro; ?>" class="ro btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
-                                <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
-                                <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+
+                                <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-kro-<?php echo $kro->id_kro ?>"><i class="fal fa-trash"></i></button>
+                                <div class="modal fade" id="hapus-kro-<?php echo $kro->id_kro ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Konfirmasi Data</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                </button>
+                                            </div>
+                                            <?php if ($kro->anak > 0) { ?>
+                                                <div class="modal-body">
+                                                    <p>Maaf, data tidak bisa dihapus</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="modal-body">
+                                                    <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                    <button key="<?php echo $kro->id_kro ?>" type=" button" class="hapus-kro btn btn-primary">Ya, Hapus</button>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     <!-- ro -->
                     <?php
-                    $this->db->select('a.*,sum(b.jumlah) as total');
+                    $this->db->select('a.*,
+                    (SELECT count(*) FROM t_output_sub c
+                    WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_ro=c.kode_ro and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
+                    ,sum(b.jumlah) as total');
                     $this->db->from('t_output_sub a');
                     $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                     $this->db->where('a.kode_kro', $kro->kode_kro);
@@ -188,14 +293,45 @@
                             <td>
                                 <div class="text-center">
                                     <button type="button" kode_dept="<?php echo $ro->kode_dept; ?>" kode_unit_kerja="<?php echo $ro->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $ro->kode_kegiatan; ?>" kode_kro="<?php echo $ro->kode_kro; ?>" kode_ro="<?php echo $ro->kode_ro; ?>" class="komponen btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
-                                    <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
-                                    <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+
+                                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-ro-<?php echo $ro->id_ro ?>"><i class="fal fa-trash"></i></button>
+                                    <div class="modal fade" id="hapus-ro-<?php echo $ro->id_ro ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Konfirmasi Data</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                    </button>
+                                                </div>
+                                                <?php if ($ro->anak > 0) { ?>
+                                                    <div class="modal-body">
+                                                        <p>Maaf, data tidak bisa dihapus</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="modal-body">
+                                                        <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                        <button key="<?php echo $ro->id_ro ?>" type=" button" class="hapus-ro btn btn-primary">Ya, Hapus</button>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                         <!-- komponen -->
                         <?php
-                        $this->db->select('a.*,sum(b.jumlah) as total');
+                        $this->db->select('a.*,
+                        (SELECT count(*) FROM t_komponen_sub c
+                        WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_komponen=c.kode_komponen and a.kode_ro=c.kode_ro and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
+                        ,sum(b.jumlah) as total');
                         $this->db->from('t_komponen a');
                         $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                         $this->db->where('a.kode_ro', $ro->kode_ro);
@@ -220,14 +356,45 @@
                                 <td>
                                     <div class="text-center">
                                         <button type="button" kode_dept="<?php echo $komponen->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $komponen->kode_kegiatan; ?>" kode_kro="<?php echo $komponen->kode_kro; ?>" kode_ro="<?php echo $komponen->kode_ro; ?>" kode_komponen="<?php echo $komponen->kode_komponen; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
-                                        <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
-                                        <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+
+                                        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-komponen-<?php echo $komponen->id_komponen ?>"><i class="fal fa-trash"></i></button>
+                                        <div class="modal fade" id="hapus-komponen-<?php echo $komponen->id_komponen ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Konfirmasi Data</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                        </button>
+                                                    </div>
+                                                    <?php if ($komponen->anak > 0) { ?>
+                                                        <div class="modal-body">
+                                                            <p>Maaf, data tidak bisa dihapus</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                        </div>
+                                                    <?php } else { ?>
+                                                        <div class="modal-body">
+                                                            <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                            <button key="<?php echo $komponen->id_komponen ?>" type=" button" class="hapus-komponen btn btn-primary">Ya, Hapus</button>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
                             <!-- komponen sub -->
                             <?php
-                            $this->db->select('a.*,sum(b.jumlah) as total');
+                            $this->db->select('a.*,
+                            (SELECT count(*) FROM t_akun c
+                            WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_komponen_sub=c.kode_komponen_sub and a.kode_komponen=c.kode_komponen and a.kode_ro=c.kode_ro and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
+                            ,sum(b.jumlah) as total');
                             $this->db->from('t_komponen_sub a');
                             $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                             $this->db->where('a.kode_komponen', $komponen->kode_komponen);
@@ -253,14 +420,42 @@
                                     <td>
                                         <div class="text-center">
                                             <button type="button" kode_dept="<?php echo $komponen_sub->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen_sub->kode_unit_kerja; ?>" kode_program="<?php echo $komponen_sub->kode_program; ?>" kode_kegiatan="<?php echo $komponen_sub->kode_kegiatan; ?>" kode_kro="<?php echo $komponen_sub->kode_kro; ?>" kode_ro="<?php echo $komponen_sub->kode_ro; ?>" kode_komponen="<?php echo $komponen_sub->kode_komponen; ?>" kode_komponen_sub="<?php echo $komponen_sub->kode_komponen_sub; ?>" class="akun btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
-                                            <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
-                                            <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+
+                                            <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-komponensub-<?php echo $komponen_sub->id_komponen_sub ?>"><i class="fal fa-trash"></i></button>
+                                            <div class="modal fade" id="hapus-komponensub-<?php echo $komponen_sub->id_komponen_sub ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-sm" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Konfirmasi Data</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                            </button>
+                                                        </div>
+                                                        <?php if ($komponen_sub->anak > 0) { ?>
+                                                            <div class="modal-body">
+                                                                <p>Maaf, data tidak bisa dihapus</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="modal-body">
+                                                                <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                                <button key="<?php echo $komponen_sub->id_komponen_sub ?>" type=" button" class="hapus-komponensub btn btn-primary">Ya, Hapus</button>
+                                                            </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <!-- Akun-->
                                 <?php
-                                $this->db->select('a.*,sum(b.jumlah) as total');
+                                $this->db->select('a.*,count(b.id_item) as anak,sum(b.jumlah) as total');
                                 $this->db->from('t_akun a');
                                 $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_akun=b.kode_akun and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                                 $this->db->where('a.kode_komponen_sub', $komponen_sub->kode_komponen_sub);
@@ -287,8 +482,36 @@
                                         <td>
                                             <div class="text-center">
                                                 <button type="button" kode_dept="<?php echo $akun->kode_dept; ?>" kode_unit_kerja="<?php echo $akun->kode_unit_kerja; ?>" kode_program="<?php echo $akun->kode_program; ?>" kode_kegiatan="<?php echo $akun->kode_kegiatan; ?>" kode_kro="<?php echo $akun->kode_kro; ?>" kode_ro="<?php echo $akun->kode_ro; ?>" kode_komponen="<?php echo $akun->kode_komponen; ?>" kode_komponen_sub="<?php echo $akun->kode_komponen_sub; ?>" kode_akun="<?php echo $akun->kode_akun; ?>" class="item btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
-                                                <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
-                                                <button type="button" class="btn btn-xs btn-danger"><i class="fal fa-trash"></i></button>
+
+                                                <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-akun-<?php echo $akun->id_akun ?>"><i class="fal fa-trash"></i></button>
+                                                <div class="modal fade" id="hapus-akun-<?php echo $akun->id_akun ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Konfirmasi Data</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <?php if ($akun->anak > 0) { ?>
+                                                                <div class="modal-body">
+                                                                    <p>Maaf, data tidak bisa dihapus</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                <div class="modal-body">
+                                                                    <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                                    <button key="<?php echo $akun->id_akun ?>" type=" button" class="hapus-akun btn btn-primary">Ya, Hapus</button>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -353,7 +576,7 @@
                                                 <td class="text-right"><?php echo angka($item->jumlah) ?></td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <!-- <button type="button" class="btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button> -->
+                                                        <button type="button" key="<?php echo $item->id_item ?>" class="edit-item btn btn-xs btn-warning"><i class="fal fa-pencil"></i></button>
                                                         <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-item-<?php echo $item->id_item ?>"><i class="fal fa-trash"></i></button>
                                                         <div class="modal fade" id="hapus-item-<?php echo $item->id_item ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                             <div class="modal-dialog modal-sm" role="document">
@@ -496,6 +719,25 @@
             </div>
             <div class="modal-body">
                 <div id="Item_modal">
+                    <!-- Data akan di tampilkan disini-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Item -->
+<div class="modal fade" id="EditItem" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Item</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="EditItem_modal">
                     <!-- Data akan di tampilkan disini-->
                 </div>
             </div>
@@ -667,6 +909,21 @@
             }
         });
     });
+
+    $('.edit-item').click(function() {
+        var id = $(this).attr("key");
+        $.ajax({
+            url: '<?php echo base_url(); ?>pok/get_item_update',
+            method: 'post',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#EditItem').modal("show");
+                $('#EditItem_modal').html(data);
+            }
+        });
+    });
     $(".hapus-item").click(function() {
         var key = $(this).attr("key");
         $.ajax({
@@ -683,6 +940,161 @@
             },
             error: function() {
                 $('.hapus-item').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+    $(".hapus-akun").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_akun",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-akun').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-akun').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+    $(".hapus-komponensub").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_komponensub",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-komponensub').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-komponensub').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+    $(".hapus-komponen").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_komponen",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-komponen').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-komponen').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+    $(".hapus-ro").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_ro",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-ro').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-ro').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+    $(".hapus-kro").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_kro",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-kro').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-kro').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+
+    $(".hapus-kegiatan").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_kegiatan",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-kegiatan').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-kegiatan').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+        });
+    });
+
+    $(".hapus-program").click(function() {
+        var key = $(this).attr("key");
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>pok/hapus_program",
+            data: {
+                id: key
+            },
+            success: function(data) {
+                $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                $('.hapus-program').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function() {
+                $('.hapus-program').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
             }

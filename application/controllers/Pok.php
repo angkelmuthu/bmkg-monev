@@ -40,6 +40,12 @@ class Pok extends CI_Controller
         $this->load->view('pok/pok_data');
     }
 
+    function hapus_program()
+    {
+        $this->db->where('id_program', $this->input->post('id'));
+        $this->db->delete('t_program');
+    }
+
     function tambah_kegiatan()
     {
         $row = $this->Pok_model->cek_kegiatan($this->input->post('kode_kegiatan'));
@@ -72,6 +78,13 @@ class Pok extends CI_Controller
         </button><strong> Record Not Found</strong></div>');
             redirect(site_url('pok'));
         }
+    }
+
+
+    function hapus_kegiatan()
+    {
+        $this->db->where('id_kegiatan', $this->input->post('id'));
+        $this->db->delete('t_kegiatan');
     }
 
     function get_kro()
@@ -109,6 +122,12 @@ class Pok extends CI_Controller
         </button><strong> Record Not Found</strong></div>');
             redirect(site_url('pok'));
         }
+    }
+
+    function hapus_kro()
+    {
+        $this->db->where('id_kro', $this->input->post('id'));
+        $this->db->delete('t_output');
     }
 
     function get_ro()
@@ -149,6 +168,12 @@ class Pok extends CI_Controller
         }
     }
 
+    function hapus_ro()
+    {
+        $this->db->where('id_ro', $this->input->post('id'));
+        $this->db->delete('t_output_sub');
+    }
+
     function get_komponen()
     {
         $kode_dept = $this->input->post('kode_dept');
@@ -187,6 +212,12 @@ class Pok extends CI_Controller
         </button><strong> Record Not Found</strong></div>');
             redirect(site_url('pok'));
         }
+    }
+
+    function hapus_komponen()
+    {
+        $this->db->where('id_komponen', $this->input->post('id'));
+        $this->db->delete('t_komponen');
     }
 
     function get_komponen_sub()
@@ -231,6 +262,11 @@ class Pok extends CI_Controller
         }
     }
 
+    function hapus_komponensub()
+    {
+        $this->db->where('id_komponen_sub', $this->input->post('id'));
+        $this->db->delete('t_komponen_sub');
+    }
 
     function get_akun()
     {
@@ -275,6 +311,12 @@ class Pok extends CI_Controller
             'create_date' => date('Y-m-d H:i:s'),
         );
         $this->db->insert('t_akun', $arr);
+    }
+
+    function hapus_akun()
+    {
+        $this->db->where('id_akun', $this->input->post('id'));
+        $this->db->delete('t_akun');
     }
 
     function get_item()
@@ -330,6 +372,34 @@ class Pok extends CI_Controller
             'create_date' => date('Y-m-d H:i:s'),
         );
         $this->db->insert('t_item', $arr);
+    }
+
+    function get_item_update()
+    {
+        $row = $this->Pok_model->get_item_id($this->input->post('id'));
+        $data = array(
+            'id_item' => $row->id_item,
+            'item_title' => $row->item_title,
+            'item' => $row->item,
+            'volume' => $row->volume,
+            'satuan' => $row->satuan,
+            'harga_satuan' => $row->harga_satuan,
+            'jumlah' => $row->jumlah,
+        );
+        $this->load->view('pok/pok_modal_item_edit', $data);
+    }
+
+    function update_item()
+    {
+        $arr = array(
+            'item' => $this->input->post('item'),
+            'volume' => $this->input->post('volume'),
+            'harga_satuan' => $this->input->post('harga_satuan'),
+            'jumlah' => $this->input->post('total'),
+            'create_date' => date('Y-m-d H:i:s'),
+        );
+        $this->db->where('id_item', $this->input->post('id_item'));
+        $this->db->update('t_item', $arr);
     }
 
     function hapus_item()

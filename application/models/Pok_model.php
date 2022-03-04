@@ -181,6 +181,12 @@ class Pok_model extends CI_Model
         $this->db->order_by('item_title', 'ASC');
         return $this->db->get('t_item')->result();
     }
+
+    function get_item_id($id)
+    {
+        $this->db->where('id_item', $id);
+        return $this->db->get('t_item')->row();
+    }
 }
 
 /* End of file Pok_model.php */
