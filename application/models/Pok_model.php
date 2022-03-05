@@ -20,14 +20,18 @@ class Pok_model extends CI_Model
     {
         $this->datatables->select('id_program,tahun_anggaran,kode_dept,nama_dept,kode_unit_kerja,nama_unit_kerja,kode_satker,nama_satker,create_date');
         $this->datatables->from('v_list_pok');
-        $this->datatables->where('kode_dept', $this->session->userdata('kode_dept'));
-        $this->datatables->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
-        $this->datatables->where('kode_satker', $this->session->userdata('kode_satker'));
-        $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
-        $this->datatables->group_by('tahun_anggaran');
+        if ($this->session->userdata('id_user_level') == 1) {
+            $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
+        } else {
+            $this->datatables->where('kode_dept', $this->session->userdata('kode_dept'));
+            $this->datatables->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+            $this->datatables->where('kode_satker', $this->session->userdata('kode_satker'));
+            $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
+            $this->datatables->group_by('tahun_anggaran');
+        }
         //add this line for join
         //$this->datatables->join('table2', 't_program.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('pok/read'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-xs btn-info')));
+        $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-xs btn-info')), 'id_program');
         // $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
         //     " . anchor(site_url('pok/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
@@ -35,14 +39,23 @@ class Pok_model extends CI_Model
     }
 
     // get data by id
-    function read()
+    function read($id)
     {
-        $this->db->select('sum(jumlah) as total');
-        $this->db->where('kode_satker', $this->session->userdata('kode_satker'));
-        $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
-        $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
-        $this->db->where('tahun_anggaran', $this->session->userdata('ta'));
-        return $this->db->get('t_item')->row();
+        $this->db->select('a.tahun_anggaran,c.nama_satker,sum(b.jumlah) as total');
+        $this->db->from('t_program a');
+        $this->db->join('t_item b', 'a.kode_satker=b.kode_satker and a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.tahun_anggaran=b.tahun_anggaran', 'left');
+        $this->db->join('ref_satker c', 'a.kode_satker=b.kode_satker', 'left');
+        $this->db->where('id_program', $id);
+        // $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
+        // $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+        // $this->db->where('tahun_anggaran', $this->session->userdata('ta'));
+        return $this->db->get()->row();
+    }
+
+    function pok_data($id)
+    {
+        $this->db->where('id_program', $id);
+        return $this->db->get('t_program')->row();
     }
 
     function cek_kegiatan($kode_kegiatan)

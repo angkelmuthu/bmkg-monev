@@ -40,7 +40,7 @@
                 data: data,
                 cache: false,
                 success: function(data) {
-                    $('#tampil').load("<?php echo base_url(); ?>pok/pok_data");
+                    $('#tampil').load("<?php echo base_url(); ?>pok/pok_data/<?php echo $pok ?>");
                     $('#Akun').modal('hide');
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();

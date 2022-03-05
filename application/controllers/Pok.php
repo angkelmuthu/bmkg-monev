@@ -25,19 +25,36 @@ class Pok extends CI_Controller
         echo $this->Pok_model->json();
     }
 
-    public function read()
+    public function read($id)
     {
-        $row = $this->Pok_model->read();
-        $data = array(
-            'pagu' => $row->total,
-        );
+        $row = $this->Pok_model->read($id);
+        if ($row) {
+            $data = array(
+                'tahun_anggaran' => $row->tahun_anggaran,
+                'nama_satker' => $row->nama_satker,
+                'pagu' => $row->total,
+            );
+        } else {
+            $data = array(
+                'tahun_anggaran' => $this->session->userdata('ta'),
+                'nama_satker' => $this->session->userdata('nama_satker'),
+                'pagu' => '0',
+            );
+        }
         $this->template->load('template', 'pok/pok_read', $data);
     }
 
-    public function pok_data()
+    public function pok_data($id)
     {
-        //$data['list_program'] = $this->Pok_model->get_program();
-        $this->load->view('pok/pok_data');
+        $row = $this->Pok_model->pok_data($id);
+        $data = array(
+            'kode_dept' => $row->kode_dept,
+            'kode_unit_kerja' => $row->kode_unit_kerja,
+            'kode_program' => $row->kode_program,
+            'tahun_anggaran' => $row->tahun_anggaran,
+            'kode_satker' => $row->kode_satker,
+        );
+        $this->load->view('pok/pok_data', $data);
     }
 
     function hapus_program()
@@ -71,6 +88,9 @@ class Pok extends CI_Controller
             );
             $arr_merger = array_merge($arr, $arr_kegiatan);
             $this->db->insert('t_kegiatan', $arr_merger);
+            if ($this->input->post('new') == 'Y') {
+                redirect(site_url('pok'));
+            }
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -93,6 +113,7 @@ class Pok extends CI_Controller
         $kode_unit_kerja = $this->input->post('kode_unit_kerja');
         $kode_kegiatan = $this->input->post('kode_kegiatan');
         $data = array(
+            'pok' => $this->input->post('pok'),
             'dt_kro' => $this->Pok_model->get_kro($kode_dept, $kode_unit_kerja, $kode_kegiatan),
         );
         $this->load->view('pok/pok_modal_kro', $data);
@@ -137,6 +158,7 @@ class Pok extends CI_Controller
         $kode_kegiatan = $this->input->post('kode_kegiatan');
         $kode_kro = $this->input->post('kode_kro');
         $data = array(
+            'pok' => $this->input->post('pok'),
             'dt_ro' => $this->Pok_model->get_ro($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro),
         );
         $this->load->view('pok/pok_modal_ro', $data);
@@ -182,6 +204,7 @@ class Pok extends CI_Controller
         $kode_kro = $this->input->post('kode_kro');
         $kode_ro = $this->input->post('kode_ro');
         $data = array(
+            'pok' => $this->input->post('pok'),
             'dt_komponen' => $this->Pok_model->get_komponen($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro),
         );
         $this->load->view('pok/pok_modal_komponen', $data);
@@ -229,6 +252,7 @@ class Pok extends CI_Controller
         $kode_ro = $this->input->post('kode_ro');
         $kode_komponen = $this->input->post('kode_komponen');
         $data = array(
+            'pok' => $this->input->post('pok'),
             'dt_komponen_sub' => $this->Pok_model->get_komponen_sub($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen),
         );
         $this->load->view('pok/pok_modal_komponen_sub', $data);
@@ -278,6 +302,7 @@ class Pok extends CI_Controller
         $kode_komponen = $this->input->post('kode_komponen');
         $kode_komponen_sub = $this->input->post('kode_komponen_sub');
         $data = array(
+            'pok' => $this->input->post('pok'),
             'kode_dept' => $this->input->post('kode_dept'),
             'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
             'kode_program' => $this->input->post('kode_program'),
@@ -331,6 +356,7 @@ class Pok extends CI_Controller
         $kode_komponen_sub = $this->input->post('kode_komponen_sub');
         $kode_akun = $this->input->post('kode_akun');
         $data = array(
+            'pok' => $this->input->post('pok'),
             'kode_dept' => $this->input->post('kode_dept'),
             'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
             'kode_program' => $this->input->post('kode_program'),
@@ -378,6 +404,7 @@ class Pok extends CI_Controller
     {
         $row = $this->Pok_model->get_item_id($this->input->post('id'));
         $data = array(
+            'pok' => $this->input->post('pok'),
             'id_item' => $row->id_item,
             'item_title' => $row->item_title,
             'item' => $row->item,
@@ -389,6 +416,29 @@ class Pok extends CI_Controller
         $this->load->view('pok/pok_modal_item_edit', $data);
     }
 
+    function get_penarikan()
+    {
+        $row = $this->Pok_model->get_item_id($this->input->post('id'));
+        $data = array(
+            'pok' => $this->input->post('pok'),
+            'id_item' => $row->id_item,
+            'jumlah' => $row->jumlah,
+            'januari' => $row->januari,
+            'februari' => $row->februari,
+            'maret' => $row->maret,
+            'april' => $row->april,
+            'mei' => $row->mei,
+            'juni' => $row->juni,
+            'juli' => $row->juli,
+            'agustus' => $row->agustus,
+            'september' => $row->september,
+            'oktober' => $row->oktober,
+            'november' => $row->november,
+            'desember' => $row->desember,
+        );
+        $this->load->view('pok/pok_modal_item_penarikan', $data);
+    }
+
     function update_item()
     {
         $arr = array(
@@ -396,6 +446,27 @@ class Pok extends CI_Controller
             'volume' => $this->input->post('volume'),
             'harga_satuan' => $this->input->post('harga_satuan'),
             'jumlah' => $this->input->post('total'),
+            'create_date' => date('Y-m-d H:i:s'),
+        );
+        $this->db->where('id_item', $this->input->post('id_item'));
+        $this->db->update('t_item', $arr);
+    }
+
+    function update_penarikan()
+    {
+        $arr = array(
+            'januari' => $this->input->post('januari'),
+            'februari' => $this->input->post('februari'),
+            'maret' => $this->input->post('maret'),
+            'april' => $this->input->post('april'),
+            'mei' => $this->input->post('mei'),
+            'juni' => $this->input->post('juni'),
+            'juli' => $this->input->post('juli'),
+            'agustus' => $this->input->post('agustus'),
+            'september' => $this->input->post('september'),
+            'oktober' => $this->input->post('oktober'),
+            'november' => $this->input->post('november'),
+            'desember' => $this->input->post('desember'),
             'create_date' => date('Y-m-d H:i:s'),
         );
         $this->db->where('id_item', $this->input->post('id_item'));

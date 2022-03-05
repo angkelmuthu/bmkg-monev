@@ -15,11 +15,11 @@
                         <table class="table table-clean">
                             <tr>
                                 <td>Tahun Anggaran</td>
-                                <td><?php echo $this->session->userdata('ta'); ?></td>
+                                <td><?php echo $tahun_anggaran; ?></td>
                             </tr>
                             <tr>
                                 <td>Satker</td>
-                                <td><?php echo $this->session->userdata('nama_satker'); ?></td>
+                                <td><?php echo $nama_satker; ?></td>
                             </tr>
                             <tr>
                                 <td>PLAFON/PAGU ANGGARAN</td>
@@ -47,7 +47,7 @@
         //Tampilkan Data
         $.ajax({
             type: 'POST',
-            url: "<?php echo base_url(); ?>pok/pok_data",
+            url: "<?php echo base_url(); ?>pok/pok_data/<?php echo $this->uri->segment(3) ?>",
             cache: false,
             success: function(data) {
                 $("#tampil").html(data);
