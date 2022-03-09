@@ -76,11 +76,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	//'hostname' => 'localhost',
 	//'hostname' => '192.168.1.125',
-	//'hostname' => '103.116.201.147:7371',
-	'username' => 'root',
-	'password' => 'root',
+    'hostname' => '103.116.201.147:7371',
+	'username' => 'etor',
+	'password' => 'etor',
 	'database' => 'bmkg_monev',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

@@ -37,6 +37,27 @@ class Pok_model extends CI_Model
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
         return $this->datatables->generate();
     }
+	function json_realisasi()
+    {
+        $this->datatables->select('id_program,tahun_anggaran,kode_dept,nama_dept,kode_unit_kerja,nama_unit_kerja,kode_satker,nama_satker,create_date');
+        $this->datatables->from('v_list_pok');
+        if ($this->session->userdata('id_user_level') == 1) {
+            $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
+        } else {
+            $this->datatables->where('kode_dept', $this->session->userdata('kode_dept'));
+            $this->datatables->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+            $this->datatables->where('kode_satker', $this->session->userdata('kode_satker'));
+            $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
+            $this->datatables->group_by('tahun_anggaran');
+        }
+        //add this line for join
+        //$this->datatables->join('table2', 't_program.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')), 'id_program');
+        // $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
+        //     " . anchor(site_url('pok/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
+        //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
+        return $this->datatables->generate();
+    }
 
     // get data by id
     function read($id)
@@ -199,6 +220,11 @@ class Pok_model extends CI_Model
     {
         $this->db->where('id_item', $id);
         return $this->db->get('t_item')->row();
+    }
+	function get_real_item_id($id)
+    {
+        $this->db->where('id_item', $id);
+        return $this->db->get('t_item_realisasi')->row();
     }
 }
 
