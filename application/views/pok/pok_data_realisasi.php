@@ -681,6 +681,7 @@
                                         $this->db->group_by('item_title');
                                         $this->db->order_by('id_item');
                                         $list_item_title = $this->db->get()->result();
+										$this->output->enable_profiler(TRUE);
                                         foreach ($list_item_title as $item_title) {
                                             if (!empty($item_title->item_title)) {
                                         ?>
@@ -711,7 +712,12 @@
                                                 </tr>
                                             <?php } ?>
                                             <?php
-                                            $this->db->where('item_title', $item_title->item_title);
+											$this->db->select('a.*,sum(jumlah) as total,sum(c.ang_januari) as januari,sum(c.ang_februari) as februari,sum(c.ang_maret) as maret,sum(c.ang_april) as april,
+										sum(c.ang_mei) as mei,sum(c.ang_juni) as juni,sum(c.ang_juli) as juli,sum(c.ang_agustus) as agustus,sum(c.ang_september) as september,sum(c.ang_november) as november,
+										sum(c.ang_oktober) as oktober,sum(c.ang_desember) as desember');
+										$this->db->from('t_item a');
+                                        $this->db->join('t_item_realisasi c', 'c.id_item=a.id_item', 'LEFT');
+                                            $this->db->where('a.item_title', $item_title->item_title);
                                             $this->db->where('kode_akun', $akun->kode_akun);
                                             $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
                                             $this->db->where('kode_komponen', $komponen->kode_komponen);
@@ -723,8 +729,8 @@
                                             $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
                                             $this->db->where('kode_satker', $program->kode_satker);
                                             $this->db->where('tahun_anggaran', $program->tahun_anggaran);
-                                            $this->db->group_by('id_item');
-                                            $list_item = $this->db->get('t_item')->result();
+                                            $this->db->group_by('a.id_item');
+                                            $list_item = $this->db->get()->result();
                                             foreach ($list_item as $item) {
                                             ?>
                                                 <tr>
