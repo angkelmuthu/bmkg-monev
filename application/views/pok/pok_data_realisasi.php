@@ -681,7 +681,7 @@
                                         $this->db->group_by('item_title');
                                         $this->db->order_by('id_item');
                                         $list_item_title = $this->db->get()->result();
-										$this->output->enable_profiler(TRUE);
+										//$this->output->enable_profiler(TRUE);
                                         foreach ($list_item_title as $item_title) {
                                             if (!empty($item_title->item_title)) {
                                         ?>
