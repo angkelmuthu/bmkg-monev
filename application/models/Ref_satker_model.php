@@ -16,14 +16,15 @@ class Ref_satker_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('id_satker,kode_satker,nama_satker,kode_jenis_satker,kode_parent_satker,alamat,no_tlpn,kode_dept,kode_unit_kerja,aktif');
+    function json()
+    {
+        $this->datatables->select('id_satker,kode_satker,nama_satker,kode_jenis_satker,kode_parent_satker,alamat,no_tlpn,penjabat_ppk,kpa,operator,email,kontak,kode_dept,kode_unit_kerja,aktif');
         $this->datatables->from('ref_satker');
         //add this line for join
         //$this->datatables->join('table2', 'ref_satker.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('ref_satker/read/$1'),'<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed'))." 
-            ".anchor(site_url('ref_satker/update/$1'),'<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed'))." 
-                ".anchor(site_url('ref_satker/delete/$1'),'<i class="fal fa-trash" aria-hidden="true"></i>','class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_satker');
+        $this->datatables->add_column('action', anchor(site_url('ref_satker/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
+            " . anchor(site_url('ref_satker/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
+                " . anchor(site_url('ref_satker/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_satker');
         return $this->datatables->generate();
     }
 
@@ -40,37 +41,39 @@ class Ref_satker_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-    
+
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL)
+    {
         $this->db->like('id_satker', $q);
-	$this->db->or_like('kode_satker', $q);
-	$this->db->or_like('nama_satker', $q);
-	$this->db->or_like('kode_jenis_satker', $q);
-	$this->db->or_like('kode_parent_satker', $q);
-	$this->db->or_like('alamat', $q);
-	$this->db->or_like('no_tlpn', $q);
-	$this->db->or_like('kode_dept', $q);
-	$this->db->or_like('kode_unit_kerja', $q);
-	$this->db->or_like('aktif', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('kode_satker', $q);
+        $this->db->or_like('nama_satker', $q);
+        $this->db->or_like('kode_jenis_satker', $q);
+        $this->db->or_like('kode_parent_satker', $q);
+        $this->db->or_like('alamat', $q);
+        $this->db->or_like('no_tlpn', $q);
+        $this->db->or_like('kode_dept', $q);
+        $this->db->or_like('kode_unit_kerja', $q);
+        $this->db->or_like('aktif', $q);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_satker', $q);
-	$this->db->or_like('kode_satker', $q);
-	$this->db->or_like('nama_satker', $q);
-	$this->db->or_like('kode_jenis_satker', $q);
-	$this->db->or_like('kode_parent_satker', $q);
-	$this->db->or_like('alamat', $q);
-	$this->db->or_like('no_tlpn', $q);
-	$this->db->or_like('kode_dept', $q);
-	$this->db->or_like('kode_unit_kerja', $q);
-	$this->db->or_like('aktif', $q);
-	$this->db->limit($limit, $start);
+        $this->db->or_like('kode_satker', $q);
+        $this->db->or_like('nama_satker', $q);
+        $this->db->or_like('kode_jenis_satker', $q);
+        $this->db->or_like('kode_parent_satker', $q);
+        $this->db->or_like('alamat', $q);
+        $this->db->or_like('no_tlpn', $q);
+        $this->db->or_like('kode_dept', $q);
+        $this->db->or_like('kode_unit_kerja', $q);
+        $this->db->or_like('aktif', $q);
+        $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
@@ -93,7 +96,6 @@ class Ref_satker_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
-
 }
 
 /* End of file Ref_satker_model.php */

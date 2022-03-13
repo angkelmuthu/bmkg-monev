@@ -41,18 +41,12 @@
                 <input type="text" name="volume" id="volume" class="form-control" value="" required>
             </div>
         </div>
-        <!-- <div class="col-xl-6 mb-2">
+        <div class="col-xl-6 mb-2">
             <div class="form-group">
                 <label class="form-label">Satuan</label>
-                <select name="id_satuan" class="select2 form-control" id="id_satuan" required>
-                    <?php
-                    foreach ($dt_satuan as $row) {
-                        echo '<option value="' . $row->id_satuan . '">' . $row->nama_satuan . '</option>';
-                    }
-                    ?>
-                </select>
+                <input type="text" name="satuan" id="satuan" class="form-control" value="" required>
             </div>
-        </div> -->
+        </div>
         <div class="col-xl-6 mb-2">
             <div class="form-group">
                 <label class="form-label">Harga Satuan</label>
@@ -63,6 +57,25 @@
             <div class="form-group">
                 <label class="form-label">Total</label>
                 <input type="text" name="total" id="total" class="form-control" value="" required readonly>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
+                <label class="form-label">Swakelola</label>
+                <?php echo form_dropdown('is_swakelola', array('n' => 'Bukan Swakelola', 'y' => 'Swakelola'), '', array('class' => 'form-control')); ?>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2"></div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
+                <label class="form-label">Kode Blokir</label>
+                <input type="text" name="kode_blokir" id="kode_blokir" class="form-control" value="" required>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
+                <label class="form-label">Jumlah Blokir</label>
+                <input type="text" name="jumlah_blokir" id="jumlah_blokir" class="form-control" value="" required>
             </div>
         </div>
         <div class="col-xl-12 mb-2">

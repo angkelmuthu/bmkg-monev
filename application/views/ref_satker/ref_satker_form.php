@@ -40,6 +40,27 @@
                                     <td><input type="text" class="form-control" name="no_tlpn" id="no_tlpn" placeholder="No Tlpn" value="<?php echo $no_tlpn; ?>" /></td>
                                 </tr>
                                 <tr>
+                                    <td width='200'>Nama Penjabat PPK</td>
+                                    <td><input type="text" class="form-control" name="penjabat_ppk" id="penjabat_ppk" placeholder="Nama Penjabat PPK" value="<?php echo $penjabat_ppk; ?>" required /></td>
+                                </tr>
+
+                                <tr>
+                                    <td width='200'>Nama KPA</td>
+                                    <td><input type="text" class="form-control" name="kpa" id="kpa" placeholder="Nama KPA" value="<?php echo $kpa; ?>" required /></td>
+                                </tr>
+                                <tr>
+                                    <td width='200'>Nama Operator</td>
+                                    <td><input type="text" class="form-control" name="operator" id="operator" placeholder="Nama Operator" value="<?php echo $operator; ?>" required /></td>
+                                </tr>
+                                <tr>
+                                    <td width='200'>Email</td>
+                                    <td><input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email; ?>" required /></td>
+                                </tr>
+                                <tr>
+                                    <td width='200'>Kontak</td>
+                                    <td><input type="text" class="form-control" name="kontak" id="kontak" placeholder="Kontak" value="<?php echo $kontak; ?>" required /></td>
+                                </tr>
+                                <tr>
                                     <td width='200'>Kode Dept</td>
                                     <td><?php echo select2_dinamis('kode_dept', 'ref_departemen', 'kode_dept', 'nama_dept', $kode_dept, 'aktif="y"', '') ?></td>
                                 </tr>

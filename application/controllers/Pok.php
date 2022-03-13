@@ -20,7 +20,7 @@ class Pok extends CI_Controller
     }
     public function realisasi()
     {
-		
+
         $this->template->load('template', 'pok/pok_list_realisasi');
     }
     public function json()
@@ -33,10 +33,10 @@ class Pok extends CI_Controller
         header('Content-Type: application/json');
         echo $this->Pok_model->json_realisasi();
     }
-	public function realisasi_kegiatan($id)
+    public function realisasi_kegiatan($id)
     {
         $row = $this->Pok_model->read($id);
-		//$this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         if ($row) {
             $data = array(
                 'tahun_anggaran' => $row->tahun_anggaran,
@@ -55,7 +55,7 @@ class Pok extends CI_Controller
     public function read($id)
     {
         $row = $this->Pok_model->read($id);
-		//$this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         if ($row) {
             $data = array(
                 'tahun_anggaran' => $row->tahun_anggaran,
@@ -71,10 +71,10 @@ class Pok extends CI_Controller
         }
         $this->template->load('template', 'pok/pok_read', $data);
     }
-   public function pok_data_realisasi($id)
+    public function pok_data_realisasi($id)
     {
         $row = $this->Pok_model->pok_data($id);
-	//	$this->output->enable_profiler(TRUE);
+        //	$this->output->enable_profiler(TRUE);
         $data = array(
             'kode_dept' => $row->kode_dept,
             'kode_unit_kerja' => $row->kode_unit_kerja,
@@ -87,7 +87,7 @@ class Pok extends CI_Controller
     public function pok_data($id)
     {
         $row = $this->Pok_model->pok_data($id);
-		//$this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         $data = array(
             'kode_dept' => $row->kode_dept,
             'kode_unit_kerja' => $row->kode_unit_kerja,
@@ -172,6 +172,7 @@ class Pok extends CI_Controller
                 'kode_kro' => $row->kode_kro,
                 'nama_kro' => $row->nama_kro,
                 'volume' => $this->input->post('volume'),
+                'kode_lokasi' => $this->input->post('kode_lokasi'),
                 'tahun_anggaran' => $this->session->userdata('ta'),
                 'kode_satker' => $this->session->userdata('kode_satker'),
                 'create_date' => date('Y-m-d H:i:s'),
@@ -432,8 +433,12 @@ class Pok extends CI_Controller
             'item_title' => $item_title,
             'item' => $this->input->post('item'),
             'volume' => $this->input->post('volume'),
+            'satuan' => $this->input->post('satuan'),
             'harga_satuan' => $this->input->post('harga_satuan'),
             'jumlah' => $this->input->post('total'),
+            'is_swakelola' => $this->input->post('is_swakelola'),
+            'kode_blokir' => $this->input->post('kode_blokir'),
+            'jumlah_blokir' => $this->input->post('jumlah_blokir'),
             'tahun_anggaran' => $this->session->userdata('ta'),
             'kode_satker' => $this->session->userdata('kode_satker'),
             'create_date' => date('Y-m-d H:i:s'),
@@ -453,25 +458,28 @@ class Pok extends CI_Controller
             'satuan' => $row->satuan,
             'harga_satuan' => $row->harga_satuan,
             'jumlah' => $row->jumlah,
+            'is_swakelola' => $row->is_swakelola,
+            'kode_blokir' => $row->kode_blokir,
+            'jumlah_blokir' => $row->jumlah_blokir,
         );
         $this->load->view('pok/pok_modal_item_edit', $data);
     }
-	function get_realisasi()
+    function get_realisasi()
     {
         $row = $this->Pok_model->get_item_id($this->input->post('id'));
         $real = $this->Pok_model->get_real_item_id($this->input->post('id'));
-		$getjan=json_decode($real->ket_kontrak_januari);
-		$getfeb=json_decode($real->ket_kontrak_februari);
-		$getmar=json_decode($real->ket_kontrak_maret);
-		$getapr=json_decode($real->ket_kontrak_april);
-		$getmei=json_decode($real->ket_kontrak_mei);
-		$getjun=json_decode($real->ket_kontrak_juni);
-		$getjul=json_decode($real->ket_kontrak_juli);
-		$getagu=json_decode($real->ket_kontrak_agustus);
-		$getsep=json_decode($real->ket_kontrak_september);
-		$getokt=json_decode($real->ket_kontrak_oktober);
-		$getnov=json_decode($real->ket_kontrak_november);
-		$getdes=json_decode($real->ket_kontrak_desember);
+        $getjan = json_decode($real->ket_kontrak_januari);
+        $getfeb = json_decode($real->ket_kontrak_februari);
+        $getmar = json_decode($real->ket_kontrak_maret);
+        $getapr = json_decode($real->ket_kontrak_april);
+        $getmei = json_decode($real->ket_kontrak_mei);
+        $getjun = json_decode($real->ket_kontrak_juni);
+        $getjul = json_decode($real->ket_kontrak_juli);
+        $getagu = json_decode($real->ket_kontrak_agustus);
+        $getsep = json_decode($real->ket_kontrak_september);
+        $getokt = json_decode($real->ket_kontrak_oktober);
+        $getnov = json_decode($real->ket_kontrak_november);
+        $getdes = json_decode($real->ket_kontrak_desember);
         $data = array(
             'pok' => $this->input->post('pok'),
             'item' => $row->item,
@@ -489,7 +497,7 @@ class Pok extends CI_Controller
             'oktober' => $row->oktober,
             'november' => $row->november,
             'desember' => $row->desember,
-			'ang_januari' => isset($real->ang_januari) ? $real->ang_januari : 0,
+            'ang_januari' => isset($real->ang_januari) ? $real->ang_januari : 0,
             'ang_februari' => isset($real->ang_februari) ? $real->ang_februari : 0,
             'ang_maret' => isset($real->ang_maret) ? $real->ang_maret : 0,
             'ang_april' => isset($real->ang_april) ? $real->ang_april : 0,
@@ -501,7 +509,7 @@ class Pok extends CI_Controller
             'ang_oktober' => isset($real->ang_oktober) ? $real->ang_oktober : 0,
             'ang_november' => isset($real->ang_november) ? $real->ang_november : 0,
             'ang_desember' => isset($real->ang_desember) ? $real->ang_desember : 0,
-			'fisik_januari' => isset($real->fisik_januari) ? $real->fisik_januari : 0,
+            'fisik_januari' => isset($real->fisik_januari) ? $real->fisik_januari : 0,
             'fisik_februari' => isset($real->fisik_februari) ? $real->fisik_februari : 0,
             'fisik_maret' => isset($real->fisik_maret) ? $real->fisik_maret : 0,
             'fisik_april' => isset($real->fisik_april) ? $real->fisik_april : 0,
@@ -513,7 +521,7 @@ class Pok extends CI_Controller
             'fisik_oktober' => isset($real->fisik_oktober) ? $real->fisik_oktober : 0,
             'fisik_november' => isset($real->fisik_november) ? $real->fisik_november : 0,
             'fisik_desember' => isset($real->fisik_desember) ? $real->fisik_desember : 0,
-			'nominal_kontrak_januari' => isset($real->nominal_kontrak_januari) ? $real->nominal_kontrak_januari : 0,
+            'nominal_kontrak_januari' => isset($real->nominal_kontrak_januari) ? $real->nominal_kontrak_januari : 0,
             'nominal_kontrak_februari' => isset($real->nominal_kontrak_februari) ? $real->nominal_kontrak_februari : 0,
             'nominal_kontrak_maret' => isset($real->nominal_kontrak_maret) ? $real->nominal_kontrak_maret : 0,
             'nominal_kontrak_april' => isset($real->nominal_kontrak_april) ? $real->nominal_kontrak_april : 0,
@@ -525,43 +533,43 @@ class Pok extends CI_Controller
             'nominal_kontrak_oktober' => isset($real->nominal_kontrak_oktober) ? $real->nominal_kontrak_oktober : 0,
             'nominal_kontrak_november' => isset($real->nominal_kontrak_november) ? $real->nominal_kontrak_november : 0,
             'nominal_kontrak_desember' => isset($real->nominal_kontrak_desember) ? $real->nominal_kontrak_desember : 0,
-			'nomor_januari' => isset($getjan->nomor) ? $getjan->nomor : '',
-			'nomor_februari' => isset($getfeb->nomor) ? $getfeb->nomor : '',
-			'nomor_maret' => isset($getmar->nomor) ? $getmar->nomor : '',
-			'nomor_april' => isset($getapr->nomor) ? $getapr->nomor : '',
-			'nomor_mei' => isset($getmei->nomor) ? $getmei->nomor : '',
-			'nomor_juni' => isset($getjun->nomor) ? $getjun->nomor : '',
-			'nomor_juli' => isset($getjul->nomor) ? $getjul->nomor : '',
-			'nomor_agustus' => isset($getagu->nomor) ? $getagu->nomor : '',
-			'nomor_september' => isset($getsep->nomor) ? $getsep->nomor : '',
-			'nomor_oktober' => isset($getokt->nomor) ? $getokt->nomor : '',
-			'nomor_november' => isset($getnov->nomor) ? $getnov->nomor : '',
-			'nomor_desember' => isset($getdes->nomor) ? $getdes->nomor : '',
-			'tgl_januari' => isset($getjan->tanggal) ? $getjan->tanggal : '',
-			'tgl_februari' => isset($getfeb->tanggal) ? $getfeb->tanggal : '',
-			'tgl_maret' => isset($getmar->tanggal) ? $getmar->tanggal : '',
-			'tgl_april' => isset($getapr->tanggal) ? $getapr->tanggal : '',
-			'tgl_mei' => isset($getmei->tanggal) ? $getmei->tanggal : '',
-			'tgl_juni' => isset($getjun->tanggal) ? $getjun->tanggal : '',
-			'tgl_juli' => isset($getjul->tanggal) ? $getjul->tanggal : '',
-			'tgl_agustus' => isset($getagu->tanggal) ? $getagu->tanggal : '',
-			'tgl_september' => isset($getsep->tanggal) ? $getsep->tanggal : '',
-			'tgl_oktober' => isset($getokt->tanggal) ? $getokt->tanggal : '',
-			'tgl_november' => isset($getnov->tanggal) ? $getnov->tanggal : '',
-			'tgl_desember' => isset($getdes->tanggal) ? $getdes->tanggal : '',
-			'ket_januari' => isset($getjan->ket) ? $getjan->ket : '',
-			'ket_februari' => isset($getfeb->ket) ? $getfeb->ket : '',
-			'ket_maret' => isset($getmar->ket) ? $getmar->ket : '',
-			'ket_april' => isset($getapr->ket) ? $getapr->ket : '',
-			'ket_mei' => isset($getmei->ket) ? $getmei->ket : '',
-			'ket_juni' => isset($getjun->ket) ? $getjun->ket : '',
-			'ket_juli' => isset($getjul->ket) ? $getjul->ket : '',
-			'ket_agustus' => isset($getagu->ket) ? $getagu->ket : '',
-			'ket_september' => isset($getsep->ket) ? $getsep->ket : '',
-			'ket_oktober' => isset($getokt->ket) ? $getokt->ket : '',
-			'ket_november' => isset($getnov->ket) ? $getnov->ket : '',
-			'ket_desember' => isset($getdes->ket) ? $getdes->ket : '',
-          
+            'nomor_januari' => isset($getjan->nomor) ? $getjan->nomor : '',
+            'nomor_februari' => isset($getfeb->nomor) ? $getfeb->nomor : '',
+            'nomor_maret' => isset($getmar->nomor) ? $getmar->nomor : '',
+            'nomor_april' => isset($getapr->nomor) ? $getapr->nomor : '',
+            'nomor_mei' => isset($getmei->nomor) ? $getmei->nomor : '',
+            'nomor_juni' => isset($getjun->nomor) ? $getjun->nomor : '',
+            'nomor_juli' => isset($getjul->nomor) ? $getjul->nomor : '',
+            'nomor_agustus' => isset($getagu->nomor) ? $getagu->nomor : '',
+            'nomor_september' => isset($getsep->nomor) ? $getsep->nomor : '',
+            'nomor_oktober' => isset($getokt->nomor) ? $getokt->nomor : '',
+            'nomor_november' => isset($getnov->nomor) ? $getnov->nomor : '',
+            'nomor_desember' => isset($getdes->nomor) ? $getdes->nomor : '',
+            'tgl_januari' => isset($getjan->tanggal) ? $getjan->tanggal : '',
+            'tgl_februari' => isset($getfeb->tanggal) ? $getfeb->tanggal : '',
+            'tgl_maret' => isset($getmar->tanggal) ? $getmar->tanggal : '',
+            'tgl_april' => isset($getapr->tanggal) ? $getapr->tanggal : '',
+            'tgl_mei' => isset($getmei->tanggal) ? $getmei->tanggal : '',
+            'tgl_juni' => isset($getjun->tanggal) ? $getjun->tanggal : '',
+            'tgl_juli' => isset($getjul->tanggal) ? $getjul->tanggal : '',
+            'tgl_agustus' => isset($getagu->tanggal) ? $getagu->tanggal : '',
+            'tgl_september' => isset($getsep->tanggal) ? $getsep->tanggal : '',
+            'tgl_oktober' => isset($getokt->tanggal) ? $getokt->tanggal : '',
+            'tgl_november' => isset($getnov->tanggal) ? $getnov->tanggal : '',
+            'tgl_desember' => isset($getdes->tanggal) ? $getdes->tanggal : '',
+            'ket_januari' => isset($getjan->ket) ? $getjan->ket : '',
+            'ket_februari' => isset($getfeb->ket) ? $getfeb->ket : '',
+            'ket_maret' => isset($getmar->ket) ? $getmar->ket : '',
+            'ket_april' => isset($getapr->ket) ? $getapr->ket : '',
+            'ket_mei' => isset($getmei->ket) ? $getmei->ket : '',
+            'ket_juni' => isset($getjun->ket) ? $getjun->ket : '',
+            'ket_juli' => isset($getjul->ket) ? $getjul->ket : '',
+            'ket_agustus' => isset($getagu->ket) ? $getagu->ket : '',
+            'ket_september' => isset($getsep->ket) ? $getsep->ket : '',
+            'ket_oktober' => isset($getokt->ket) ? $getokt->ket : '',
+            'ket_november' => isset($getnov->ket) ? $getnov->ket : '',
+            'ket_desember' => isset($getdes->ket) ? $getdes->ket : '',
+
         );
         $this->load->view('pok/pok_modal_item_realisasi', $data);
     }
@@ -593,10 +601,15 @@ class Pok extends CI_Controller
         $arr = array(
             'item' => $this->input->post('item'),
             'volume' => $this->input->post('volume'),
+            'satuan' => $this->input->post('satuan'),
             'harga_satuan' => $this->input->post('harga_satuan'),
             'jumlah' => $this->input->post('total'),
+            'is_swakelola' => $this->input->post('is_swakelola'),
+            'kode_blokir' => $this->input->post('kode_blokir'),
+            'jumlah_blokir' => $this->input->post('jumlah_blokir'),
             'create_date' => date('Y-m-d H:i:s'),
         );
+
         $this->db->where('id_item', $this->input->post('id_item'));
         $this->db->update('t_item', $arr);
     }
@@ -621,121 +634,118 @@ class Pok extends CI_Controller
         $this->db->where('id_item', $this->input->post('id_item'));
         $this->db->update('t_item', $arr);
     }
-	function update_realisasi()
+    function update_realisasi()
     {
-		$row = $this->Pok_model->get_real_item_id($this->input->post('id_item'));
-		if(!empty($row))
-		{
-			$arr = array(
-				'ang_januari' => $this->input->post('anggaran_jan'),
-				'ang_februari' => $this->input->post('anggaran_feb'),
-				'ang_maret' => $this->input->post('anggaran_mar'),
-				'ang_april' => $this->input->post('anggaran_apr'),
-				'ang_mei' => $this->input->post('anggaran_mei'),
-				'ang_juni' => $this->input->post('anggaran_jun'),
-				'ang_juli' => $this->input->post('anggaran_jul'),
-				'ang_agustus' => $this->input->post('anggaran_agu'),
-				'ang_september' => $this->input->post('anggaran_sep'),
-				'ang_oktober' => $this->input->post('anggaran_okt'),
-				'ang_november' => $this->input->post('anggaran_nov'),
-				'ang_desember' => $this->input->post('anggaran_des'),
-				'fisik_januari' => $this->input->post('fisik_jan'),
-				'fisik_februari' => $this->input->post('fisik_feb'),
-				'fisik_maret' => $this->input->post('fisik_mar'),
-				'fisik_april' => $this->input->post('fisik_apr'),
-				'fisik_mei' => $this->input->post('fisik_mei'),
-				'fisik_juni' => $this->input->post('fisik_jun'),
-				'fisik_juli' => $this->input->post('fisik_jul'),
-				'fisik_agustus' => $this->input->post('fisik_agu'),
-				'fisik_september' => $this->input->post('fisik_sep'),
-				'fisik_oktober' => $this->input->post('fisik_okt'),
-				'fisik_november' => $this->input->post('fisik_nov'),
-				'fisik_desember' => $this->input->post('fisik_des'),
-				'nominal_kontrak_januari' => $this->input->post('nominal_kontrak_jan'),
-				'nominal_kontrak_februari' => $this->input->post('nominal_kontrak_feb'),
-				'nominal_kontrak_maret' => $this->input->post('nominal_kontrak_mar'),
-				'nominal_kontrak_april' => $this->input->post('nominal_kontrak_apr'),
-				'nominal_kontrak_mei' => $this->input->post('nominal_kontrak_mei'),
-				'nominal_kontrak_juni' => $this->input->post('nominal_kontrak_jun'),
-				'nominal_kontrak_juli' => $this->input->post('nominal_kontrak_jul'),
-				'nominal_kontrak_agustus' => $this->input->post('nominal_kontrak_agu'),
-				'nominal_kontrak_september' => $this->input->post('nominal_kontrak_sep'),
-				'nominal_kontrak_oktober' => $this->input->post('nominal_kontrak_okt'),
-				'nominal_kontrak_november' => $this->input->post('nominal_kontrak_nov'),
-				'nominal_kontrak_desember' => $this->input->post('nominal_kontrak_des'),
-				'ket_kontrak_januari' => '{"nomor":"'.$this->input->post('nomor_jan').'","tanggal":"'.$this->input->post('tgl_jan').'","ket":"'.$this->input->post('ket_jan').'"}',
-				'ket_kontrak_februari' => '{"nomor":"'.$this->input->post('nomor_feb').'","tanggal":"'.$this->input->post('tgl_feb').'","ket":"'.$this->input->post('ket_feb').'"}',
-				'ket_kontrak_maret' => '{"nomor":"'.$this->input->post('nomor_mar').'","tanggal":"'.$this->input->post('tgl_mar').'","ket":"'.$this->input->post('ket_mar').'"}',
-				'ket_kontrak_april' => '{"nomor":"'.$this->input->post('nomor_apr').'","tanggal":"'.$this->input->post('tgl_apr').'","ket":"'.$this->input->post('ket_apr').'"}',
-				'ket_kontrak_mei' => '{"nomor":"'.$this->input->post('nomor_mei').'","tanggal":"'.$this->input->post('tgl_mei').'","ket":"'.$this->input->post('ket_mei').'"}',
-				'ket_kontrak_juni' => '{"nomor":"'.$this->input->post('nomor_jun').'","tanggal":"'.$this->input->post('tgl_jun').'","ket":"'.$this->input->post('ket_jun').'"}',
-				'ket_kontrak_juli' => '{"nomor":"'.$this->input->post('nomor_jul').'","tanggal":"'.$this->input->post('tgl_jul').'","ket":"'.$this->input->post('ket_jul').'"}',
-				'ket_kontrak_agustus' => '{"nomor":"'.$this->input->post('nomor_agu').'","tanggal":"'.$this->input->post('tgl_agu').'","ket":"'.$this->input->post('ket_agu').'"}',
-				'ket_kontrak_september' => '{"nomor":"'.$this->input->post('nomor_sep').'","tanggal":"'.$this->input->post('tgl_sep').'","ket":"'.$this->input->post('ket_sep').'"}',
-				'ket_kontrak_oktober' => '{"nomor":"'.$this->input->post('nomor_okt').'","tanggal":"'.$this->input->post('tgl_okt').'","ket":"'.$this->input->post('ket_okt').'"}',
-				'ket_kontrak_november' => '{"nomor":"'.$this->input->post('nomor_nov').'","tanggal":"'.$this->input->post('tgl_nov').'","ket":"'.$this->input->post('ket_nov').'"}',
-				'ket_kontrak_desember' => '{"nomor":"'.$this->input->post('nomor_des').'","tanggal":"'.$this->input->post('tgl_des').'","ket":"'.$this->input->post('ket_des').'"}',
-				'update_date' => date('Y-m-d H:i:s'),
-			);
-			$this->db->where('id_item', $this->input->post('id_item'));
-			$this->db->update('t_item_realisasi', $arr);
-		}else{
-			$arr = array(
-				'id_item' => $this->input->post('id_item'),
-				'ang_januari' => $this->input->post('anggaran_jan'),
-				'ang_februari' => $this->input->post('anggaran_feb'),
-				'ang_maret' => $this->input->post('anggaran_mar'),
-				'ang_april' => $this->input->post('anggaran_apr'),
-				'ang_mei' => $this->input->post('anggaran_mei'),
-				'ang_juni' => $this->input->post('anggaran_jun'),
-				'ang_juli' => $this->input->post('anggaran_jul'),
-				'ang_agustus' => $this->input->post('anggaran_agu'),
-				'ang_september' => $this->input->post('anggaran_sep'),
-				'ang_oktober' => $this->input->post('anggaran_okt'),
-				'ang_november' => $this->input->post('anggaran_nov'),
-				'ang_desember' => $this->input->post('anggaran_des'),
-				'fisik_januari' => $this->input->post('fisik_jan'),
-				'fisik_februari' => $this->input->post('fisik_feb'),
-				'fisik_maret' => $this->input->post('fisik_mar'),
-				'fisik_april' => $this->input->post('fisik_apr'),
-				'fisik_mei' => $this->input->post('fisik_mei'),
-				'fisik_juni' => $this->input->post('fisik_jun'),
-				'fisik_juli' => $this->input->post('fisik_jul'),
-				'fisik_agustus' => $this->input->post('fisik_agu'),
-				'fisik_september' => $this->input->post('fisik_sep'),
-				'fisik_oktober' => $this->input->post('fisik_okt'),
-				'fisik_november' => $this->input->post('fisik_nov'),
-				'fisik_desember' => $this->input->post('fisik_des'),
-				'nominal_kontrak_januari' => $this->input->post('nominal_kontrak_jan'),
-				'nominal_kontrak_februari' => $this->input->post('nominal_kontrak_feb'),
-				'nominal_kontrak_maret' => $this->input->post('nominal_kontrak_mar'),
-				'nominal_kontrak_april' => $this->input->post('nominal_kontrak_apr'),
-				'nominal_kontrak_mei' => $this->input->post('nominal_kontrak_mei'),
-				'nominal_kontrak_juni' => $this->input->post('nominal_kontrak_jun'),
-				'nominal_kontrak_juli' => $this->input->post('nominal_kontrak_jul'),
-				'nominal_kontrak_agustus' => $this->input->post('nominal_kontrak_agu'),
-				'nominal_kontrak_september' => $this->input->post('nominal_kontrak_sep'),
-				'nominal_kontrak_oktober' => $this->input->post('nominal_kontrak_okt'),
-				'nominal_kontrak_november' => $this->input->post('nominal_kontrak_nov'),
-				'nominal_kontrak_desember' => $this->input->post('nominal_kontrak_des'),
-				'ket_kontrak_januari' => '{"nomor":"'.$this->input->post('nomor_jan').'","tanggal":"'.$this->input->post('tgl_jan').'","ket":"'.$this->input->post('ket_jan').'"}',
-				'ket_kontrak_februari' => '{"nomor":"'.$this->input->post('nomor_feb').'","tanggal":"'.$this->input->post('tgl_feb').'","ket":"'.$this->input->post('ket_feb').'"}',
-				'ket_kontrak_maret' => '{"nomor":"'.$this->input->post('nomor_mar').'","tanggal":"'.$this->input->post('tgl_mar').'","ket":"'.$this->input->post('ket_mar').'"}',
-				'ket_kontrak_april' => '{"nomor":"'.$this->input->post('nomor_apr').'","tanggal":"'.$this->input->post('tgl_apr').'","ket":"'.$this->input->post('ket_apr').'"}',
-				'ket_kontrak_mei' => '{"nomor":"'.$this->input->post('nomor_mei').'","tanggal":"'.$this->input->post('tgl_mei').'","ket":"'.$this->input->post('ket_mei').'"}',
-				'ket_kontrak_juni' => '{"nomor":"'.$this->input->post('nomor_jun').'","tanggal":"'.$this->input->post('tgl_jun').'","ket":"'.$this->input->post('ket_jun').'"}',
-				'ket_kontrak_juli' => '{"nomor":"'.$this->input->post('nomor_jul').'","tanggal":"'.$this->input->post('tgl_jul').'","ket":"'.$this->input->post('ket_jul').'"}',
-				'ket_kontrak_agustus' => '{"nomor":"'.$this->input->post('nomor_agu').'","tanggal":"'.$this->input->post('tgl_agu').'","ket":"'.$this->input->post('ket_agu').'"}',
-				'ket_kontrak_september' => '{"nomor":"'.$this->input->post('nomor_sep').'","tanggal":"'.$this->input->post('tgl_sep').'","ket":"'.$this->input->post('ket_sep').'"}',
-				'ket_kontrak_oktober' => '{"nomor":"'.$this->input->post('nomor_okt').'","tanggal":"'.$this->input->post('tgl_okt').'","ket":"'.$this->input->post('ket_okt').'"}',
-				'ket_kontrak_november' => '{"nomor":"'.$this->input->post('nomor_nov').'","tanggal":"'.$this->input->post('tgl_nov').'","ket":"'.$this->input->post('ket_nov').'"}',
-				'ket_kontrak_desember' => '{"nomor":"'.$this->input->post('nomor_des').'","tanggal":"'.$this->input->post('tgl_des').'","ket":"'.$this->input->post('ket_des').'"}',
-				'update_date' => date('Y-m-d H:i:s'),
-			);
-			$this->db->insert('t_item_realisasi', $arr);
-			
-			
-		}
+        $row = $this->Pok_model->get_real_item_id($this->input->post('id_item'));
+        if (!empty($row)) {
+            $arr = array(
+                'ang_januari' => $this->input->post('anggaran_jan'),
+                'ang_februari' => $this->input->post('anggaran_feb'),
+                'ang_maret' => $this->input->post('anggaran_mar'),
+                'ang_april' => $this->input->post('anggaran_apr'),
+                'ang_mei' => $this->input->post('anggaran_mei'),
+                'ang_juni' => $this->input->post('anggaran_jun'),
+                'ang_juli' => $this->input->post('anggaran_jul'),
+                'ang_agustus' => $this->input->post('anggaran_agu'),
+                'ang_september' => $this->input->post('anggaran_sep'),
+                'ang_oktober' => $this->input->post('anggaran_okt'),
+                'ang_november' => $this->input->post('anggaran_nov'),
+                'ang_desember' => $this->input->post('anggaran_des'),
+                'fisik_januari' => $this->input->post('fisik_jan'),
+                'fisik_februari' => $this->input->post('fisik_feb'),
+                'fisik_maret' => $this->input->post('fisik_mar'),
+                'fisik_april' => $this->input->post('fisik_apr'),
+                'fisik_mei' => $this->input->post('fisik_mei'),
+                'fisik_juni' => $this->input->post('fisik_jun'),
+                'fisik_juli' => $this->input->post('fisik_jul'),
+                'fisik_agustus' => $this->input->post('fisik_agu'),
+                'fisik_september' => $this->input->post('fisik_sep'),
+                'fisik_oktober' => $this->input->post('fisik_okt'),
+                'fisik_november' => $this->input->post('fisik_nov'),
+                'fisik_desember' => $this->input->post('fisik_des'),
+                'nominal_kontrak_januari' => $this->input->post('nominal_kontrak_jan'),
+                'nominal_kontrak_februari' => $this->input->post('nominal_kontrak_feb'),
+                'nominal_kontrak_maret' => $this->input->post('nominal_kontrak_mar'),
+                'nominal_kontrak_april' => $this->input->post('nominal_kontrak_apr'),
+                'nominal_kontrak_mei' => $this->input->post('nominal_kontrak_mei'),
+                'nominal_kontrak_juni' => $this->input->post('nominal_kontrak_jun'),
+                'nominal_kontrak_juli' => $this->input->post('nominal_kontrak_jul'),
+                'nominal_kontrak_agustus' => $this->input->post('nominal_kontrak_agu'),
+                'nominal_kontrak_september' => $this->input->post('nominal_kontrak_sep'),
+                'nominal_kontrak_oktober' => $this->input->post('nominal_kontrak_okt'),
+                'nominal_kontrak_november' => $this->input->post('nominal_kontrak_nov'),
+                'nominal_kontrak_desember' => $this->input->post('nominal_kontrak_des'),
+                'ket_kontrak_januari' => '{"nomor":"' . $this->input->post('nomor_jan') . '","tanggal":"' . $this->input->post('tgl_jan') . '","ket":"' . $this->input->post('ket_jan') . '"}',
+                'ket_kontrak_februari' => '{"nomor":"' . $this->input->post('nomor_feb') . '","tanggal":"' . $this->input->post('tgl_feb') . '","ket":"' . $this->input->post('ket_feb') . '"}',
+                'ket_kontrak_maret' => '{"nomor":"' . $this->input->post('nomor_mar') . '","tanggal":"' . $this->input->post('tgl_mar') . '","ket":"' . $this->input->post('ket_mar') . '"}',
+                'ket_kontrak_april' => '{"nomor":"' . $this->input->post('nomor_apr') . '","tanggal":"' . $this->input->post('tgl_apr') . '","ket":"' . $this->input->post('ket_apr') . '"}',
+                'ket_kontrak_mei' => '{"nomor":"' . $this->input->post('nomor_mei') . '","tanggal":"' . $this->input->post('tgl_mei') . '","ket":"' . $this->input->post('ket_mei') . '"}',
+                'ket_kontrak_juni' => '{"nomor":"' . $this->input->post('nomor_jun') . '","tanggal":"' . $this->input->post('tgl_jun') . '","ket":"' . $this->input->post('ket_jun') . '"}',
+                'ket_kontrak_juli' => '{"nomor":"' . $this->input->post('nomor_jul') . '","tanggal":"' . $this->input->post('tgl_jul') . '","ket":"' . $this->input->post('ket_jul') . '"}',
+                'ket_kontrak_agustus' => '{"nomor":"' . $this->input->post('nomor_agu') . '","tanggal":"' . $this->input->post('tgl_agu') . '","ket":"' . $this->input->post('ket_agu') . '"}',
+                'ket_kontrak_september' => '{"nomor":"' . $this->input->post('nomor_sep') . '","tanggal":"' . $this->input->post('tgl_sep') . '","ket":"' . $this->input->post('ket_sep') . '"}',
+                'ket_kontrak_oktober' => '{"nomor":"' . $this->input->post('nomor_okt') . '","tanggal":"' . $this->input->post('tgl_okt') . '","ket":"' . $this->input->post('ket_okt') . '"}',
+                'ket_kontrak_november' => '{"nomor":"' . $this->input->post('nomor_nov') . '","tanggal":"' . $this->input->post('tgl_nov') . '","ket":"' . $this->input->post('ket_nov') . '"}',
+                'ket_kontrak_desember' => '{"nomor":"' . $this->input->post('nomor_des') . '","tanggal":"' . $this->input->post('tgl_des') . '","ket":"' . $this->input->post('ket_des') . '"}',
+                'update_date' => date('Y-m-d H:i:s'),
+            );
+            $this->db->where('id_item', $this->input->post('id_item'));
+            $this->db->update('t_item_realisasi', $arr);
+        } else {
+            $arr = array(
+                'id_item' => $this->input->post('id_item'),
+                'ang_januari' => $this->input->post('anggaran_jan'),
+                'ang_februari' => $this->input->post('anggaran_feb'),
+                'ang_maret' => $this->input->post('anggaran_mar'),
+                'ang_april' => $this->input->post('anggaran_apr'),
+                'ang_mei' => $this->input->post('anggaran_mei'),
+                'ang_juni' => $this->input->post('anggaran_jun'),
+                'ang_juli' => $this->input->post('anggaran_jul'),
+                'ang_agustus' => $this->input->post('anggaran_agu'),
+                'ang_september' => $this->input->post('anggaran_sep'),
+                'ang_oktober' => $this->input->post('anggaran_okt'),
+                'ang_november' => $this->input->post('anggaran_nov'),
+                'ang_desember' => $this->input->post('anggaran_des'),
+                'fisik_januari' => $this->input->post('fisik_jan'),
+                'fisik_februari' => $this->input->post('fisik_feb'),
+                'fisik_maret' => $this->input->post('fisik_mar'),
+                'fisik_april' => $this->input->post('fisik_apr'),
+                'fisik_mei' => $this->input->post('fisik_mei'),
+                'fisik_juni' => $this->input->post('fisik_jun'),
+                'fisik_juli' => $this->input->post('fisik_jul'),
+                'fisik_agustus' => $this->input->post('fisik_agu'),
+                'fisik_september' => $this->input->post('fisik_sep'),
+                'fisik_oktober' => $this->input->post('fisik_okt'),
+                'fisik_november' => $this->input->post('fisik_nov'),
+                'fisik_desember' => $this->input->post('fisik_des'),
+                'nominal_kontrak_januari' => $this->input->post('nominal_kontrak_jan'),
+                'nominal_kontrak_februari' => $this->input->post('nominal_kontrak_feb'),
+                'nominal_kontrak_maret' => $this->input->post('nominal_kontrak_mar'),
+                'nominal_kontrak_april' => $this->input->post('nominal_kontrak_apr'),
+                'nominal_kontrak_mei' => $this->input->post('nominal_kontrak_mei'),
+                'nominal_kontrak_juni' => $this->input->post('nominal_kontrak_jun'),
+                'nominal_kontrak_juli' => $this->input->post('nominal_kontrak_jul'),
+                'nominal_kontrak_agustus' => $this->input->post('nominal_kontrak_agu'),
+                'nominal_kontrak_september' => $this->input->post('nominal_kontrak_sep'),
+                'nominal_kontrak_oktober' => $this->input->post('nominal_kontrak_okt'),
+                'nominal_kontrak_november' => $this->input->post('nominal_kontrak_nov'),
+                'nominal_kontrak_desember' => $this->input->post('nominal_kontrak_des'),
+                'ket_kontrak_januari' => '{"nomor":"' . $this->input->post('nomor_jan') . '","tanggal":"' . $this->input->post('tgl_jan') . '","ket":"' . $this->input->post('ket_jan') . '"}',
+                'ket_kontrak_februari' => '{"nomor":"' . $this->input->post('nomor_feb') . '","tanggal":"' . $this->input->post('tgl_feb') . '","ket":"' . $this->input->post('ket_feb') . '"}',
+                'ket_kontrak_maret' => '{"nomor":"' . $this->input->post('nomor_mar') . '","tanggal":"' . $this->input->post('tgl_mar') . '","ket":"' . $this->input->post('ket_mar') . '"}',
+                'ket_kontrak_april' => '{"nomor":"' . $this->input->post('nomor_apr') . '","tanggal":"' . $this->input->post('tgl_apr') . '","ket":"' . $this->input->post('ket_apr') . '"}',
+                'ket_kontrak_mei' => '{"nomor":"' . $this->input->post('nomor_mei') . '","tanggal":"' . $this->input->post('tgl_mei') . '","ket":"' . $this->input->post('ket_mei') . '"}',
+                'ket_kontrak_juni' => '{"nomor":"' . $this->input->post('nomor_jun') . '","tanggal":"' . $this->input->post('tgl_jun') . '","ket":"' . $this->input->post('ket_jun') . '"}',
+                'ket_kontrak_juli' => '{"nomor":"' . $this->input->post('nomor_jul') . '","tanggal":"' . $this->input->post('tgl_jul') . '","ket":"' . $this->input->post('ket_jul') . '"}',
+                'ket_kontrak_agustus' => '{"nomor":"' . $this->input->post('nomor_agu') . '","tanggal":"' . $this->input->post('tgl_agu') . '","ket":"' . $this->input->post('ket_agu') . '"}',
+                'ket_kontrak_september' => '{"nomor":"' . $this->input->post('nomor_sep') . '","tanggal":"' . $this->input->post('tgl_sep') . '","ket":"' . $this->input->post('ket_sep') . '"}',
+                'ket_kontrak_oktober' => '{"nomor":"' . $this->input->post('nomor_okt') . '","tanggal":"' . $this->input->post('tgl_okt') . '","ket":"' . $this->input->post('ket_okt') . '"}',
+                'ket_kontrak_november' => '{"nomor":"' . $this->input->post('nomor_nov') . '","tanggal":"' . $this->input->post('tgl_nov') . '","ket":"' . $this->input->post('ket_nov') . '"}',
+                'ket_kontrak_desember' => '{"nomor":"' . $this->input->post('nomor_des') . '","tanggal":"' . $this->input->post('tgl_des') . '","ket":"' . $this->input->post('ket_des') . '"}',
+                'update_date' => date('Y-m-d H:i:s'),
+            );
+            $this->db->insert('t_item_realisasi', $arr);
+        }
     }
 
     function hapus_item()
