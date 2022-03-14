@@ -16,9 +16,21 @@
             </select>
         </div>
         <div class="form-group">
+            <label class="form-label">Lokasi Kegiatan</label>
+            <select name="kode_lokasi" class="select2 form-control" id="kode_lokasi" required>
+                <?php
+                $this->db->where('aktif', 'y');
+                $dt_lokasi = $this->db->get('ref_lokasi')->result();
+                foreach ($dt_lokasi as $lokasi) {
+                    echo '<option value="' . $lokasi->kode_lokasi . '">' . $lokasi->nama_lokasi . '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <!-- <div class="form-group">
             <label class="form-label">Volume</label>
             <input type="text" name="volume" class="form-control">
-        </div>
+        </div> -->
     </div>
     <button id="tambah_kro" type="button" class="btn btn-block btn-warning" data-dismiss="modal">Simpan</button>
     <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Batal</button>

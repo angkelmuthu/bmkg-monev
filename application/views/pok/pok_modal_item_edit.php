@@ -21,6 +21,12 @@
         </div>
         <div class="col-xl-6 mb-2">
             <div class="form-group">
+                <label class="form-label">Satuan</label>
+                <input type="text" name="satuan" id="satuan" class="form-control" value="<?php echo $satuan ?>" required>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
                 <label class="form-label">Harga Satuan</label>
                 <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" value="<?php echo $harga_satuan ?>" required>
             </div>
@@ -29,6 +35,25 @@
             <div class="form-group">
                 <label class="form-label">Total</label>
                 <input type="text" name="total" id="total" class="form-control" value="<?php echo $jumlah ?>" required readonly>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
+                <label class="form-label">Swakelola</label>
+                <?php echo form_dropdown('is_swakelola', array('n' => 'Bukan Swakelola', 'y' => 'Swakelola'), $is_swakelola, array('class' => 'form-control')); ?>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2"></div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
+                <label class="form-label">Kode Blokir</label>
+                <input type="text" name="kode_blokir" id="kode_blokir" class="form-control" value="<?php echo $kode_blokir ?>" required>
+            </div>
+        </div>
+        <div class="col-xl-6 mb-2">
+            <div class="form-group">
+                <label class="form-label">Jumlah Blokir</label>
+                <input type="text" name="jumlah_blokir" id="jumlah_blokir" class="form-control" value="<?php echo $jumlah_blokir ?>" required>
             </div>
         </div>
         <div class="col-xl-12 mb-2">
