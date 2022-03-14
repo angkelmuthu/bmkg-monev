@@ -50,10 +50,15 @@
                                 <div class="form-group">
                                     <!-- <label for="ta">Tahun Anggaran</label> -->
                                     <select class="form-control" name="ta" id="ta" required>
-                                        <option value="">Tahun Anggaran</option>
                                         <?php
-                                        for ($i = date('Y'); $i >= date('Y') - 10; $i -= 1) {
-                                            echo "<option value='$i'> $i </option>";
+                                        $tg_awal = date('Y') - 10;
+                                        $tgl_akhir = date('Y') + 2;
+                                        for ($i = $tgl_akhir; $i >= $tg_awal; $i--) {
+                                            echo "<option value='$i'";
+                                            if (date('Y') == $i) {
+                                                echo "selected";
+                                            }
+                                            echo ">$i</option>";
                                         }
                                         ?>
                                     </select>
