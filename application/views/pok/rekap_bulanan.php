@@ -13,11 +13,6 @@
                 <div class="panel-container show">
                     <div class="panel-content">
                         <table class="table table-clean">
-                           
-                            <tr>
-                                <td>Satker</td>
-                                <td><?php echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', $kode_unit_kerja, 'aktif="y"', 'id_satker ASC') ?></td>
-                            </tr>
 							 <tr>
                                 <td>Tahun Anggaran</td>
                                 <td><select class="form-control" name="ta" id="ta" required>
@@ -54,6 +49,7 @@
 							</tr>
 
                         </table>
+
                         <div id="tampil"></div>
 
                     </div>
@@ -70,12 +66,11 @@
 <script>
   function cari()
   {
-	  satker= $("#kode_satker").val();
 	  tahun= $("#ta").val();
 	  bulan= $("#bulan").val();
         $.ajax({
             type: 'POST',
-            url: "<?php echo base_url(); ?>pok/get_laporan_bulanan/"+satker+"/"+tahun+"/"+bulan,
+            url: "<?php echo base_url(); ?>pok/get_rekap_bulanan/"+tahun+"/"+bulan,
             cache: false,
             success: function(data) {
                 $("#tampil").html(data);

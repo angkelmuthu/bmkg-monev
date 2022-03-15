@@ -4,50 +4,7 @@
         z-index: 9999 !important;
     }
 </style>
-<div class="modal fade" id="default-example-modal" role="dialog" aria-hidden="true" style="overflow:hidden;">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <!-- <form action="" method="post"> -->
-            <div class="modal-header">
-                <h4 class="modal-title">
-                    Kegiatan
-                    <small class="m-0 text-muted">
-                        Pilih kegiatan dibawah untuk menambah
-                    </small>
-                </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                </button>
-            </div>
-            <form method="post" id="form_kegiatan">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input type="hidden" name="new" value="N">
-                        <label class="form-label" for="single-default">
-                            Kegiatan
-                        </label>
-                        <select name="kode_kegiatan" id="kode_kegiatan" class="select2 form-control w-100" required="">
-                            <?php
-                            $this->db->where('kode_dept', $kode_dept);
-                            $this->db->where('kode_unit_kerja', $kode_unit_kerja);
-                            $this->db->order_by('kode_kegiatan', 'ASC');
-                            $row_keg = $this->db->get('ref_kegiatan')->result();
-                            foreach ($row_keg as $keg) { ?>
-                                <option value="<?php echo $keg->kode_kegiatan ?>"><?php echo $keg->kode_kegiatan . '-' . $keg->nama_kegiatan ?></option>
-                            <?php } ?>
-                        </select>
-                        <?php //echo select2_custom_2('kode_kegiatan', 'ref_kegiatan', 'kode_kegiatan', 'kode_kegiatan', 'nama_kegiatan', 'kode_dept="' . $this->session->userdata("kode_dept") . '" and kode_unit_kerja="' . $this->session->userdata("kode_unit_kerja") . '"', 'aktif="y"', 'nama_kegiatan ASC')
-                        ?>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button id="tambah_kegiatan" type="button" class="btn btn-warning" data-dismiss="modal">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 <div>
     <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">
@@ -106,7 +63,7 @@
             $this->db->from('t_program a');
 			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
             $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-            $this->db->where('a.kode_unit_kerja', $kode_satker);
+            $this->db->where('a.kode_satker', $kode_satker);
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
             $this->db->group_by('a.kode_program');
             //$this->db->order_by('create_date', 'ASC');
@@ -386,8 +343,7 @@
                                                     <td class="text-right"></td>
                                                     <td class="text-right"></td>
                                                     <td class="text-right"></td>
-                                                    <td class="text-right"></td>
-                                            
+                                                    <td class="text-right"></td>                                           
                                                 </tr>
                                             <?php } ?>
                                             <?php
