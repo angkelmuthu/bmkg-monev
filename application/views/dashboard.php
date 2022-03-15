@@ -1,30 +1,76 @@
 <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/statistics/chartjs/chartjs.css">
+<?php
+if (!empty($_GET['ta'])) {
+    $ta = $_GET['ta'];
+} else {
+    $ta = date('Y');
+}
+if (!empty($_GET['satker'])) {
+    $satker = $_GET['satker'];
+    $this->db->where('kode_satker', $satker);
+    $dt = $this->db->get('ref_satker')->row();
+    $title = $dt->nama_satker;
+} else {
+    $satker = '';
+    $title = 'All Satker';
+}
+?>
 <main id="js-page-content" role="main" class="page-content">
-    <div class="subheader">
-        <h1 class="subheader-title">
-            <i class='subheader-icon fal fa-chart-area'></i> Dashboard
-            <small>
-            </small>
-        </h1>
-        <!-- <div class="d-flex mr-4">
-            <div class="mr-2">
-                <span class="peity-donut" data-peity="{ &quot;fill&quot;: [&quot;#967bbd&quot;, &quot;#ccbfdf&quot;],  &quot;innerRadius&quot;: 14, &quot;radius&quot;: 20 }">7/10</span>
+    <form method="GET" action="">
+        <div class="subheader">
+            <h1 class="subheader-title">
+                <i class='subheader-icon fal fa-chart-area'></i> Dashboard
+                <small>
+                    Satker : <?php echo '<span class="badge border border-primary text-primary">' . $title . '</span>'; ?> |
+                    Tahun : <?php echo '<span class="badge border border-primary text-primary">' . $ta . '</span>'; ?>
+                </small>
+            </h1>
+
+            <div class="d-flex mr-4">
+                <div>
+                    <label class="fs-sm mb-0 mt-2 mt-md-0">Tahun Anggaran</label>
+                    <div class="form-group">
+                        <select class="form-control" name="ta" id="ta">
+                            <?php
+                            if (!empty($_GET['ta'])) {
+                                $ta = $_GET['ta'];
+                            } else {
+                                $ta = date('Y');
+                            }
+                            $tg_awal = date('Y') - 10;
+                            $tgl_akhir = date('Y') + 2;
+                            for ($i = $tgl_akhir; $i >= $tg_awal; $i--) {
+                                echo "<option value='$i'";
+                                if ($ta == $i) {
+                                    echo "selected";
+                                }
+                                echo ">$i</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label class="fs-sm mb-0 mt-2 mt-md-0">New Sessions</label>
-                <h4 class="font-weight-bold mb-0">70.60%</h4>
+            <div class="d-flex mr-0">
+                <div>
+                    <label class="fs-sm mb-0 mt-2 mt-md-0">Satuan Kerja</label>
+                    <select name="satker" id="satker" class="select2 form-control w-100">
+                        <option value="">All</option>
+                        <?php
+                        $this->db->where('aktif', 'y');
+                        $this->db->order_by('nama_satker', 'ASC');
+                        $result = $this->db->get('ref_satker')->result();
+                        foreach ($result as $row) { ?>
+                            <option value="<?php echo $row->kode_satker ?>" <?php if ($satker == $row->kode_satker) {
+                                                                                print 'selected';
+                                                                            } ?>><?php echo $row->nama_satker  ?></option>';
+                        <?php } ?>
+                    </select>
+                </div>
             </div>
+
         </div>
-        <div class="d-flex mr-0">
-            <div class="mr-2">
-                <span class="peity-donut" data-peity="{ &quot;fill&quot;: [&quot;#2196F3&quot;, &quot;#9acffa&quot;],  &quot;innerRadius&quot;: 14, &quot;radius&quot;: 20 }">3/10</span>
-            </div>
-            <div>
-                <label class="fs-sm mb-0 mt-2 mt-md-0">Page Views</label>
-                <h4 class="font-weight-bold mb-0">14,134</h4>
-            </div>
-        </div> -->
-    </div>
+    </form>
     <div class="row">
         <div class="col-sm-6 col-xl-4">
             <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
@@ -70,7 +116,7 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Pagu Anggaran <span class="fw-300"><i>Berdasarkan Kegiatan</i></span>
+                        Pagu Anggaran Berdasarkan Kegiatan
                     </h2>
                 </div>
                 <canvas id="kegiatan"></canvas>
@@ -80,10 +126,10 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Pagu Anggaran <span class="fw-300"><i>Berdasarkan Lokasi</i></span>
+                        Pagu Anggaran Berdasarkan Jenis Belanja
                     </h2>
                 </div>
-                <canvas id="lokasi"></canvas>
+                <canvas id="akun"></canvas>
             </div>
         </div>
         <div class="col-md-12">
@@ -103,32 +149,39 @@
                         <ul class="nav nav-tabs nav-fill" role="tablist">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Lokasi</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Detail Rincian</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Jenis Belanja</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
                         </ul>
                         <div class="tab-content p-3">
                             <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
-                                <div id="barStacked_kegiatan">
-                                    <canvas style="width:100%;"></canvas>
+                                <div id="barChart_kegiatan">
+                                    <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
-                                <div id="barStacked_kro">
-                                    <canvas style="width:100%;"></canvas>
+                                <div id="barChart_kro">
+                                    <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
-                                <div id="barStacked_lokasi">
-                                    <canvas style="width:100%;"></canvas>
+                                <div id="barChart_akun">
+                                    <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
-                                <table class="table table-striped" id=myTable>
-                                    <thead>
+                                <div id="barChart_lokasi">
+                                    <canvas style="width:100%; height:300px;"></canvas>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
+                                <table class="table table-striped table-bordered" id=myTable>
+                                    <thead class="thead-themed">
                                         <tr>
                                             <th>Satker</th>
                                             <th>Kegiatan</th>
                                             <th>Kro</th>
+                                            <th>Akun</th>
                                             <th>Pagu</th>
                                             <th>Realisasi</th>
                                         </tr>
@@ -139,6 +192,7 @@
                                                 <td><?php echo $row->nama_satker ?></td>
                                                 <td><?php echo $row->nama_kegiatan ?></td>
                                                 <td><?php echo $row->nama_kro ?></td>
+                                                <td><?php echo $row->nama_akun ?></td>
                                                 <td class="text-right"><?php echo angka($row->pagu) ?></td>
                                                 <td class="text-right"><?php echo angka($row->realisasi) ?></td>
                                             </tr>
@@ -155,11 +209,16 @@
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/chartjs/chartjs.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
+        $('select').change(function() {
+            this.form.submit();
+        });
     });
     var kegiatan_json = {
         "kegiatan_array": <?php echo json_encode($kegiatan) ?>
@@ -216,26 +275,26 @@
         }
     });
 
-    ///lokasi
+    ///Akun
     var jsonfile = {
-        "jsonarray": <?php echo json_encode($lokasi) ?>
+        "jsonarray": <?php echo json_encode($akun) ?>
     };
 
     var labels = jsonfile.jsonarray.map(function(e) {
-        return e.nama_lokasi;
+        return e.nama_akun;
     });
     var data = jsonfile.jsonarray.map(function(e) {
         return e.pagu;
     });
 
-    var ctx = document.getElementById('lokasi').getContext('2d');
+    var ctx = document.getElementById('akun').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'pie',
         /* w  ww  .de mo  2s .  c  om*/
         data: {
             labels: labels,
             datasets: [{
-                label: 'Kegiatan',
+                label: 'Jenis Belanja',
                 data: data,
                 backgroundColor: [
                     getRandomColor(),
@@ -272,12 +331,11 @@
         }
     });
 
-    /* bar stacked */
-    var barStacked_kegiatan = function() {
+    /* bar char kegiatan*/
+    var barChart_kegiatan = function() {
         var pr_kegiatan = {
             "pr_kegiatan_array": <?php echo json_encode($pagu_realisasi_kegiatan) ?>
         };
-
         var labels = pr_kegiatan.pr_kegiatan_array.map(function(e) {
             return e.nama_kegiatan;
         });
@@ -287,38 +345,44 @@
         var realisasi = pr_kegiatan.pr_kegiatan_array.map(function(e) {
             return e.realisasi;
         });
-        var barStackedData = {
+        var barChartData = {
             labels: labels,
             datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
                     label: "Realisasi",
                     backgroundColor: myapp_get_color.primary_300,
                     borderColor: myapp_get_color.primary_500,
                     borderWidth: 1,
                     data: realisasi
-                },
-                {
-                    label: "Pagu Anggaran",
-                    backgroundColor: myapp_get_color.success_300,
-                    borderColor: myapp_get_color.success_500,
-                    borderWidth: 1,
-                    data: pagu
                 }
             ]
 
         };
         var config = {
             type: 'bar',
-            data: barStackedData,
+            data: barChartData,
             options: {
+                responsive: true,
                 legend: {
+                    position: 'top',
+                },
+                title: {
                     display: false,
-                    labels: {
-                        display: false
-                    }
+                    text: 'Bar Chart'
                 },
                 scales: {
-                    yAxes: [{
-                        stacked: true,
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
                         gridLines: {
                             display: true,
                             color: "#f2f2f2"
@@ -328,8 +392,12 @@
                             fontSize: 11
                         }
                     }],
-                    xAxes: [{
-                        stacked: true,
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
                         gridLines: {
                             display: true,
                             color: "#f2f2f2"
@@ -342,15 +410,14 @@
                 }
             }
         }
-        new Chart($("#barStacked_kegiatan > canvas").get(0).getContext("2d"), config);
+        new Chart($("#barChart_kegiatan > canvas").get(0).getContext("2d"), config);
     }
-    /* bar stacked -- end */
-    /* bar stacked */
-    var barStacked_kro = function() {
+    /* bar char kegiatan-- end */
+    /* bar char kro */
+    var barChart_kro = function() {
         var pr_kro = {
             "pr_kro_array": <?php echo json_encode($pagu_realisasi_kro) ?>
         };
-
         var labels = pr_kro.pr_kro_array.map(function(e) {
             return e.nama_kro;
         });
@@ -360,38 +427,44 @@
         var realisasi = pr_kro.pr_kro_array.map(function(e) {
             return e.realisasi;
         });
-        var barStackedData = {
+        var barChartData = {
             labels: labels,
             datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
                     label: "Realisasi",
                     backgroundColor: myapp_get_color.primary_300,
                     borderColor: myapp_get_color.primary_500,
                     borderWidth: 1,
                     data: realisasi
-                },
-                {
-                    label: "Pagu Anggaran",
-                    backgroundColor: myapp_get_color.success_300,
-                    borderColor: myapp_get_color.success_500,
-                    borderWidth: 1,
-                    data: pagu
                 }
             ]
 
         };
         var config = {
             type: 'bar',
-            data: barStackedData,
+            data: barChartData,
             options: {
+                responsive: true,
                 legend: {
+                    position: 'top',
+                },
+                title: {
                     display: false,
-                    labels: {
-                        display: false
-                    }
+                    text: 'Bar Chart'
                 },
                 scales: {
-                    yAxes: [{
-                        stacked: true,
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
                         gridLines: {
                             display: true,
                             color: "#f2f2f2"
@@ -401,8 +474,12 @@
                             fontSize: 11
                         }
                     }],
-                    xAxes: [{
-                        stacked: true,
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
                         gridLines: {
                             display: true,
                             color: "#f2f2f2"
@@ -415,15 +492,99 @@
                 }
             }
         }
-        new Chart($("#barStacked_kro > canvas").get(0).getContext("2d"), config);
+        new Chart($("#barChart_kro > canvas").get(0).getContext("2d"), config);
     }
-    /* bar stacked -- end */
-    /* bar stacked */
-    var barStacked_lokasi = function() {
+
+    /* bar char kro -- end */
+    /* bar chart akun */
+    var barChart_akun = function() {
+        var pr_akun = {
+            "pr_akun_array": <?php echo json_encode($pagu_realisasi_akun) ?>
+        };
+        var labels = pr_akun.pr_akun_array.map(function(e) {
+            return e.nama_akun;
+        });
+        var pagu = pr_akun.pr_akun_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_akun.pr_akun_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
+
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                }
+            }
+        }
+        new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
+    }
+
+    /* bar chart akun -- end */
+    /* bar chart lokasi */
+
+    var barChart_lokasi = function() {
         var pr_lokasi = {
             "pr_lokasi_array": <?php echo json_encode($pagu_realisasi_lokasi) ?>
         };
-
         var labels = pr_lokasi.pr_lokasi_array.map(function(e) {
             return e.nama_lokasi;
         });
@@ -433,38 +594,44 @@
         var realisasi = pr_lokasi.pr_lokasi_array.map(function(e) {
             return e.realisasi;
         });
-        var barStackedData = {
+        var barChartData = {
             labels: labels,
             datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
                     label: "Realisasi",
                     backgroundColor: myapp_get_color.primary_300,
                     borderColor: myapp_get_color.primary_500,
                     borderWidth: 1,
                     data: realisasi
-                },
-                {
-                    label: "Pagu Anggaran",
-                    backgroundColor: myapp_get_color.success_300,
-                    borderColor: myapp_get_color.success_500,
-                    borderWidth: 1,
-                    data: pagu
                 }
             ]
 
         };
         var config = {
             type: 'bar',
-            data: barStackedData,
+            data: barChartData,
             options: {
+                responsive: true,
                 legend: {
+                    position: 'top',
+                },
+                title: {
                     display: false,
-                    labels: {
-                        display: false
-                    }
+                    text: 'Bar Chart'
                 },
                 scales: {
-                    yAxes: [{
-                        stacked: true,
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
                         gridLines: {
                             display: true,
                             color: "#f2f2f2"
@@ -474,8 +641,12 @@
                             fontSize: 11
                         }
                     }],
-                    xAxes: [{
-                        stacked: true,
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
                         gridLines: {
                             display: true,
                             color: "#f2f2f2"
@@ -488,9 +659,10 @@
                 }
             }
         }
-        new Chart($("#barStacked_lokasi > canvas").get(0).getContext("2d"), config);
+        new Chart($("#barChart_lokasi > canvas").get(0).getContext("2d"), config);
     }
-    /* bar stacked -- end */
+
+    /* bar chart lokasi -- end */
     function getRandomColor() {
         var letters = '789ABCD'.split('');
         var color = '#';
@@ -501,8 +673,9 @@
     }
     /* initialize all charts */
     $(document).ready(function() {
-        barStacked_kegiatan();
-        barStacked_kro();
-        barStacked_lokasi();
+        barChart_kegiatan();
+        barChart_kro();
+        barChart_akun();
+        barChart_lokasi();
     });
 </script>
