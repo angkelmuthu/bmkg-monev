@@ -52,16 +52,23 @@ class Pok extends CI_Controller
         }
         $this->template->load('template', 'pok/pok_realisasi_kegiatan', $data);
     }
-	public function laporan_bulanan()
+    public function laporan_bulanan()
     {
-		 $data = array(
-                'kode_unit_kerja' => $this->session->userdata('kode_satker'),
-            );
+        $data = array(
+            'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+        );
         $this->template->load('template', 'pok/laporan_bulanan', $data);
     }
-	public function get_laporan_bulanan($satker,$tahun,$bulan)
+    public function rekap_bulanan()
     {
-		//$this->output->enable_profiler(TRUE);
+        $data = array(
+            'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+        );
+        $this->template->load('template', 'pok/rekap_bulanan', $data);
+    }
+    public function get_laporan_bulanan($satker, $tahun, $bulan)
+    {
+        //$this->output->enable_profiler(TRUE);
         $data = array(
             'bulan' => $bulan,
             'tahun_anggaran' => $tahun,
@@ -69,6 +76,25 @@ class Pok extends CI_Controller
         );
         $this->load->view('pok/get_laporan_bulanan', $data);
     }
+    public function get_rekap_bulanan($tahun, $bulan)
+    {
+        //$this->output->enable_profiler(TRUE);
+        $data = array(
+            'bulan' => $bulan,
+            'tahun_anggaran' => $tahun,
+        );
+        $this->load->view('pok/get_rekap_bulanan', $data);
+    }
+    // public function get_laporan_bulanan($satker, $tahun, $bulan)
+    // {
+    //     //$this->output->enable_profiler(TRUE);
+    //     $data = array(
+    //         'bulan' => $bulan,
+    //         'tahun_anggaran' => $tahun,
+    //         'kode_satker' => $satker,
+    //     );
+    //     $this->load->view('pok/get_laporan_bulanan', $data);
+    // }
     public function read($id)
     {
         $row = $this->Pok_model->read($id);
@@ -101,7 +127,7 @@ class Pok extends CI_Controller
         );
         $this->load->view('pok/pok_data_realisasi', $data);
     }
-	
+
     public function pok_data($id)
     {
         $row = $this->Pok_model->pok_data($id);
