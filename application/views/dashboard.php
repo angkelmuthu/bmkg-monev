@@ -53,9 +53,9 @@ if (!empty($_GET['satker'])) {
             </div>
             <div class="d-flex mr-0">
                 <div>
-                    <label class="fs-sm mb-0 mt-2 mt-md-0">Satuan Kerja</label>
+                    <label class="fs-sm mb-0 mt-2 mt-md-0">Satker</label>
                     <select name="satker" id="satker" class="select2 form-control w-100">
-                        <option value="">All</option>
+                        <option value="">Tampilkan Semua Satker</option>
                         <?php
                         $this->db->where('aktif', 'y');
                         $this->db->order_by('nama_satker', 'ASC');
@@ -126,7 +126,7 @@ if (!empty($_GET['satker'])) {
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Pagu Anggaran Berdasarkan Jenis Belanja
+                        Pagu Anggaran Berdasarkan Akun
                     </h2>
                 </div>
                 <canvas id="akun"></canvas>
@@ -149,7 +149,7 @@ if (!empty($_GET['satker'])) {
                         <ul class="nav nav-tabs nav-fill" role="tablist">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Jenis Belanja</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
                         </ul>
