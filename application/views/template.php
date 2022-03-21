@@ -25,6 +25,9 @@
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/notifications/toastr/toastr.css">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/page-invoice.css">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/costume/default.css">
+    <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/bootstrap/css/sweetalert.css">
+	
+	<script src="<?php echo base_url() ?>assets/bootstrap/js/sweetalert.min.js"></script>
     <!-- <link id="mytheme" rel="stylesheet" href="<?php echo base_url() ?>assets/smartadmin-slim/css/themes/cust-theme-5.css"> -->
     <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
 </head>

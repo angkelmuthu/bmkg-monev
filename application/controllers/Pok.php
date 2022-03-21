@@ -59,15 +59,39 @@ class Pok extends CI_Controller
             );
         $this->template->load('template', 'pok/laporan_bulanan', $data);
     }
+	public function rekap_bulanan()
+    {
+		 $data = array(
+                'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+            );
+        $this->template->load('template', 'pok/rekap_bulanan', $data);
+    }
 	public function get_laporan_bulanan($satker,$tahun,$bulan)
+    {
+		//$this->output->enable_profiler(TRUE);
+		$row = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
+		if(!empty($row))
+		{
+			$get="T";
+		}else{
+			$get="F";
+		}
+        $data = array(
+            'bulan' => $bulan,
+            'tahun_anggaran' => $tahun,
+            'kode_satker' => $satker,
+            'row' => $get,
+        );
+        $this->load->view('pok/get_laporan_bulanan', $data);
+    }
+	public function get_rekap_bulanan($tahun,$bulan)
     {
 		//$this->output->enable_profiler(TRUE);
         $data = array(
             'bulan' => $bulan,
             'tahun_anggaran' => $tahun,
-            'kode_satker' => $satker,
         );
-        $this->load->view('pok/get_laporan_bulanan', $data);
+        $this->load->view('pok/get_rekap_bulanan', $data);
     }
     public function read($id)
     {
@@ -486,35 +510,41 @@ class Pok extends CI_Controller
     {
         $row = $this->Pok_model->get_item_id($this->input->post('id'));
         $real = $this->Pok_model->get_real_item_id($this->input->post('id'));
-        $getjan = json_decode($real->ket_kontrak_januari);
-        $getfeb = json_decode($real->ket_kontrak_februari);
-        $getmar = json_decode($real->ket_kontrak_maret);
-        $getapr = json_decode($real->ket_kontrak_april);
-        $getmei = json_decode($real->ket_kontrak_mei);
-        $getjun = json_decode($real->ket_kontrak_juni);
-        $getjul = json_decode($real->ket_kontrak_juli);
-        $getagu = json_decode($real->ket_kontrak_agustus);
-        $getsep = json_decode($real->ket_kontrak_september);
-        $getokt = json_decode($real->ket_kontrak_oktober);
-        $getnov = json_decode($real->ket_kontrak_november);
-        $getdes = json_decode($real->ket_kontrak_desember);
+		for ($x = 0; $x <= 12; $x++) {
+			$get = $this->Pok_model->get_kirim($_POST['satker'],$_POST['program'],$_POST['tahun'],$x);
+			$bulan[]=isset($get->bulan) ? $get->bulan : "";
+		}
+		//var_dump($bulan);
+        $getjan = json_decode(isset($real->ket_kontrak_januari) ? $real->ket_kontrak_januari : "");
+        $getfeb = json_decode(isset($real->ket_kontrak_februari) ? $real->ket_kontrak_januari : "");
+        $getmar = json_decode(isset($real->ket_kontrak_maret) ? $real->ket_kontrak_maret : "");
+        $getapr = json_decode(isset($real->ket_kontrak_april) ? $real->ket_kontrak_april : "");
+        $getmei = json_decode(isset($real->ket_kontrak_mei) ? $real->ket_kontrak_mei : "");
+        $getjun = json_decode(isset($real->ket_kontrak_juni) ? $real->ket_kontrak_juni : "");
+        $getjul = json_decode(isset($real->ket_kontrak_juli) ? $real->ket_kontrak_juli : "");
+        $getagu = json_decode(isset($real->ket_kontrak_agustus) ? $real->ket_kontrak_agustus : "");
+        $getsep = json_decode(isset($real->ket_kontrak_september) ? $real->ket_kontrak_september : "");
+        $getokt = json_decode(isset($real->ket_kontrak_oktober) ? $real->ket_kontrak_oktober : "");
+        $getnov = json_decode(isset($real->ket_kontrak_november) ? $real->ket_kontrak_november : "");
+        $getdes = json_decode(isset($real->ket_kontrak_desember) ? $real->ket_kontrak_desember : "");
         $data = array(
+            'bulan' => $bulan,
             'pok' => $this->input->post('pok'),
-            'item' => $row->item,
-            'id_item' => $row->id_item,
-            'jumlah' => $row->jumlah,
-            'januari' => $row->januari,
-            'februari' => $row->februari,
-            'maret' => $row->maret,
-            'april' => $row->april,
-            'mei' => $row->mei,
-            'juni' => $row->juni,
-            'juli' => $row->juli,
-            'agustus' => $row->agustus,
-            'september' => $row->september,
-            'oktober' => $row->oktober,
-            'november' => $row->november,
-            'desember' => $row->desember,
+            'item' => isset($row->item) ? $row->item : "",
+            'id_item' => isset($row->id_item) ? $row->id_item : "",
+            'jumlah' => isset($row->jumlah) ? $row->jumlah : "",
+            'januari' => isset($row->januari) ? $row->januari : "0",
+            'februari' => isset($row->februari) ? $row->februari : "0",
+            'maret' => isset($row->maret) ? $row->maret : "0",
+            'april' => isset($row->april) ? $row->april : "0",
+            'mei' => isset($row->mei) ? $row->mei : "0",
+            'juni' => isset($row->juni) ? $row->juni : "0",
+            'juli' => isset($row->juli) ? $row->juli : "0",
+            'agustus' => isset($row->agustus) ? $row->agustus : "0",
+            'september' => isset($row->september) ? $row->september : "0",
+            'oktober' => isset($row->oktober) ? $row->oktober : "0",
+            'november' => isset($row->november) ? $row->november : "0",
+            'desember' => isset($row->desember) ? $row->desember : "0",
             'ang_januari' => isset($real->ang_januari) ? $real->ang_januari : 0,
             'ang_februari' => isset($real->ang_februari) ? $real->ang_februari : 0,
             'ang_maret' => isset($real->ang_maret) ? $real->ang_maret : 0,
@@ -652,6 +682,46 @@ class Pok extends CI_Controller
         $this->db->where('id_item', $this->input->post('id_item'));
         $this->db->update('t_item', $arr);
     }
+	function kirim_realisasi()
+    {
+        $cek = $this->Pok_model->get_status_realisasi($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
+			//$this->output->enable_profiler(TRUE);
+        $row = $this->Pok_model->get_kirim($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
+		if (!empty($cek)) {
+			if (!empty($row)) {
+				$arr = array(
+				 'flag' => 0,
+				);
+				$this->db->where('kode_satker', $_POST['satker']);
+				$this->db->where('id_program', $_POST['id']);
+				$this->db->where('tahun', $_POST['tahun']);
+				$this->db->where('bulan', $_POST['bulan']);
+				$this->db->update('t_status_kirim', $arr);
+				
+			}
+				$arr_insert = array(
+				 'kode_satker' => $_POST['satker'],
+				 'id_program' => $_POST['id'],
+				 'tahun' => $_POST['tahun'],
+				 'bulan' => $_POST['bulan'],
+				 'status' => "Terkirim",
+				 'tgl_kirim' =>  date('Y-m-d H:i:s'),
+				 'id_user' => $this->session->userdata('kode_satker'),
+				 'flag' => 1,
+				);
+				$simpan=$this->db->insert('t_status_kirim', $arr_insert);
+				if($simpan)
+				{
+					echo "{'kode':'200','msg':'Realisasi berhasil terkirim'}";
+				}else{
+					echo "{'kode':'201','msg':'Realisasi gagal terkirim'}";
+				}
+		}else{
+			echo '{"kode":"201","msg":"Tidak dapat mengirim, anda belum menginput realisasi"}';
+			
+		}
+		
+    }		
     function update_realisasi()
     {
         $row = $this->Pok_model->get_real_item_id($this->input->post('id_item'));

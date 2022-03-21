@@ -759,7 +759,7 @@
                                                     <td class="text-right"><?php echo angka($item->desember) ?></td>
                                                     <?php if ($this->session->userdata('id_user_level') != 1) { ?>
                                                         <td>
-                                                            <button type="button" key="<?php echo $item->id_item ?>" class="realisasi btn btn-xs btn-success">Realisasi</button>
+                                                            <button type="button" satker="<?php echo $program->kode_satker ?>" tahun="<?php echo $program->tahun_anggaran ?>" key="<?php echo $item->id_item ?>" program="<?php echo $program->id_program ?>" onClick="" class="realisasi btn btn-xs btn-success">Realisasi</button>
                                                         </td>
                                                         <!--<td width="100px">
                                                             <div class="text-center">
@@ -1183,10 +1183,16 @@
     $('.realisasi').click(function() {
         var pok = <?php echo $this->uri->segment(3) ?>;
         var id = $(this).attr("key");
+        var program = $(this).attr("program");
+        var tahun = $(this).attr("tahun");
+        var satker = $(this).attr("satker");
         $.ajax({
             url: '<?php echo base_url(); ?>pok/get_realisasi',
             method: 'post',
             data: {
+                tahun: tahun,
+                satker: satker,
+                program: program,
                 pok: pok,
                 id: id
             },

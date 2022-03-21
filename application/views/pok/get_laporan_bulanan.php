@@ -52,6 +52,7 @@
             </tr>
             <!-- program -->
             <?php
+			//var_dump($this->session->userdata('kode_satker'));
             $this->db->select('a.*,
         (SELECT count(*) FROM t_kegiatan c
         WHERE`a`.`kode_dept` = `c`.`kode_dept`
@@ -70,6 +71,7 @@
             //$q = $this->db->get();
             //var_dump($q);
             $list_program = $this->db->get()->result();
+			$id=$list_program[0]->id_program;
             foreach ($list_program as $program) { ?>
                 <tr>
                     <td class="text-right"><?php echo $program->kode_dept . '.' . $program->kode_unit_kerja . '.' . $program->kode_program ?></td>
@@ -526,8 +528,15 @@
         </tbody>
     </table>
 </div>
+<?php
+if($row=="F")
+{
+?>
+<button type="button" onClick="kirim('<?php echo $list_program[0]->id_program ?>')" class="btn btn-block btn-warning">Kirim</button>
+<?php }else{ ?>
+<span class="badge badge-danger">Realisasi Sudah Terkirim</span>
 
-
+<?php } ?>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 
 <script>

@@ -57,6 +57,7 @@
                         <div id="tampil"></div>
 
                     </div>
+					
                 </div>
             </div>
         </div>
@@ -81,5 +82,45 @@
                 $("#tampil").html(data);
             }
         });
+    }
+</script>
+<script>
+  function kirim(id)
+  {
+
+	  satker= $("#kode_satker").val();
+	  tahun= $("#ta").val();
+	  bulan= $("#bulan").val();
+	  nama= $("#bulan option:selected").text();
+	
+       swal({
+						  title: "Data "+nama+" Akan Di Kirim.??",
+						  text: "Data yang sudah dikirim tidak akan bisa di rubah kembali",
+						  type: "warning",
+						  showCancelButton: true,
+						  confirmButtonColor: "#DD6B55",
+						  confirmButtonText: "Ya",
+						  cancelButtonText: "Tidak",
+						  closeOnConfirm: true,
+						  closeOnCancel: true
+						},
+						function(isConfirm){
+						  if (isConfirm) {
+							 jQuery.post('<?php echo site_url('pok/kirim_realisasi')?>',{id:id,satker:satker,tahun:tahun,bulan:bulan},function(data) {
+									var explode = eval("(" + data + ")");
+									alert(explode.msg);
+										$.ajax({
+											type: 'POST',
+											url: "<?php echo base_url(); ?>pok/get_laporan_bulanan/"+satker+"/"+tahun+"/"+bulan,
+											cache: false,
+											success: function(data) {
+												$("#tampil").html(data);
+											}
+										});
+							  }); 
+						  }else{
+							swal("Data Laporan "+nama+" Tidak Dikirim");
+						  }						  
+						});
     }
 </script>
