@@ -37,7 +37,7 @@ class Pok_model extends CI_Model
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
         return $this->datatables->generate();
     }
-	function json_realisasi()
+    function json_realisasi()
     {
         $this->datatables->select('id_program,tahun_anggaran,kode_dept,nama_dept,kode_unit_kerja,nama_unit_kerja,kode_satker,nama_satker,create_date,kirim');
         $this->datatables->from('v_list_pok');
@@ -53,8 +53,8 @@ class Pok_model extends CI_Model
         //add this line for join
         //$this->datatables->join('table2', 't_program.field = table2.field');
         $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')) . "
-		
-        ". "<span class='badge badge-danger'>Realisasi $2 Terkirim</span>"     , 'id_program,kirim');
+
+        " . "<span class='badge badge-danger'>Realisasi $2 Terkirim</span>", 'id_program,kirim');
         // $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
         //     " . anchor(site_url('pok/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
@@ -66,9 +66,9 @@ class Pok_model extends CI_Model
     {
         $this->db->select('a.tahun_anggaran,c.nama_satker,sum(b.jumlah) as total');
         $this->db->from('t_program a');
-        $this->db->join('t_item b', 'a.kode_satker=b.kode_satker and a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.tahun_anggaran=b.tahun_anggaran', 'left');
-        $this->db->join('ref_satker c', 'a.kode_satker=b.kode_satker', 'left');
-        $this->db->where('id_program', $id);
+        $this->db->join('t_item b', 'a.kode_program=b.kode_program and a.kode_satker=b.kode_satker and a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.tahun_anggaran=b.tahun_anggaran', 'left');
+        $this->db->join('ref_satker c', 'a.kode_satker=c.kode_satker', 'left');
+        $this->db->where('a.id_program', $id);
         // $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
         // $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
         // $this->db->where('tahun_anggaran', $this->session->userdata('ta'));
@@ -223,32 +223,32 @@ class Pok_model extends CI_Model
         $this->db->where('id_item', $id);
         return $this->db->get('t_item')->row();
     }
-	function get_real_item_id($id)
+    function get_real_item_id($id)
     {
         $this->db->where('id_item', $id);
         return $this->db->get('t_item_realisasi')->row();
     }
-	function get_status_realisasi($satker,$id_program,$tahun,$bulan)
+    function get_status_realisasi($satker, $id_program, $tahun, $bulan)
     {
-		$this->db->select('c.*');
-                $this->db->from('t_item_realisasi c');
-                $this->db->join('t_item b', 'c.id_item=b.id_item', 'LEFT');
-                $this->db->join('t_program a', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
-				$this->db->where('a.id_program', $id_program);
-                $this->db->where('a.kode_satker', $satker);
-                $this->db->where('b.tahun_anggaran', $tahun);
-                $this->db->group_by('a.kode_program');
-				
+        $this->db->select('c.*');
+        $this->db->from('t_item_realisasi c');
+        $this->db->join('t_item b', 'c.id_item=b.id_item', 'LEFT');
+        $this->db->join('t_program a', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
+        $this->db->where('a.id_program', $id_program);
+        $this->db->where('a.kode_satker', $satker);
+        $this->db->where('b.tahun_anggaran', $tahun);
+        $this->db->group_by('a.kode_program');
+
         return $this->db->get()->result();
     }
-	function get_status_kirim($satker,$tahun,$bulan)
+    function get_status_kirim($satker, $tahun, $bulan)
     {
         $this->db->where('kode_satker', $satker);
         $this->db->where('tahun', $tahun);
         $this->db->where('bulan', $bulan);
         return $this->db->get('t_status_kirim')->row();
     }
-	function get_kirim($satker,$id_program,$tahun,$bulan)
+    function get_kirim($satker, $id_program, $tahun, $bulan)
     {
         $this->db->where('kode_satker', $satker);
         $this->db->where('id_program', $id_program);

@@ -26,8 +26,8 @@
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/page-invoice.css">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/costume/default.css">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/bootstrap/css/sweetalert.css">
-	
-	<script src="<?php echo base_url() ?>assets/bootstrap/js/sweetalert.min.js"></script>
+
+    <script src="<?php echo base_url() ?>assets/bootstrap/js/sweetalert.min.js"></script>
     <!-- <link id="mytheme" rel="stylesheet" href="<?php echo base_url() ?>assets/smartadmin-slim/css/themes/cust-theme-5.css"> -->
     <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
 </head>
@@ -148,16 +148,16 @@
                             <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
                                 <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
                                     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
-                                        <span class="mr-2">
+                                        <!-- <span class="mr-2">
                                             <?php if (empty($this->session->userdata('images'))) { ?>
                                                 <img src="<?php echo base_url() ?>assets/foto_profil/avatar.jpg" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('username'); ?>">
                                             <?php } else { ?>
                                                 <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('username'); ?>">
                                             <?php } ?>
-                                        </span>
+                                        </span> -->
                                         <div class="info-card-text">
                                             <div class="fs-lg text-truncate text-truncate-lg"><?php echo $this->session->userdata('username'); ?></div>
-                                            <span class="text-truncate text-truncate-md opacity-80"><?php echo $this->session->userdata('nama_satker'); ?></span>
+                                            <span class="opacity-80"><?php echo $this->session->userdata('nama_satker'); ?></span>
                                         </div>
                                     </div>
 

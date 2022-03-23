@@ -9,29 +9,34 @@
     </div>
     <!-- BEGIN PRIMARY NAVIGATION -->
     <nav id="js-primary-nav" class="primary-nav" role="navigation">
-        <div class="nav-filter">
+        <!-- <div class="nav-filter">
             <div class="position-relative">
                 <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">
                 <a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
                     <i class="fal fa-chevron-up"></i>
                 </a>
             </div>
-        </div>
+        </div> -->
         <div class="info-card">
-            <?php if (empty($this->session->userdata('images'))) { ?>
+            <!-- <?php if (empty($this->session->userdata('images'))) { ?>
                 <img src="<?php echo base_url() ?>assets/foto_profil/avatar.jpg" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('nama_satker'); ?>">
             <?php } else { ?>
                 <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-image rounded-circle" alt="<?php echo $this->session->userdata('nama_satker'); ?>">
-            <?php } ?>
+            <?php } ?> -->
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
-                    <span class="text-truncate text-truncate-sm d-inline-block">
-                        <?php echo $this->session->userdata('full_name'); ?>
+                    <span class="d-inline-block">
+                        <?php echo $this->session->userdata('nama_satker'); ?>
                     </span>
                 </a>
-                <span class="d-inline-block text-truncate text-truncate-sm"><?php echo $this->session->userdata('nama_satker'); ?></span>
+                <!-- <span class="d-inline-block"><?php echo $this->session->userdata('nama_satker'); ?></span> -->
+                <span>PPK : <?php echo $this->session->userdata('penjabat_ppk'); ?></span>
+                <span>KPA : <?php echo $this->session->userdata('kpa'); ?></span>
+                <span>Operator : <?php echo $this->session->userdata('operator'); ?></span>
+                <span>Kontak : <?php echo $this->session->userdata('kontak'); ?></span>
+                <span>Email : <?php echo $this->session->userdata('email'); ?></span>
             </div>
-            <img src="<?php echo base_url() ?>assets/smartadmin/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
+            <img src="<?php echo base_url() ?>assets/smartadmin/img/card-backgrounds/cover-new.png" class="cover" alt="cover">
             <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
                 <i class="fal fa-angle-down"></i>
             </a>
