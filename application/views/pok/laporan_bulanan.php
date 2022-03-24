@@ -16,7 +16,19 @@
                            
                             <tr>
                                 <td>Satker</td>
-                                <td><?php echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', $kode_unit_kerja, 'aktif="y"', 'id_satker ASC') ?></td>
+                                <td>
+								<?php if ($this->session->userdata('id_user_level') != 1) { ?>
+								<?php 
+								echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', $kode_unit_kerja, 'kode_satker="'.$kode_unit_kerja.'"', 'id_satker ASC') 
+							
+								
+								?></td>
+								<?php }else{ ?>
+								<?php 
+								echo select2_dinamis('kode_satker', 'ref_satker', 'kode_satker', 'nama_satker', $kode_unit_kerja, 'aktif="y"', 'id_satker ASC') 
+								
+								?></td>
+								<?php } ?>
                             </tr>
 							 <tr>
                                 <td>Tahun Anggaran</td>
@@ -106,7 +118,7 @@
 						},
 						function(isConfirm){
 						  if (isConfirm) {
-							 jQuery.post('<?php echo site_url('pok/kirim_realisasi')?>',{id:id,satker:satker,tahun:tahun,bulan:bulan},function(data) {
+							 jQuery.post('<?php echo site_url('pok/kirim_realisasi')?>',{id:id,satker:satker,tahun:tahun,bulan:bulan,status:"Terkirim"},function(data) {
 									var explode = eval("(" + data + ")");
 									alert(explode.msg);
 										$.ajax({

@@ -50,11 +50,11 @@ class Pok_model extends CI_Model
             $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
             $this->datatables->group_by('tahun_anggaran');
         }
+	
+		//var_dump($this->datatables);
         //add this line for join
         //$this->datatables->join('table2', 't_program.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')) . "
-		
-        ". "<span class='badge badge-danger'>Realisasi $2 Terkirim</span>"     , 'id_program,kirim');
+        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')) , 'id_program,kirim');
         // $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
         //     " . anchor(site_url('pok/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
@@ -246,6 +246,7 @@ class Pok_model extends CI_Model
         $this->db->where('kode_satker', $satker);
         $this->db->where('tahun', $tahun);
         $this->db->where('bulan', $bulan);
+        $this->db->where('flag', 1);
         return $this->db->get('t_status_kirim')->row();
     }
 	function get_kirim($satker,$id_program,$tahun,$bulan)

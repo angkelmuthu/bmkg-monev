@@ -62,13 +62,38 @@ class Pok extends CI_Controller
 
 
 
-
+   public function rekap_pertahun()
+    {
+        $data = array(
+            'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+        );
+        $this->template->load('template', 'pok/rekap_pertahun', $data);
+    }
     public function rekap_bulanan()
     {
         $data = array(
             'kode_unit_kerja' => $this->session->userdata('kode_satker'),
         );
         $this->template->load('template', 'pok/rekap_bulanan', $data);
+    }
+	public function view_laporan_bulanan($satker, $tahun, $bulan)
+    {
+        //$this->output->enable_profiler(TRUE);
+        $row = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
+		if(!empty($row))
+		{
+			$get=$row->status;
+		}else{
+			$get="";
+		}
+
+        $data = array(
+            'bulan' => $bulan,
+            'tahun_anggaran' => $tahun,
+            'kode_satker' => $satker,
+            'row' => $get,
+        );
+        $this->template->load('template', 'pok/view_laporan_bulanan', $data);
     }
     public function get_laporan_bulanan($satker, $tahun, $bulan)
     {
@@ -100,6 +125,14 @@ class Pok extends CI_Controller
         $this->load->view('pok/get_rekap_bulanan', $data);
     }
 
+	public function get_rekap_tahunan($tahun)
+    {
+        //$this->output->enable_profiler(TRUE);
+        $data = array(
+            'tahun_anggaran' => $tahun,
+        );
+        $this->load->view('pok/get_rekap_tahunan', $data);
+    }
     public function read($id)
     {
         $row = $this->Pok_model->read($id);
@@ -711,7 +744,7 @@ class Pok extends CI_Controller
 				 'id_program' => $_POST['id'],
 				 'tahun' => $_POST['tahun'],
 				 'bulan' => $_POST['bulan'],
-				 'status' => "Terkirim",
+				 'status' => $_POST['status'],
 				 'tgl_kirim' =>  date('Y-m-d H:i:s'),
 				 'id_user' => $this->session->userdata('kode_satker'),
 				 'flag' => 1,
@@ -719,12 +752,12 @@ class Pok extends CI_Controller
 				$simpan=$this->db->insert('t_status_kirim', $arr_insert);
 				if($simpan)
 				{
-					echo "{'kode':'200','msg':'Realisasi berhasil terkirim'}";
+					echo "{'kode':'200','msg':'Realisasi berhasil ".$_POST['status']."'}";
 				}else{
-					echo "{'kode':'201','msg':'Realisasi gagal terkirim'}";
+					echo "{'kode':'201','msg':'Realisasi gagal ".$_POST['status']."'}";
 				}
 		}else{
-			echo '{"kode":"201","msg":"Tidak dapat mengirim, anda belum menginput realisasi"}';
+			echo '{"kode":"201","msg":"Tidak dapat '.$_POST['status'].', anda belum menginput realisasi"}';
 			
 		}
 		

@@ -14,20 +14,46 @@
                 <th class="text-center" rowspan="2">PAGU</th>
                 <th class="text-center" rowspan="2">% BOBOT</th>
                 <th class="text-center" rowspan="2">NILAI KONTRAK/ SPK</th>
-                <th class="text-center" colspan="2">REALISASI KEU.KUMULATIF</th>
-                <th class="text-center" colspan="2">REALISASI KEG. THDP (%) FISIK</th>
-                <th class="text-center" colspan="2">SISA PAGU TERHADAP</th>
-                <th class="text-center" rowspan="2">KETERANGAN</th>
+                 <th class="text-right" colspan=2>Januari</th>
+                <th class="text-right" colspan=2>Februari</th>
+                <th class="text-right" colspan=2>Maret</th>
+                <th class="text-right" colspan=2>April</th>
+                <th class="text-right" colspan=2>Mei</th>
+                <th class="text-right" colspan=2>Juni</th>
+                <th class="text-right" colspan=2>Juli</th>
+                <th class="text-right" colspan=2>Agustus</th>
+                <th class="text-right" colspan=2>September</th>
+                <th class="text-right" colspan=2>Oktober</th>
+                <th class="text-right" colspan=2>November</th>
+                <th class="text-right" colspan=2>Desember</th>
+                <th class="text-right" rowspan=2></th>
 
             </tr>
             <tr>
  
                 <th class="text-right">RUPIAH</th>
                 <th class="text-right">%</th>
-                <th class="text-right">SATKER</th>
-                <th class="text-right">BMKG</th>
-                <th class="text-right">KONTRAK</th>
-                <th class="text-right">REALISASI</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th> <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
+				 <th class="text-right">RUPIAH</th>
+                <th class="text-right">%</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +73,24 @@
                 <td class="text-center">11</td>
                 <td class="text-center">12</td>
                 <td class="text-center">13</td>
+                <td class="text-center">14</td>
+                <td class="text-center">15</td>
+                <td class="text-center">16</td>
+                <td class="text-center">17</td>
+                <td class="text-center">18</td>
+                <td class="text-center">19</td>
+                <td class="text-center">20</td>
+                <td class="text-center">21</td>
+                <td class="text-center">22</td>
+                <td class="text-center">23</td>
+                <td class="text-center">24</td>
+                <td class="text-center">25</td>
+                <td class="text-center">26</td>
+                <td class="text-center">27</td>
+                <td class="text-center">28</td>
+                <td class="text-center">29</td>
+                <td class="text-center">30</td>
+                <td class="text-center"></td>
                
             </tr>
             <!-- program -->
@@ -58,9 +102,9 @@
 			(sum(c.ang_januari)+sum(c.ang_desember)+sum(c.ang_februari)+sum(c.ang_maret)
 			+sum(c.ang_april)+sum(c.ang_mei)+sum(c.ang_juni)+sum(c.ang_juli)+sum(c.ang_agustus)
 			+sum(c.ang_september)+sum(c.ang_oktober)+sum(c.ang_november))as anggaran,
-			(sum(c.fisik_januari)+sum(c.fisik_desember)+sum(c.fisik_februari)+sum(c.fisik_maret)
-			+sum(c.fisik_april)+sum(c.fisik_mei)+sum(c.fisik_juni)+sum(c.fisik_juli)+sum(c.fisik_agustus)
-			+sum(c.fisik_september)+sum(c.fisik_oktober)+sum(c.fisik_november))as fisik,sum(b.jumlah) as total');
+			sum(c.ang_januari)as jan,sum(c.ang_desember)as des,sum(c.ang_februari)as feb,sum(c.ang_maret)
+			as mar,sum(c.ang_april)as apr,sum(c.ang_mei)as mei,sum(c.ang_juni)as jun,sum(c.ang_juli)as jul,sum(c.ang_agustus)
+			as agu,sum(c.ang_september)as sep,sum(c.ang_oktober)as okt,sum(c.ang_november)as nov,sum(b.jumlah) as total');
             $this->db->from('t_program a');
 			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
             $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
@@ -77,12 +121,43 @@
                     <td class="text-right fw-700"><?php echo angka($prov->total) ?></td>
                     <td class="text-right fw-700"><?php echo round(($prov->anggaran/$prov->total)*100,2) ?></td>
                     <td class="text-right fw-700"><?php echo angka($prov->kontrak) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($prov->anggaran) ?></td>
-                    <td class="text-right fw-700"><?php echo round(($prov->anggaran/$prov->total)*100,2) ?></td>
-                    <td class="text-right fw-700"><?php echo $prov->fisik ?></td>
-                    <td class="text-right fw-700"></td>
-                    <td class="text-right fw-700"><?php echo angka($prov->total-$prov->kontrak) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($prov->total-$prov->anggaran) ?></td>
+                    <td class="text-right fw-700"><?php echo angka($prov->jan) ?></td>
+                    <td class="text-right fw-700"><?php echo round(($prov->jan/$prov->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb)/$prov->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar)/$prov->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr)/$prov->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei)/$prov->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun)
+					/$prov->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul)
+					/$prov->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu)
+					/$prov->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu+$prov->sep) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu+$prov->sep)
+					/$prov->total)*100,2) ?></td>
+					
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu+$prov->sep+$prov->okt) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu+$prov->sep+$prov->okt)
+					/$prov->total)*100,2) ?></td>
+					
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu+
+					$prov->sep+$prov->okt+$prov->nov) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+
+					$prov->agu+$prov->sep+$prov->okt+$prov->nov)
+					/$prov->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+$prov->agu+
+					$prov->sep+$prov->okt+$prov->nov+$prov->des) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($prov->jan+$prov->feb+$prov->mar+$prov->apr+$prov->mei+$prov->jun+$prov->jul+
+					$prov->agu+$prov->sep+$prov->okt+$prov->nov+$prov->des)
+					/$prov->total)*100,2) ?></td>
                     <td class="text-right fw-700"></td>
               
                 </tr>
@@ -97,17 +172,18 @@
 			(sum(c.ang_januari)+sum(c.ang_desember)+sum(c.ang_februari)+sum(c.ang_maret)
 			+sum(c.ang_april)+sum(c.ang_mei)+sum(c.ang_juni)+sum(c.ang_juli)+sum(c.ang_agustus)
 			+sum(c.ang_september)+sum(c.ang_oktober)+sum(c.ang_november))as anggaran,
-			(sum(c.fisik_januari)+sum(c.fisik_desember)+sum(c.fisik_februari)+sum(c.fisik_maret)
-			+sum(c.fisik_april)+sum(c.fisik_mei)+sum(c.fisik_juni)+sum(c.fisik_juli)+sum(c.fisik_agustus)
-			+sum(c.fisik_september)+sum(c.fisik_oktober)+sum(c.fisik_november))as fisik,sum(b.jumlah) as total');
+			sum(c.ang_januari)as jan,sum(c.ang_desember)as des,sum(c.ang_februari)as feb,sum(c.ang_maret)
+			as mar,sum(c.ang_april)as apr,sum(c.ang_mei)as mei,sum(c.ang_juni)as jun,sum(c.ang_juli)as jul,sum(c.ang_agustus)
+			as agu,sum(c.ang_september)as sep,sum(c.ang_oktober)as okt,sum(c.ang_november)as nov,sum(b.jumlah) as total');
             $this->db->from('t_program a');
 			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
             $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
             $this->db->join('ref_satker d', 'd.kode_satker=b.kode_satker', 'LEFT');
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
             $this->db->where('d.kode_lokasi', $prov->kode_lokasi);
-            $this->db->group_by('a.kode_satker');
+            $this->db->group_by('b.kode_satker');
             $list_program = $this->db->get()->result();
+			$this->output->enable_profiler(TRUE);
             foreach ($list_program as $program) { ?>
                 <tr>
                     <td class="text-right"></td>
@@ -116,12 +192,43 @@
                     <td class="text-right fw-700"><?php echo angka($program->total) ?></td>
                     <td class="text-right fw-700"><?php echo round(($program->anggaran/$program->total)*100,2) ?></td>
                     <td class="text-right fw-700"><?php echo angka($program->kontrak) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->anggaran) ?></td>
-                    <td class="text-right fw-700"><?php echo round(($program->anggaran/$program->total)*100,2) ?></td>
-                    <td class="text-right fw-700"><?php echo $program->fisik ?></td>
-                    <td class="text-right fw-700"></td>
-                    <td class="text-right fw-700"><?php echo angka($program->total-$program->kontrak) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->total-$program->anggaran) ?></td>
+                    <td class="text-right fw-700"><?php echo angka($program->jan) ?></td>
+                    <td class="text-right fw-700"><?php echo round(($program->jan/$program->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($program->jan+$program->feb) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb)/$program->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar)/$program->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr)/$program->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei)/$program->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun)
+					/$program->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul)
+					/$program->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu)
+					/$program->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu+$program->sep) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu+$program->sep)
+					/$program->total)*100,2) ?></td>
+					
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu+$program->sep+$program->okt) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu+$program->sep+$program->okt)
+					/$program->total)*100,2) ?></td>
+					
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu+
+					$program->sep+$program->okt+$program->nov) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+
+					$program->agu+$program->sep+$program->okt+$program->nov)
+					/$program->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+$program->agu+
+					$program->sep+$program->okt+$program->nov+$program->des) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($program->jan+$program->feb+$program->mar+$program->apr+$program->mei+$program->jun+$program->jul+
+					$program->agu+$program->sep+$program->okt+$program->nov+$program->des)
+					/$program->total)*100,2) ?></td>
                     <td class="text-right fw-700"></td>
               
                 </tr>
@@ -135,8 +242,23 @@
 
 
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
-
+  <script>
+        $(document).ready(function() {
+            var table = $('#dt-basic-example').DataTable({
+                scrollY: "500px",
+                scrollX: true,
+                scrollCollapse: true,
+                ordering: false,
+                paging: false,
+                fixedColumns: {
+                    leftColumns: 0,
+                    rightColumns: 1
+                }
+            });
+        });
+    </script>
 <script>
+
     $('#kode_kegiatan').select2({
         dropdownParent: $('#default-example-modal .modal-content')
     });

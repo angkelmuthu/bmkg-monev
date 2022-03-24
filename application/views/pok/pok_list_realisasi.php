@@ -22,6 +22,7 @@
                                     <th>Unit Kerja</th>
                                     <th>Satker</th>
                                     <th>Create Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -84,6 +85,29 @@
                     "data": "nama_satker"
                 }, {
                     "data": "create_date"
+                },
+				{
+                    render: function(data,type,row){
+						if(row.kirim==null)
+						{
+							return '';
+						}else{
+							get=row.kirim.split(",");
+							
+							show="";
+							for(var i = 0; i < get.length; i++) {
+								getstatus=get[i].split("-");
+								tahun=<?= $this->session->userdata('ta') ?>;
+								if(getstatus[i]=='Terkirim')
+								{
+									show =show+'<a href="<?php echo base_url("pok/view_laporan_bulanan/'+row.kode_satker+'/'+tahun+'/'+getstatus[2]+'") ?>" ><span class="badge badge-danger">Realisasi '+getstatus[0]+' '+getstatus[1]+'</span></a></br>';
+								}else{
+									show =show+'<a href="<?php echo base_url("pok/view_laporan_bulanan/'+row.kode_satker+'/'+tahun+'/'+getstatus[2]+'") ?>" ><span class="badge badge-success">Realisasi '+getstatus[0]+' '+getstatus[1]+'</span></a></br>';
+								}
+							}
+							return show;
+						}
+					}
                 },
                 {
                     "data": "action",
