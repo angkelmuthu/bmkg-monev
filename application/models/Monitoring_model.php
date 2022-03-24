@@ -46,7 +46,10 @@ class Monitoring_model extends CI_Model
         ) AS realisasi');
         $this->db->from('ref_satker a');
         $this->db->join('ref_lokasi b', 'a.kode_lokasi=b.kode_lokasi', 'left');
-        $this->db->where('a.kode_lokasi', $lokasi);
+        if (!empty($lokasi)) {
+            $this->db->where('a.kode_lokasi', $lokasi);
+        }
+        //$this->db->group_by('a.kode_satker');
         return $this->db->get()->result();
     }
 }
