@@ -183,7 +183,7 @@
             $this->db->where('d.kode_lokasi', $prov->kode_lokasi);
             $this->db->group_by('b.kode_satker');
             $list_program = $this->db->get()->result();
-			$this->output->enable_profiler(TRUE);
+			//$this->output->enable_profiler(TRUE);
             foreach ($list_program as $program) { ?>
                 <tr>
                     <td class="text-right"></td>
@@ -239,9 +239,18 @@
         </tbody>
     </table>
 </div>
-
+</br>
+</br>
+ <button class="btn btn-block btn-primary pull-right" onclick="ExportToExcel('dt-basic-example')" name="submit" id="btnExport" style="margin-left:10px;">Excell</button>
 
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
+<script type="text/javascript">
+function ExportToExcel(mytblId){
+       var htmltable= document.getElementById('dt-basic-example');
+       var html = htmltable.outerHTML;
+       window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+    }
+</script>
   <script>
         $(document).ready(function() {
             var table = $('#dt-basic-example').DataTable({
