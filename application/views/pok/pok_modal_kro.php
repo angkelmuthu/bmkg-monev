@@ -40,6 +40,9 @@
         $('#id_kro').select2({
             dropdownParent: $('#Kro .modal-content')
         });
+        $('#kode_lokasi').select2({
+            dropdownParent: $('#Kro .modal-content')
+        });
         $("#tambah_kro").click(function() {
             var data = $('#form').serialize();
             $.ajax({

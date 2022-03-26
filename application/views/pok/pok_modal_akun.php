@@ -29,9 +29,10 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#id_akun').select2({
+        $('#akun').select2({
             dropdownParent: $('#Akun .modal-content')
         });
+
         $("#tambah_akun").click(function() {
             var data = $('#form').serialize();
             $.ajax({
