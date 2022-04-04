@@ -244,10 +244,21 @@ class Pok_model extends CI_Model
     }
     function get_status_kirim($satker, $tahun, $bulan)
     {
+		$this->db->select('status,keterangan');
         $this->db->where('kode_satker', $satker);
         $this->db->where('tahun', $tahun);
         $this->db->where('bulan', $bulan);
         $this->db->where('flag', 1);
+        return $this->db->get('t_status_kirim')->row();
+    }
+	function get_status_kirim_grup($satker, $tahun, $bulan)
+    {
+		$this->db->select('group_concat(status)as status');
+        $this->db->where('kode_satker', $satker);
+        $this->db->where('tahun', $tahun);
+        $this->db->where('bulan', $bulan);
+       // $this->db->where('flag', 1);
+		$this->db->group_by('kode_satker,tahun,bulan,id_program');
         return $this->db->get('t_status_kirim')->row();
     }
     function get_kirim($satker, $id_program, $tahun, $bulan)
@@ -256,6 +267,7 @@ class Pok_model extends CI_Model
         $this->db->where('id_program', $id_program);
         $this->db->where('tahun', $tahun);
         $this->db->where('bulan', $bulan);
+		 $this->db->where('flag', 1);
         return $this->db->get('t_status_kirim')->row();
     }
 }

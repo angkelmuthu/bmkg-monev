@@ -528,14 +528,70 @@
         </tbody>
     </table>
 </div>
+
 <?php
-if($row=="F")
-{
+
+	$status = explode(",", $row);
+	foreach($status as $val) {
+		if($val=="Terkirim")
+        {
+		  echo '<span class="badge badge-primary">Realisasi <?= $bulans[$bulan-1] ?> Sudah Terkirim</span>';
+		}
+		if($val=="Revisi")
+        {
+		  echo '<span class="badge badge-danger">Realisasi <?= $bulans[$bulan-1] ?> Harus Di Revisi</span>';
+		}
+		if($val=="Final")
+        {
+		  echo '<span class="badge badge-success">Realisasi <?= $bulans[$bulan-1] ?> Harus Di Revisi</span>';
+		}
+		
+		
+		
+	}
+ if ($this->session->userdata('id_user_level') != 1) { 
+			if($rowlast=="Terkirim")
+			{
+				//echo '<button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Final</button></br>';
+				//echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
+			}else if($rowlast=="Revisi")
+			{
+				echo '</br><button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
+				  echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
+				//echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
+			}else if($rowlast=="Final")
+			{
+				
+			}
+			if($rowlast=="")
+			{
+				echo '</br><button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
+			}
+			
+ }else{
+	 	if($rowlast=="Terkirim")
+			{
+				echo '<button type="button" onClick="kirim_final('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Final</button>';
+				echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
+			}else if($rowlast=="Revisi")
+			{
+				 echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
+				echo '<button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
+				
+			}else if($rowlast=="Final")
+			{
+				
+			}
+			if($rowlast=="")
+			{
+				echo '<button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
+			}
+			
+	 
+ }
+
 ?>
-<button type="button" onClick="kirim('<?php echo $list_program[0]->id_program ?>')" class="btn btn-block btn-warning">Kirim</button>
-<?php }else{ ?>
-<span class="badge badge-danger">Realisasi Sudah Terkirim</span>
-<?php } ?>
+
 </br>
 </br>
  <button class="btn btn-block btn-primary pull-right" onclick="ExportToExcel('dt-basic-example')" name="submit" id="btnExport" style="margin-left:10px;">Excell</button>

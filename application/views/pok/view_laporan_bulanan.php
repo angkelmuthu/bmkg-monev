@@ -566,16 +566,44 @@
         </tbody>
     </table>
 	<?php
-if($row=="Terkirim")
-{
-?>
-<span class="badge badge-danger">Realisasi <?= $bulans[$bulan-1] ?> Sudah Terkirim</span>
-<button type="button" onClick="kirim('<?php echo $list_program[0]->id_program ?>')" class="btn btn-block btn-warning">Final</button>
-<?php }else{ ?>
-<span class="badge badge-danger">Realisasi <?= $bulans[$bulan-1] ?> Sudah Terkirim</span>
-<span class="badge badge-success">Realisasi <?= $bulans[$bulan-1] ?> Sudah TerFinal</span>
 
-<?php } ?>
+	$status = explode(",", $row);
+	foreach($status as $val) {
+		if($val=="Terkirim")
+        {
+		  echo '<span class="badge badge-primary">Realisasi <?= $bulans[$bulan-1] ?> Sudah Terkirim</span>';
+		}
+		if($val=="Revisi")
+        {
+		  echo '<span class="badge badge-danger">Realisasi <?= $bulans[$bulan-1] ?> Harus Di Revisi</span>';
+		}
+		if($val=="Final")
+        {
+		  echo '<span class="badge badge-success">Realisasi <?= $bulans[$bulan-1] ?> Harus Di Revisi</span>';
+		}
+		
+		
+		
+	}
+
+			if($rowlast=="Terkirim")
+			{
+				echo '<button type="button" onClick="kirim_final('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Final</button>';
+				echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
+			}
+			if($rowlast=="Revisi")
+			{
+				 echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
+				echo '<button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
+				//echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
+			}
+			
+	
+
+?>
+
+
+
 </div>
 </div>
 					
@@ -584,6 +612,25 @@ if($row=="Terkirim")
         </div>
     </div>
 </main>
+<div class="modal fade" id="Kro" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Revisi Laporan Realisasi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="Kro_modal">
+				 <h4 >Isikan Keterangan</h4>
+                   <textarea type="text" name="ket" id="ket"  class="form-control" ><?php //echo $keterangan ?></textarea>
+				   <button type="button" onClick="kirim_revisi('<?php echo $list_program[0]->id_program ?>')" class="btn btn-block btn-danger">Revisi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
@@ -594,7 +641,38 @@ if($row=="Terkirim")
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 
 <script>
-    function kirim(id)
+function kirim(id)
+  {
+
+	  	  satker=<?= $kode_satker ?>;
+	  tahun=<?= $tahun_anggaran ?>;
+	  bulan= <?= $bulan ?>;
+	  nama= '<?= $bulans[$bulan-1] ?>';
+	
+       swal({
+						  title: "Data "+nama+" Akan Di Kirim.??",
+						  text: "Data yang sudah dikirim tidak akan bisa di rubah kembali",
+						  type: "warning",
+						  showCancelButton: true,
+						  confirmButtonColor: "#DD6B55",
+						  confirmButtonText: "Ya",
+						  cancelButtonText: "Tidak",
+						  closeOnConfirm: true,
+						  closeOnCancel: true
+						},
+						function(isConfirm){
+						  if (isConfirm) {
+							 jQuery.post('<?php echo site_url('pok/kirim_realisasi')?>',{id:id,satker:satker,tahun:tahun,bulan:bulan,status:"Terkirim"},function(data) {
+									var explode = eval("(" + data + ")");
+									alert(explode.msg);
+										location.reload(); 
+							  }); 
+						  }else{
+							swal("Data Laporan "+nama+" Tidak Dikirim");
+						  }						  
+						});
+    }
+    function kirim_final(id)
   {
 
 	  satker=<?= $kode_satker ?>;
@@ -625,5 +703,52 @@ if($row=="Terkirim")
 						  }						  
 						});
     }
+	
+	 function revisi()
+   {
+      $('#Kro').modal("show");
+	 
+    }
+	function kirim_revisi(id)
+	{
+		 satker=<?= $kode_satker ?>;
+	  tahun=<?= $tahun_anggaran ?>;
+	  bulan= <?= $bulan ?>;
+	  nama= '<?= $bulans[$bulan-1] ?>';
+	  ket= $("#ket").val();
+	  if(ket=="")
+	  {
+		  swal("Isikan Keterangan Revisi");
+	  }else{
+       swal({
+						  title: "Data "+nama+" Akan Di Revisi.??",
+					
+						  type: "warning",
+						   text: 'Data akan dikembalikan dengan status revisi',
+						  showCancelButton: true,
+						  confirmButtonColor: "#DD6B55",
+						  confirmButtonText: "Ya",
+						  cancelButtonText: "Tidak",
+						  closeOnConfirm: true,
+						  closeOnCancel: true
+						},
+						function(isConfirm){
+						  if (isConfirm) {
+							 
+								
+								  jQuery.post('<?php echo site_url('pok/kirim_revisi')?>',{ket:ket,id:id,satker:satker,tahun:tahun,bulan:bulan,status:"Revisi"},function(data) {
+									var explode = eval("(" + data + ")");
+									alert(explode.msg);
+										location.reload(); 
+									}); 
+							
+								
+						  }else{
+							swal("Data Laporan "+nama+" Tidak di Revisi");
+						  }						  
+						});
+	  }
+		
+	}
 
 </script>

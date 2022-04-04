@@ -79,38 +79,63 @@ class Pok extends CI_Controller
 	public function view_laporan_bulanan($satker, $tahun, $bulan)
     {
         //$this->output->enable_profiler(TRUE);
-        $row = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
+        $row = $this->Pok_model->get_status_kirim_grup($satker,$tahun,$bulan);
+        $rowlast = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
 		if(!empty($row))
 		{
 			$get=$row->status;
 		}else{
 			$get="";
 		}
+		if(!empty($rowlast))
+		{
+			$getlast=$rowlast->status;
+			$getketerangan=$rowlast->keterangan;
+		}else{
+			$getketerangan="";
+			$getlast="";
+		}
+		
 
         $data = array(
             'bulan' => $bulan,
             'tahun_anggaran' => $tahun,
             'kode_satker' => $satker,
             'row' => $get,
+            'rowlast' => $getlast,
+            'getketerangan' => $getketerangan,
         );
         $this->template->load('template', 'pok/view_laporan_bulanan', $data);
     }
     public function get_laporan_bulanan($satker, $tahun, $bulan)
     {
         //$this->output->enable_profiler(TRUE);
-        $row = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
+        
+		 $row = $this->Pok_model->get_status_kirim_grup($satker,$tahun,$bulan);
+        $rowlast = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
 		if(!empty($row))
 		{
-			$get="T";
+			$get=$row->status;
 		}else{
-			$get="F";
+			$get="";
 		}
+		if(!empty($rowlast))
+		{
+			$getlast=$rowlast->status;
+			$getketerangan=$rowlast->keterangan;
+		}else{
+			$getketerangan="";
+			$getlast="";
+		}
+		
 
         $data = array(
             'bulan' => $bulan,
             'tahun_anggaran' => $tahun,
             'kode_satker' => $satker,
             'row' => $get,
+            'rowlast' => $getlast,
+            'getketerangan' => $getketerangan,
         );
         $this->load->view('pok/get_laporan_bulanan', $data);
     }
@@ -552,7 +577,16 @@ class Pok extends CI_Controller
         $real = $this->Pok_model->get_real_item_id($this->input->post('id'));
 		for ($x = 0; $x <= 12; $x++) {
 			$get = $this->Pok_model->get_kirim($_POST['satker'],$_POST['program'],$_POST['tahun'],$x);
-			$bulan[]=isset($get->bulan) ? $get->bulan : "";
+			if(!empty($get)){
+				if($get->status=='Revisi')
+				{
+					$bulan[]="";
+				}else{
+					$bulan[]=isset($get->bulan) ? $get->bulan : "";
+				}
+			}else{
+				$bulan[]="";
+			}
 		}
 		//var_dump($bulan);
         $getjan = json_decode(isset($real->ket_kontrak_januari) ? $real->ket_kontrak_januari : "");
@@ -721,6 +755,47 @@ class Pok extends CI_Controller
         );
         $this->db->where('id_item', $this->input->post('id_item'));
         $this->db->update('t_item', $arr);
+    }
+	function kirim_revisi()
+    {
+        $cek = $this->Pok_model->get_status_realisasi($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
+			//$this->output->enable_profiler(TRUE);
+        $row = $this->Pok_model->get_kirim($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
+		if (!empty($cek)) {
+			if (!empty($row)) {
+				$arr = array(
+				 'flag' => 0,
+				);
+				$this->db->where('kode_satker', $_POST['satker']);
+				$this->db->where('id_program', $_POST['id']);
+				$this->db->where('tahun', $_POST['tahun']);
+				$this->db->where('bulan', $_POST['bulan']);
+				$this->db->update('t_status_kirim', $arr);
+				
+			}
+				$arr_insert = array(
+				 'kode_satker' => $_POST['satker'],
+				 'id_program' => $_POST['id'],
+				 'tahun' => $_POST['tahun'],
+				 'bulan' => $_POST['bulan'],
+				 'status' => $_POST['status'],
+				 'keterangan' =>  $_POST['ket'],
+				 'tgl_kirim' =>  date('Y-m-d H:i:s'),
+				 'id_user' => $this->session->userdata('kode_satker'),
+				 'flag' => 1,
+				);
+				$simpan=$this->db->insert('t_status_kirim', $arr_insert);
+				if($simpan)
+				{
+					echo "{'kode':'200','msg':'Realisasi berhasil ".$_POST['status']."'}";
+				}else{
+					echo "{'kode':'201','msg':'Realisasi gagal ".$_POST['status']."'}";
+				}
+		}else{
+			echo '{"kode":"201","msg":"Tidak dapat '.$_POST['status'].', anda belum menginput realisasi"}';
+			
+		}
+		
     }
 	function kirim_realisasi()
     {
