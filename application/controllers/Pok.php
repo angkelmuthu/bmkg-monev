@@ -62,7 +62,7 @@ class Pok extends CI_Controller
 
 
 
-   public function rekap_pertahun()
+    public function rekap_pertahun()
     {
         $data = array(
             'kode_unit_kerja' => $this->session->userdata('kode_satker'),
@@ -76,9 +76,10 @@ class Pok extends CI_Controller
         );
         $this->template->load('template', 'pok/rekap_bulanan', $data);
     }
-	public function view_laporan_bulanan($satker, $tahun, $bulan)
+    public function view_laporan_bulanan($satker, $tahun, $bulan)
     {
         //$this->output->enable_profiler(TRUE);
+
         $row = $this->Pok_model->get_status_kirim_grup($satker,$tahun,$bulan);
         $rowlast = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
 		if(!empty($row))
@@ -97,6 +98,7 @@ class Pok extends CI_Controller
 		}
 		
 
+
         $data = array(
             'bulan' => $bulan,
             'tahun_anggaran' => $tahun,
@@ -109,7 +111,7 @@ class Pok extends CI_Controller
     }
     public function get_laporan_bulanan($satker, $tahun, $bulan)
     {
-        //$this->output->enable_profiler(TRUE);
+
         
 		 $row = $this->Pok_model->get_status_kirim_grup($satker,$tahun,$bulan);
         $rowlast = $this->Pok_model->get_status_kirim($satker,$tahun,$bulan);
@@ -150,7 +152,7 @@ class Pok extends CI_Controller
         $this->load->view('pok/get_rekap_bulanan', $data);
     }
 
-	public function get_rekap_tahunan($tahun)
+    public function get_rekap_tahunan($tahun)
     {
         //$this->output->enable_profiler(TRUE);
         $data = array(
@@ -396,12 +398,20 @@ class Pok extends CI_Controller
     {
         $kode_dept = $this->input->post('kode_dept');
         $kode_unit_kerja = $this->input->post('kode_unit_kerja');
+        $kode_program = $this->input->post('kode_program');
         $kode_kegiatan = $this->input->post('kode_kegiatan');
         $kode_kro = $this->input->post('kode_kro');
         $kode_ro = $this->input->post('kode_ro');
         $kode_komponen = $this->input->post('kode_komponen');
         $data = array(
             'pok' => $this->input->post('pok'),
+            'kode_dept' => $kode_dept,
+            'kode_unit_kerja' => $kode_unit_kerja,
+            'kode_program' => $kode_program,
+            'kode_kegiatan' => $kode_kegiatan,
+            'kode_kro' => $kode_kro,
+            'kode_ro' => $kode_ro,
+            'kode_komponen' => $kode_komponen,
             'dt_komponen_sub' => $this->Pok_model->get_komponen_sub($kode_dept, $kode_unit_kerja, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen),
         );
         $this->load->view('pok/pok_modal_komponen_sub', $data);
@@ -409,30 +419,30 @@ class Pok extends CI_Controller
 
     function tambah_komponen_sub()
     {
-        $row = $this->Pok_model->cek_komponen_sub($this->input->post('id_komponen_sub'));
-        if ($row) {
-            $arr = array(
-                'kode_dept' => $row->kode_dept,
-                'kode_unit_kerja' => $row->kode_unit_kerja,
-                'kode_program' => $row->kode_program,
-                'kode_kegiatan' => $row->kode_kegiatan,
-                'kode_kro' => $row->kode_kro,
-                'kode_ro' => $row->kode_ro,
-                'kode_komponen' => $row->kode_komponen,
-                'kode_komponen_sub' => $row->kode_komponen_sub,
-                'nama_komponen_sub' => $row->nama_komponen_sub,
-                'tahun_anggaran' => $this->session->userdata('ta'),
-                'kode_satker' => $this->session->userdata('kode_satker'),
-                'create_date' => date('Y-m-d H:i:s'),
-            );
-            $this->db->insert('t_komponen_sub', $arr);
-        } else {
-            $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="fal fa-times"></i></span>
-        </button><strong> Record Not Found</strong></div>');
-            redirect(site_url('pok'));
-        }
+        //$row = $this->Pok_model->cek_komponen_sub($this->input->post('id_komponen_sub'));
+        //if ($row) {
+        $arr = array(
+            'kode_dept' => $this->input->post('kode_dept'),
+            'kode_unit_kerja' => $this->input->post('kode_unit_kerja'),
+            'kode_program' => $this->input->post('kode_program'),
+            'kode_kegiatan' => $this->input->post('kode_kegiatan'),
+            'kode_kro' => $this->input->post('kode_kro'),
+            'kode_ro' => $this->input->post('kode_ro'),
+            'kode_komponen' => $this->input->post('kode_komponen'),
+            'kode_komponen_sub' => $this->input->post('kode_komponen_sub'),
+            'nama_komponen_sub' => $this->input->post('nama_komponen_sub'),
+            'tahun_anggaran' => $this->session->userdata('ta'),
+            'kode_satker' => $this->session->userdata('kode_satker'),
+            'create_date' => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('t_komponen_sub', $arr);
+        // } else {
+        //     $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
+        // <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //     <span aria-hidden="true"><i class="fal fa-times"></i></span>
+        // </button><strong> Record Not Found</strong></div>');
+        //     redirect(site_url('pok'));
+        // }
     }
 
     function hapus_komponensub()
@@ -575,6 +585,7 @@ class Pok extends CI_Controller
     {
         $row = $this->Pok_model->get_item_id($this->input->post('id'));
         $real = $this->Pok_model->get_real_item_id($this->input->post('id'));
+
 		for ($x = 0; $x <= 12; $x++) {
 			$get = $this->Pok_model->get_kirim($_POST['satker'],$_POST['program'],$_POST['tahun'],$x);
 			if(!empty($get)){
@@ -588,7 +599,7 @@ class Pok extends CI_Controller
 				$bulan[]="";
 			}
 		}
-		//var_dump($bulan);
+
         $getjan = json_decode(isset($real->ket_kontrak_januari) ? $real->ket_kontrak_januari : "");
         $getfeb = json_decode(isset($real->ket_kontrak_februari) ? $real->ket_kontrak_januari : "");
         $getmar = json_decode(isset($real->ket_kontrak_maret) ? $real->ket_kontrak_maret : "");
@@ -756,6 +767,7 @@ class Pok extends CI_Controller
         $this->db->where('id_item', $this->input->post('id_item'));
         $this->db->update('t_item', $arr);
     }
+
 	function kirim_revisi()
     {
         $cek = $this->Pok_model->get_status_realisasi($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
@@ -837,6 +849,7 @@ class Pok extends CI_Controller
 		}
 		
     }		
+
     function update_realisasi()
     {
         $row = $this->Pok_model->get_real_item_id($this->input->post('id_item'));

@@ -15,15 +15,20 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
-        if (!empty($_GET['ta'])) {
-            $ta = $_GET['ta'];
+        if ($this->session->userdata('id_user_level') == 1) {
+            if (!empty($_GET['ta'])) {
+                $ta = $_GET['ta'];
+            } else {
+                $ta = date('Y');
+            }
+            if (!empty($_GET['satker'])) {
+                $satker = $_GET['satker'];
+            } else {
+                $satker = '';
+            }
         } else {
-            $ta = date('Y');
-        }
-        if (!empty($_GET['satker'])) {
-            $satker = $_GET['satker'];
-        } else {
-            $satker = '';
+            $ta = $this->session->userdata('ta');
+            $satker = $this->session->userdata('kode_satker');
         }
         $pagu = $this->Dashboard_model->ttl_pagu($ta, $satker);
         $penarikan = $this->Dashboard_model->ttl_penarikan($ta, $satker);

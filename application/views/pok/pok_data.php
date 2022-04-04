@@ -467,7 +467,7 @@
                                         <td></td>
                                         <td width="100px">
                                             <div class="text-center">
-                                                <button type="button" kode_dept="<?php echo $komponen->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $komponen->kode_kegiatan; ?>" kode_kro="<?php echo $komponen->kode_kro; ?>" kode_ro="<?php echo $komponen->kode_ro; ?>" kode_komponen="<?php echo $komponen->kode_komponen; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
+                                                <button type="button" kode_dept="<?php echo $komponen->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen->kode_unit_kerja; ?>" kode_program="<?php echo $komponen->kode_program; ?>" kode_kegiatan="<?php echo $komponen->kode_kegiatan; ?>" kode_kro="<?php echo $komponen->kode_kro; ?>" kode_ro="<?php echo $komponen->kode_ro; ?>" kode_komponen="<?php echo $komponen->kode_komponen; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
                                                 <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-komponen-<?php echo $komponen->id_komponen ?>"><i class="fal fa-trash"></i></button>
                                                 <div class="modal fade" id="hapus-komponen-<?php echo $komponen->id_komponen ?>" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1065,6 +1065,7 @@
         var pok = <?php echo $this->uri->segment(3) ?>;
         var kode_dept = $(this).attr("kode_dept");
         var kode_unit_kerja = $(this).attr("kode_unit_kerja");
+        var kode_program = $(this).attr("kode_program");
         var kode_kegiatan = $(this).attr("kode_kegiatan");
         var kode_kro = $(this).attr("kode_kro");
         var kode_ro = $(this).attr("kode_ro");
@@ -1076,6 +1077,7 @@
                 pok: pok,
                 kode_dept: kode_dept,
                 kode_unit_kerja: kode_unit_kerja,
+                kode_program: kode_program,
                 kode_kegiatan: kode_kegiatan,
                 kode_kro: kode_kro,
                 kode_ro: kode_ro,
