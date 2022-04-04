@@ -1,18 +1,24 @@
 <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/statistics/chartjs/chartjs.css">
 <?php
-if (!empty($_GET['ta'])) {
-    $ta = $_GET['ta'];
+if ($this->session->userdata('id_user_level') == 1) {
+    if (!empty($_GET['ta'])) {
+        $ta = $_GET['ta'];
+    } else {
+        $ta = date('Y');
+    }
+    if (!empty($_GET['satker'])) {
+        $satker = $_GET['satker'];
+        $this->db->where('kode_satker', $satker);
+        $dt = $this->db->get('ref_satker')->row();
+        $title = $dt->nama_satker;
+    } else {
+        $satker = '';
+        $title = 'All Satker';
+    }
 } else {
-    $ta = date('Y');
-}
-if (!empty($_GET['satker'])) {
-    $satker = $_GET['satker'];
-    $this->db->where('kode_satker', $satker);
-    $dt = $this->db->get('ref_satker')->row();
-    $title = $dt->nama_satker;
-} else {
-    $satker = '';
-    $title = 'All Satker';
+    $ta = $this->session->userdata('ta');
+    $satker = $this->session->userdata('kode_satker');
+    $title = $this->session->userdata('nama_satker');
 }
 ?>
 <main id="js-page-content" role="main" class="page-content">
@@ -25,50 +31,51 @@ if (!empty($_GET['satker'])) {
                     Tahun : <?php echo '<span class="badge border border-primary text-primary">' . $ta . '</span>'; ?>
                 </small>
             </h1>
-
-            <div class="d-flex mr-4">
-                <div>
-                    <label class="fs-sm mb-0 mt-2 mt-md-0">Tahun Anggaran</label>
-                    <div class="form-group">
-                        <select class="form-control" name="ta" id="ta">
-                            <?php
-                            if (!empty($_GET['ta'])) {
-                                $ta = $_GET['ta'];
-                            } else {
-                                $ta = date('Y');
-                            }
-                            $tg_awal = date('Y') - 10;
-                            $tgl_akhir = date('Y') + 2;
-                            for ($i = $tgl_akhir; $i >= $tg_awal; $i--) {
-                                echo "<option value='$i'";
-                                if ($ta == $i) {
-                                    echo "selected";
+            <?php
+            if ($this->session->userdata('id_user_level') == 1) { ?>
+                <div class="d-flex mr-4">
+                    <div>
+                        <label class="fs-sm mb-0 mt-2 mt-md-0">Tahun Anggaran</label>
+                        <div class="form-group">
+                            <select class="form-control" name="ta" id="ta">
+                                <?php
+                                if (!empty($_GET['ta'])) {
+                                    $ta = $_GET['ta'];
+                                } else {
+                                    $ta = date('Y');
                                 }
-                                echo ">$i</option>";
-                            }
-                            ?>
+                                $tg_awal = date('Y') - 10;
+                                $tgl_akhir = date('Y') + 2;
+                                for ($i = $tgl_akhir; $i >= $tg_awal; $i--) {
+                                    echo "<option value='$i'";
+                                    if ($ta == $i) {
+                                        echo "selected";
+                                    }
+                                    echo ">$i</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex mr-0">
+                    <div>
+                        <label class="fs-sm mb-0 mt-2 mt-md-0">Satker</label>
+                        <select name="satker" id="satker" class="select2 form-control w-100">
+                            <option value="">Tampilkan Semua Satker</option>
+                            <?php
+                            $this->db->where('aktif', 'y');
+                            $this->db->order_by('nama_satker', 'ASC');
+                            $result = $this->db->get('ref_satker')->result();
+                            foreach ($result as $row) { ?>
+                                <option value="<?php echo $row->kode_satker ?>" <?php if ($satker == $row->kode_satker) {
+                                                                                    print 'selected';
+                                                                                } ?>><?php echo $row->nama_satker  ?></option>';
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex mr-0">
-                <div>
-                    <label class="fs-sm mb-0 mt-2 mt-md-0">Satker</label>
-                    <select name="satker" id="satker" class="select2 form-control w-100">
-                        <option value="">Tampilkan Semua Satker</option>
-                        <?php
-                        $this->db->where('aktif', 'y');
-                        $this->db->order_by('nama_satker', 'ASC');
-                        $result = $this->db->get('ref_satker')->result();
-                        foreach ($result as $row) { ?>
-                            <option value="<?php echo $row->kode_satker ?>" <?php if ($satker == $row->kode_satker) {
-                                                                                print 'selected';
-                                                                            } ?>><?php echo $row->nama_satker  ?></option>';
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
-
+            <?php } ?>
         </div>
     </form>
     <div class="row">
