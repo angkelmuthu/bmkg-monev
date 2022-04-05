@@ -585,7 +585,6 @@ class Pok extends CI_Controller
     {
         $row = $this->Pok_model->get_item_id($this->input->post('id'));
         $real = $this->Pok_model->get_real_item_id($this->input->post('id'));
-
 		for ($x = 0; $x <= 12; $x++) {
 			$get = $this->Pok_model->get_kirim($_POST['satker'],$_POST['program'],$_POST['tahun'],$x);
 			if(!empty($get)){

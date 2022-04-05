@@ -617,6 +617,7 @@ $(document).ready(function() {
     } );
 } );
 
+
     $('#kode_kegiatan').select2({
         dropdownParent: $('#default-example-modal .modal-content')
     });

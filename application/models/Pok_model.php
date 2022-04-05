@@ -257,6 +257,7 @@ class Pok_model extends CI_Model
         $this->db->where('kode_satker', $satker);
         $this->db->where('tahun', $tahun);
         $this->db->where('bulan', $bulan);
+		
        // $this->db->where('flag', 1);
 		$this->db->group_by('kode_satker,tahun,bulan,id_program');
         return $this->db->get('t_status_kirim')->row();

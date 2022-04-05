@@ -104,7 +104,6 @@
 	  tahun= $("#ta").val();
 	  bulan= $("#bulan").val();
 	  nama= $("#bulan option:selected").text();
-	
        swal({
 						  title: "Data "+nama+" Akan Di Kirim.??",
 						  text: "Data yang sudah dikirim tidak akan bisa di rubah kembali",

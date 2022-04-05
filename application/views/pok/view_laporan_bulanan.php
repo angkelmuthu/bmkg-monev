@@ -637,7 +637,6 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 
-
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 
 <script>
