@@ -214,7 +214,8 @@ if ($this->session->userdata('id_user_level') == 1) {
         </div> -->
     </div>
 </main>
-<?php $this->output->enable_profiler(TRUE); ?>
+<?php //$this->output->enable_profiler(TRUE);
+?>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
