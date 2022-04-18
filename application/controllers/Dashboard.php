@@ -41,11 +41,11 @@ class Dashboard extends CI_Controller
             'realisasi_fisik' => $realisasi_fisik->fisik_januari + $realisasi_fisik->fisik_februari + $realisasi_fisik->fisik_maret + $realisasi_fisik->fisik_april + $realisasi_fisik->fisik_mei + $realisasi_fisik->fisik_juni + $realisasi_fisik->fisik_juli + $realisasi_fisik->fisik_agustus + $realisasi_fisik->fisik_september + $realisasi_fisik->fisik_oktober + $realisasi_fisik->fisik_november + $realisasi_fisik->fisik_desember,
             'kegiatan' => $this->Dashboard_model->kegiatan($ta, $satker),
             'akun' => $this->Dashboard_model->akun($ta, $satker),
-            // 'pagu_realisasi_kegiatan' => $this->Dashboard_model->pagu_realisasi_kegiatan($ta, $satker),
-            // 'pagu_realisasi_kro' => $this->Dashboard_model->pagu_realisasi_kro($ta, $satker),
-            // 'pagu_realisasi_lokasi' => $this->Dashboard_model->pagu_realisasi_lokasi($ta, $satker),
-            // 'pagu_realisasi_akun' => $this->Dashboard_model->pagu_realisasi_akun($ta, $satker),
-            // 'pagu_realisasi_detail' => $this->Dashboard_model->pagu_realisasi_detail($ta, $satker),
+            'pagu_realisasi_kegiatan' => $this->Dashboard_model->pagu_realisasi_kegiatan($ta, $satker),
+            'pagu_realisasi_kro' => $this->Dashboard_model->pagu_realisasi_kro($ta, $satker),
+            //'pagu_realisasi_lokasi' => $this->Dashboard_model->pagu_realisasi_lokasi($ta, $satker),
+            'pagu_realisasi_akun' => $this->Dashboard_model->pagu_realisasi_akun($ta, $satker),
+            'pagu_realisasi_detail' => $this->Dashboard_model->pagu_realisasi_detail($ta, $satker),
         );
         $this->template->load('template', 'dashboard', $data);
     }

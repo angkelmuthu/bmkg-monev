@@ -139,7 +139,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                 <canvas id="akun"></canvas>
             </div>
         </div>
-        <!--<div class="col-md-12">
+        <div class="col-md-12">
             <div id="panel-4" class="panel">
                 <div class="panel-hdr">
                     <h2>
@@ -157,7 +157,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li> -->
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
                         </ul>
                         <div class="tab-content p-3">
@@ -176,11 +176,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                                     <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
+                            <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
                                 <div id="barChart_lokasi">
                                     <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
                                 <table class="table table-striped table-bordered" id=myTable>
                                     <thead class="thead-themed">
@@ -211,7 +211,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </main>
 <?php //$this->output->enable_profiler(TRUE);
@@ -229,6 +229,16 @@ if ($this->session->userdata('id_user_level') == 1) {
             this.form.submit();
         });
     });
+
+    function getRandomColor() {
+        var letters = '789ABCD'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.round(Math.random() * 6)];
+        }
+        return color;
+    }
+
     var kegiatan_json = {
         "kegiatan_array": <?php echo json_encode($kegiatan) ?>
     };
@@ -243,43 +253,24 @@ if ($this->session->userdata('id_user_level') == 1) {
     var ctx = document.getElementById('kegiatan').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'pie',
-        /* w  ww  .de mo  2s .  c  om*/
         data: {
             labels: labels,
             datasets: [{
                 label: 'Kegiatan',
                 data: data,
-                backgroundColor: [
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor()
-                ],
+                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
                 hoverOffset: 4
             }]
         },
         options: {
             responsive: true,
             legend: {
-                position: 'right',
-                labels: {
-                    boxWidth: 20,
-                    padding: 20
-                }
+                display: false,
+                // position: 'right',
+                // labels: {
+                //     boxWidth: 20,
+                //     padding: 20
+                // }
             }
         }
     });
@@ -303,296 +294,280 @@ if ($this->session->userdata('id_user_level') == 1) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Jenis Belanja',
+                label: 'Kegiatan',
                 data: data,
-                backgroundColor: [
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor()
-                ],
+                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
                 hoverOffset: 4
             }]
         },
         options: {
             responsive: true,
             legend: {
-                position: 'right',
-                labels: {
-                    boxWidth: 20,
-                    padding: 20
-                }
+                display: false,
+                // position: 'right',
+                // labels: {
+                //     boxWidth: 20,
+                //     padding: 20
+                // }
             }
         }
     });
 
     /* bar char kegiatan*/
-    // var barChart_kegiatan = function() {
-    //     var pr_kegiatan = {
-    //         "pr_kegiatan_array": <?php echo json_encode($pagu_realisasi_kegiatan) ?>
-    //     };
-    //     var labels = pr_kegiatan.pr_kegiatan_array.map(function(e) {
-    //         return e.nama_kegiatan;
-    //     });
-    //     var pagu = pr_kegiatan.pr_kegiatan_array.map(function(e) {
-    //         return e.pagu;
-    //     });
-    //     var realisasi = pr_kegiatan.pr_kegiatan_array.map(function(e) {
-    //         return e.realisasi;
-    //     });
-    //     var barChartData = {
-    //         labels: labels,
-    //         datasets: [{
-    //                 label: "Pagu",
-    //                 backgroundColor: myapp_get_color.success_300,
-    //                 borderColor: myapp_get_color.success_500,
-    //                 borderWidth: 1,
-    //                 data: pagu
-    //             },
-    //             {
-    //                 label: "Realisasi",
-    //                 backgroundColor: myapp_get_color.primary_300,
-    //                 borderColor: myapp_get_color.primary_500,
-    //                 borderWidth: 1,
-    //                 data: realisasi
-    //             }
-    //         ]
+    var barChart_kegiatan = function() {
+        var pr_kegiatan = {
+            "pr_kegiatan_array": <?php echo json_encode($pagu_realisasi_kegiatan) ?>
+        };
+        var labels = pr_kegiatan.pr_kegiatan_array.map(function(e) {
+            return e.nama_kegiatan;
+        });
+        var pagu = pr_kegiatan.pr_kegiatan_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_kegiatan.pr_kegiatan_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
 
-    //     };
-    //     var config = {
-    //         type: 'bar',
-    //         data: barChartData,
-    //         options: {
-    //             responsive: true,
-    //             legend: {
-    //                 position: 'top',
-    //             },
-    //             title: {
-    //                 display: false,
-    //                 text: 'Bar Chart'
-    //             },
-    //             scales: {
-    //                 xAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: '6 months forecast'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }],
-    //                 yAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: 'Profit margin (approx)'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }]
-    //             }
-    //         }
-    //     }
-    //     new Chart($("#barChart_kegiatan > canvas").get(0).getContext("2d"), config);
-    // }
-    // /* bar char kegiatan-- end */
-    // /* bar char kro */
-    // var barChart_kro = function() {
-    //     var pr_kro = {
-    //         "pr_kro_array": <?php echo json_encode($pagu_realisasi_kro) ?>
-    //     };
-    //     var labels = pr_kro.pr_kro_array.map(function(e) {
-    //         return e.nama_kro;
-    //     });
-    //     var pagu = pr_kro.pr_kro_array.map(function(e) {
-    //         return e.pagu;
-    //     });
-    //     var realisasi = pr_kro.pr_kro_array.map(function(e) {
-    //         return e.realisasi;
-    //     });
-    //     var barChartData = {
-    //         labels: labels,
-    //         datasets: [{
-    //                 label: "Pagu",
-    //                 backgroundColor: myapp_get_color.success_300,
-    //                 borderColor: myapp_get_color.success_500,
-    //                 borderWidth: 1,
-    //                 data: pagu
-    //             },
-    //             {
-    //                 label: "Realisasi",
-    //                 backgroundColor: myapp_get_color.primary_300,
-    //                 borderColor: myapp_get_color.primary_500,
-    //                 borderWidth: 1,
-    //                 data: realisasi
-    //             }
-    //         ]
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                }
+            }
+        }
+        new Chart($("#barChart_kegiatan > canvas").get(0).getContext("2d"), config);
+    }
+    /* bar char kegiatan-- end */
+    /* bar char kro */
+    var barChart_kro = function() {
+        var pr_kro = {
+            "pr_kro_array": <?php echo json_encode($pagu_realisasi_kro)
+                            ?>
+        };
+        var labels = pr_kro.pr_kro_array.map(function(e) {
+            return e.nama_kro;
+        });
+        var pagu = pr_kro.pr_kro_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_kro.pr_kro_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
 
-    //     };
-    //     var config = {
-    //         type: 'bar',
-    //         data: barChartData,
-    //         options: {
-    //             responsive: true,
-    //             legend: {
-    //                 position: 'top',
-    //             },
-    //             title: {
-    //                 display: false,
-    //                 text: 'Bar Chart'
-    //             },
-    //             scales: {
-    //                 xAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: '6 months forecast'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }],
-    //                 yAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: 'Profit margin (approx)'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }]
-    //             }
-    //         }
-    //     }
-    //     new Chart($("#barChart_kro > canvas").get(0).getContext("2d"), config);
-    // }
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                }
+            }
+        }
+        new Chart($("#barChart_kro > canvas").get(0).getContext("2d"), config);
+    }
 
-    // /* bar char kro -- end */
-    // /* bar chart akun */
-    // var barChart_akun = function() {
-    //     var pr_akun = {
-    //         "pr_akun_array": <?php echo json_encode($pagu_realisasi_akun) ?>
-    //     };
-    //     var labels = pr_akun.pr_akun_array.map(function(e) {
-    //         return e.nama_akun;
-    //     });
-    //     var pagu = pr_akun.pr_akun_array.map(function(e) {
-    //         return e.pagu;
-    //     });
-    //     var realisasi = pr_akun.pr_akun_array.map(function(e) {
-    //         return e.realisasi;
-    //     });
-    //     var barChartData = {
-    //         labels: labels,
-    //         datasets: [{
-    //                 label: "Pagu",
-    //                 backgroundColor: myapp_get_color.success_300,
-    //                 borderColor: myapp_get_color.success_500,
-    //                 borderWidth: 1,
-    //                 data: pagu
-    //             },
-    //             {
-    //                 label: "Realisasi",
-    //                 backgroundColor: myapp_get_color.primary_300,
-    //                 borderColor: myapp_get_color.primary_500,
-    //                 borderWidth: 1,
-    //                 data: realisasi
-    //             }
-    //         ]
+    /* bar char kro -- end */
+    /* bar chart akun */
+    var barChart_akun = function() {
+        var pr_akun = {
+            "pr_akun_array": <?php echo json_encode($pagu_realisasi_akun) ?>
+        };
+        var labels = pr_akun.pr_akun_array.map(function(e) {
+            return e.nama_akun;
+        });
+        var pagu = pr_akun.pr_akun_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_akun.pr_akun_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
 
-    //     };
-    //     var config = {
-    //         type: 'bar',
-    //         data: barChartData,
-    //         options: {
-    //             responsive: true,
-    //             legend: {
-    //                 position: 'top',
-    //             },
-    //             title: {
-    //                 display: false,
-    //                 text: 'Bar Chart'
-    //             },
-    //             scales: {
-    //                 xAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: '6 months forecast'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }],
-    //                 yAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: 'Profit margin (approx)'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }]
-    //             }
-    //         }
-    //     }
-    //     new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
-    // }
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                }
+            }
+        }
+        new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
+    }
 
-    // /* bar chart akun -- end */
-    // /* bar chart lokasi */
+    /* bar chart akun -- end */
+    /* bar chart lokasi */
 
     // var barChart_lokasi = function() {
     //     var pr_lokasi = {
-    //         "pr_lokasi_array": <?php echo json_encode($pagu_realisasi_lokasi) ?>
+    //         "pr_lokasi_array": <?php //echo json_encode($pagu_realisasi_lokasi)
+                                    ?>
     //     };
     //     var labels = pr_lokasi.pr_lokasi_array.map(function(e) {
     //         return e.nama_lokasi;
@@ -672,19 +647,12 @@ if ($this->session->userdata('id_user_level') == 1) {
     // }
 
     /* bar chart lokasi -- end */
-    // function getRandomColor() {
-    //     var letters = '789ABCD'.split('');
-    //     var color = '#';
-    //     for (var i = 0; i < 6; i++) {
-    //         color += letters[Math.round(Math.random() * 6)];
-    //     }
-    //     return color;
-    // }
+
     /* initialize all charts */
-    // $(document).ready(function() {
-    //     barChart_kegiatan();
-    //     barChart_kro();
-    //     barChart_akun();
-    //     barChart_lokasi();
-    // });
+    $(document).ready(function() {
+        barChart_kegiatan();
+        barChart_kro();
+        barChart_akun();
+        //barChart_lokasi();
+    });
 </script>
