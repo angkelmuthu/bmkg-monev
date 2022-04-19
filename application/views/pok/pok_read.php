@@ -27,7 +27,9 @@
                             </tr>
 
                         </table>
-
+                        <div class="ajax-loader text-center">
+                            <img id="loading-pok" style="display:none;" src="<?php echo base_url() ?>assets/smartadmin/img/loading.gif" class="img-responsive" />
+                        </div>
                         <div id="tampil"></div>
 
                     </div>
@@ -51,8 +53,14 @@
             type: 'POST',
             url: "<?php echo base_url(); ?>pok/pok_data/<?php echo $this->uri->segment(3) ?>",
             cache: false,
+            beforeSend: function() {
+                $("#loading-pok").show();
+            },
             success: function(data) {
                 $("#tampil").html(data);
+            },
+            complete: function() {
+                $('#loading-pok').hide();
             }
         });
     });
