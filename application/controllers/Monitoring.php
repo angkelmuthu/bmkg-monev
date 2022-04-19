@@ -29,4 +29,20 @@ class Monitoring extends CI_Controller
         $data['monitoring'] = $this->Monitoring_model->monitoring($ta, $lokasi);
         $this->template->load('template', 'monitoring', $data);
     }
+
+    public function status()
+    {
+        if (!empty($_GET['ta'])) {
+            $ta = $_GET['ta'];
+        } else {
+            $ta = date('Y');
+        }
+        if (!empty($_GET['bulan'])) {
+            $bulan = $_GET['bulan'];
+        } else {
+            $bulan = date('m');
+        }
+        $data['monitoring'] = $this->Monitoring_model->monitoring_status($ta, $bulan);
+        $this->template->load('template', 'monitoring_status', $data);
+    }
 }
