@@ -67,4 +67,16 @@ class Monitoring_model extends CI_Model
         // }
         return $this->db->get()->result();
     }
+
+    function chart($ta, $bulan)
+    {
+        $this->db->select('if(b.status is null,"Draft",b.`status`) as status,COUNT(ifnull(b.`status`,"Draft")) as jml');
+        $this->db->from('t_program a');
+        $this->db->join('t_status_kirim b', 'a.id_program = b.id_program AND a.tahun_anggaran = b.tahun and b.bulan=' . $bulan . '', 'left');
+        if (!empty($ta)) {
+            $this->db->where('a.tahun_anggaran', $ta);
+        }
+        $this->db->group_by('b.status');
+        return $this->db->get()->result();
+    }
 }

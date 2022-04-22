@@ -43,6 +43,7 @@ class Monitoring extends CI_Controller
             $bulan = date('m');
         }
         $data['monitoring'] = $this->Monitoring_model->monitoring_status($ta, $bulan);
+        $data['chart'] = $this->Monitoring_model->chart($ta, $bulan);
         $this->template->load('template', 'monitoring_status', $data);
     }
 }
