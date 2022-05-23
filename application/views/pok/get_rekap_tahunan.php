@@ -93,6 +93,55 @@
                 <td class="text-center"></td>
                
             </tr>
+				<?php
+           $this->db->select('a.*,f.nama_balai,f.kode_balai');
+            $this->db->from('t_program a');
+			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
+            $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+            $this->db->join('ref_satker d', 'd.kode_satker=b.kode_satker', 'LEFT');
+            $this->db->join('ref_lokasi e', 'e.kode_lokasi=d.kode_lokasi', 'LEFT');
+            $this->db->join('ref_balai f', 'e.kode_balai=f.kode_balai', 'LEFT');
+            $this->db->where('a.tahun_anggaran', $tahun_anggaran);
+            $this->db->group_by('d.kode_lokasi');
+			$list_balai = $this->db->get()->result();
+		//	var_dump($list_balai);
+			foreach ($list_balai as $balai) { ?>
+                <tr>
+                    <td class="text-right"><?php echo $balai->kode_balai ?></td>
+                    <td class="text-left fw-700"><?php echo $balai->nama_balai ?></td>
+                    <td></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+					 <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+					 <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+					 <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+                    <td class="text-right fw-700"></td>
+              
+                </tr>
+              
+			  
             <!-- program -->
 			<?php
             $this->db->select('a.*,e.nama_lokasi,e.kode_lokasi,a.kode_satker,sum(b.volume)as vol,
@@ -111,8 +160,10 @@
             $this->db->join('ref_satker d', 'd.kode_satker=b.kode_satker', 'LEFT');
             $this->db->join('ref_lokasi e', 'e.kode_lokasi=d.kode_lokasi', 'LEFT');
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
+            $this->db->where('e.kode_balai', $balai->kode_balai);
             $this->db->group_by('d.kode_lokasi');
 			$list_prov = $this->db->get()->result();
+			//$this->output->enable_profiler(TRUE);
 			foreach ($list_prov as $prov) { ?>
                 <tr>
                     <td class="text-right"><?php echo $prov->kode_lokasi ?></td>
@@ -179,8 +230,10 @@
 			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
             $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
             $this->db->join('ref_satker d', 'd.kode_satker=b.kode_satker', 'LEFT');
+			 $this->db->join('ref_lokasi e', 'e.kode_lokasi=d.kode_lokasi', 'LEFT');
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
             $this->db->where('d.kode_lokasi', $prov->kode_lokasi);
+			  $this->db->where('e.kode_balai', $balai->kode_balai);
             $this->db->group_by('b.kode_satker');
             $list_program = $this->db->get()->result();
 			//$this->output->enable_profiler(TRUE);
@@ -234,6 +287,7 @@
                 </tr>
               
       
+            <?php } ?>
             <?php } ?>
             <?php } ?>
         </tbody>
