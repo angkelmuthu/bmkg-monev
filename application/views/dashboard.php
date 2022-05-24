@@ -159,8 +159,9 @@ if ($this->session->userdata('id_user_level') == 1) {
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Sumber Dana</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Berdasarkan Jenis Belanja</a></li>
                                 <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li> -->
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-6" role="tab">Detail Rincian</a></li>
                             </ul>
                             <div class="tab-content p-3">
                                 <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
@@ -183,12 +184,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                                         <canvas style="width:100%; height:300px;"></canvas>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
+                                    <div id="barChart_belanja">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
+                                </div>
                                 <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
                                 <div id="barChart_lokasi">
                                     <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div> -->
-                                <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
+                                <div class="tab-pane fade" id="tab_justified-6" role="tabpanel">
                                     <table class="table table-striped table-bordered" id=myTable>
                                         <thead class="thead-themed">
                                             <tr>
@@ -569,6 +575,87 @@ if ($this->session->userdata('id_user_level') == 1) {
         new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
     }
 
+    var barChart_belanja = function() {
+        var pr_belanja = {
+            "pr_belanja_array": <?php echo json_encode($pagu_realisasi_belanja) ?>
+        };
+        var labels = pr_belanja.pr_belanja_array.map(function(e) {
+            return e.nama_akun;
+        });
+        var pagu = pr_belanja.pr_belanja_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_belanja.pr_belanja_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
+
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                }
+            }
+        }
+        new Chart($("#barChart_belanja > canvas").get(0).getContext("2d"), config);
+    }
+
     var barChart_dana = function() {
         var pr_dana = {
             "pr_dana_array": <?php echo json_encode($pagu_realisasi_dana) ?>
@@ -743,6 +830,7 @@ if ($this->session->userdata('id_user_level') == 1) {
         barChart_kro();
         barChart_akun();
         barChart_dana();
+        barChart_belanja();
         //barChart_lokasi();
     });
 </script>

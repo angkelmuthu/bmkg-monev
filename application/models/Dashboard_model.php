@@ -150,6 +150,24 @@ class Dashboard_model extends CI_Model
         return $this->db->get()->result();
     }
 
+    function pagu_realisasi_belanja($ta, $satker)
+    {
+        $this->db->select('CASE
+        WHEN left(a.kode_akun,2)=51 THEN "Operasional"
+        WHEN left(a.kode_akun,2)=52 THEN "Barang"
+        ELSE "Modal" END as nama_akun,
+        sum(a.jumlah) as pagu,
+        sum(ifnull(b.ang_januari,0))+sum(ifnull(b.ang_februari,0))+sum(ifnull(b.ang_maret,0))+sum(ifnull(b.ang_april,0))+sum(ifnull(b.ang_mei,0))+sum(ifnull(b.ang_juni,0))+sum(ifnull(b.ang_juli,0))+sum(ifnull(b.ang_agustus,0))+sum(ifnull(b.ang_september,0))+sum(ifnull(b.ang_oktober,0))+sum(ifnull(b.ang_november,0))+sum(ifnull(b.ang_desember,0)) as realisasi');
+        $this->db->from('t_item a');
+        $this->db->join('t_item_realisasi b', 'a.id_item = b.id_item', 'left');
+        $this->db->where('a.tahun_anggaran', $ta);
+        if (!empty($satker)) {
+            $this->db->where('a.kode_satker', $satker);
+        }
+        $this->db->group_by('left(a.kode_akun,2)');
+        return $this->db->get()->result();
+    }
+
     function pagu_realisasi_dana($ta, $satker)
     {
         $this->db->select('c.nama_beban,

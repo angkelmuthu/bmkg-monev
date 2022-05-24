@@ -46,6 +46,7 @@ class Dashboard extends CI_Controller
             //'pagu_realisasi_lokasi' => $this->Dashboard_model->pagu_realisasi_lokasi($ta, $satker),
             'pagu_realisasi_akun' => $this->Dashboard_model->pagu_realisasi_akun($ta, $satker),
             'pagu_realisasi_dana' => $this->Dashboard_model->pagu_realisasi_dana($ta, $satker),
+            'pagu_realisasi_belanja' => $this->Dashboard_model->pagu_realisasi_belanja($ta, $satker),
             'pagu_realisasi_detail' => $this->Dashboard_model->pagu_realisasi_detail($ta, $satker),
         );
         $this->template->load('template', 'dashboard', $data);
