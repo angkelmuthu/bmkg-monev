@@ -152,17 +152,18 @@ class Dashboard_model extends CI_Model
 
     function pagu_realisasi_dana($ta, $satker)
     {
-        $this->db->select('c.nama_sumber_dana,
+        $this->db->select('c.nama_beban,
         sum(a.jumlah) as pagu,
         sum(ifnull(b.ang_januari,0))+sum(ifnull(b.ang_februari,0))+sum(ifnull(b.ang_maret,0))+sum(ifnull(b.ang_april,0))+sum(ifnull(b.ang_mei,0))+sum(ifnull(b.ang_juni,0))+sum(ifnull(b.ang_juli,0))+sum(ifnull(b.ang_agustus,0))+sum(ifnull(b.ang_september,0))+sum(ifnull(b.ang_oktober,0))+sum(ifnull(b.ang_november,0))+sum(ifnull(b.ang_desember,0)) as realisasi');
         $this->db->from('t_item a');
+        $this->db->join('t_akun aa', 'a.kode_akun = aa.kode_akun AND a.kode_komponen_sub = aa.kode_komponen_sub AND a.kode_komponen = aa.kode_komponen AND a.kode_ro = aa.kode_ro AND a.kode_kro = aa.kode_kro AND a.kode_kegiatan = aa.kode_kegiatan AND a.kode_program = aa.kode_program AND a.kode_dept = aa.kode_dept AND a.kode_unit_kerja = aa.kode_unit_kerja AND a.kode_satker= aa.kode_satker AND a.tahun_anggaran = aa.tahun_anggaran', 'left');
         $this->db->join('t_item_realisasi b', 'a.id_item = b.id_item', 'left');
-        $this->db->join('ref_sumber_dana c', 'a.kode_sumber_dana = c.kode_sumber_dana', 'left');
+        $this->db->join('ref_beban c', 'aa.kode_beban = c.kode_beban', 'left');
         $this->db->where('a.tahun_anggaran', $ta);
         if (!empty($satker)) {
             $this->db->where('a.kode_satker', $satker);
         }
-        $this->db->group_by('a.kode_sumber_dana');
+        $this->db->group_by('aa.kode_beban');
         return $this->db->get()->result();
     }
 

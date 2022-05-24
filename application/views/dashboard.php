@@ -119,99 +119,101 @@ if ($this->session->userdata('id_user_level') == 1) {
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div id="panel-1" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Pagu Anggaran Berdasarkan Kegiatan
-                    </h2>
-                </div>
-                <canvas id="kegiatan"></canvas>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div id="panel-1" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Pagu Anggaran Berdasarkan Jenis Belanja
-                    </h2>
-                </div>
-                <canvas id="akun"></canvas>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div id="panel-4" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Pagu Anggaran & Realisai</span>
-                    </h2>
-                    <div class="panel-toolbar">
-                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="panel-1" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Pagu Anggaran Berdasarkan Kegiatan
+                        </h2>
                     </div>
+                    <canvas id="kegiatan"></canvas>
                 </div>
-                <div class="panel-container show">
-                    <div class="panel-content">
-                        <ul class="nav nav-tabs nav-fill" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
-                            <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Sumber Dana</a></li> -->
-                            <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li> -->
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
-                        </ul>
-                        <div class="tab-content p-3">
-                            <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
-                                <div id="barChart_kegiatan">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+            </div>
+            <div class="col-sm-6">
+                <div id="panel-1" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Pagu Anggaran Berdasarkan Jenis Belanja
+                        </h2>
+                    </div>
+                    <canvas id="akun"></canvas>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="panel-4" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Pagu Anggaran & Realisai</span>
+                        </h2>
+                        <div class="panel-toolbar">
+                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                            <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                        </div>
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <ul class="nav nav-tabs nav-fill" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Sumber Dana</a></li>
+                                <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li> -->
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
+                            </ul>
+                            <div class="tab-content p-3">
+                                <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
+                                    <div id="barChart_kegiatan">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
-                                <div id="barChart_kro">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+                                <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
+                                    <div id="barChart_kro">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
-                                <div id="barChart_akun">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+                                <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
+                                    <div id="barChart_akun">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
-                                <div id="barChart_dana">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+                                <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
+                                    <div id="barChart_dana">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div> -->
-                            <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
+                                <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
                                 <div id="barChart_lokasi">
                                     <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div> -->
-                            <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
-                                <table class="table table-striped table-bordered" id=myTable>
-                                    <thead class="thead-themed">
-                                        <tr>
-                                            <th>Satker</th>
-                                            <th>Kegiatan</th>
-                                            <th>Kro</th>
-                                            <th>Akun</th>
-                                            <th>Pagu</th>
-                                            <th>Realisasi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($pagu_realisasi_detail as $row) { ?>
+                                <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
+                                    <table class="table table-striped table-bordered" id=myTable>
+                                        <thead class="thead-themed">
                                             <tr>
-                                                <td><?php echo $row->nama_satker ?></td>
-                                                <td><?php echo $row->nama_kegiatan ?></td>
-                                                <td><?php echo $row->nama_kro ?></td>
-                                                <td><?php echo $row->nama_akun ?></td>
-                                                <td class="text-right"><?php echo angka($row->pagu) ?></td>
-                                                <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                <th>Satker</th>
+                                                <th>Kegiatan</th>
+                                                <th>Kro</th>
+                                                <th>Akun</th>
+                                                <th>Pagu</th>
+                                                <th>Realisasi</th>
                                             </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($pagu_realisasi_detail as $row) { ?>
+                                                <tr>
+                                                    <td><?php echo $row->nama_satker ?></td>
+                                                    <td><?php echo $row->nama_kegiatan ?></td>
+                                                    <td><?php echo $row->nama_kro ?></td>
+                                                    <td><?php echo $row->nama_akun ?></td>
+                                                    <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -567,87 +569,86 @@ if ($this->session->userdata('id_user_level') == 1) {
         new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
     }
 
-    // var barChart_dana = function() {
-    //     var pr_dana = {
-    //         "pr_dana_array": <?php //echo json_encode($pagu_realisasi_dana) 
-                                ?>
-    //     };
-    //     var labels = pr_dana.pr_dana_array.map(function(e) {
-    //         return e.nama_akun;
-    //     });
-    //     var pagu = pr_dana.pr_dana_array.map(function(e) {
-    //         return e.pagu;
-    //     });
-    //     var realisasi = pr_dana.pr_dana_array.map(function(e) {
-    //         return e.realisasi;
-    //     });
-    //     var barChartData = {
-    //         labels: labels,
-    //         datasets: [{
-    //                 label: "Pagu",
-    //                 backgroundColor: myapp_get_color.success_300,
-    //                 borderColor: myapp_get_color.success_500,
-    //                 borderWidth: 1,
-    //                 data: pagu
-    //             },
-    //             {
-    //                 label: "Realisasi",
-    //                 backgroundColor: myapp_get_color.primary_300,
-    //                 borderColor: myapp_get_color.primary_500,
-    //                 borderWidth: 1,
-    //                 data: realisasi
-    //             }
-    //         ]
+    var barChart_dana = function() {
+        var pr_dana = {
+            "pr_dana_array": <?php echo json_encode($pagu_realisasi_dana) ?>
+        };
+        var labels = pr_dana.pr_dana_array.map(function(e) {
+            return e.nama_beban;
+        });
+        var pagu = pr_dana.pr_dana_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_dana.pr_dana_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
 
-    //     };
-    //     var config = {
-    //         type: 'bar',
-    //         data: barChartData,
-    //         options: {
-    //             responsive: true,
-    //             legend: {
-    //                 position: 'top',
-    //             },
-    //             title: {
-    //                 display: false,
-    //                 text: 'Bar Chart'
-    //             },
-    //             scales: {
-    //                 xAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: '6 months forecast'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }],
-    //                 yAxes: [{
-    //                     display: true,
-    //                     scaleLabel: {
-    //                         display: false,
-    //                         labelString: 'Profit margin (approx)'
-    //                     },
-    //                     gridLines: {
-    //                         display: true,
-    //                         color: "#f2f2f2"
-    //                     },
-    //                     ticks: {
-    //                         beginAtZero: true,
-    //                         fontSize: 11
-    //                     }
-    //                 }]
-    //             }
-    //         }
-    //     }
-    //     new Chart($("#barChart_dana > canvas").get(0).getContext("2d"), config);
-    // }
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                }
+            }
+        }
+        new Chart($("#barChart_dana > canvas").get(0).getContext("2d"), config);
+    }
 
     /* bar chart akun -- end */
     /* bar chart lokasi */
@@ -741,6 +742,7 @@ if ($this->session->userdata('id_user_level') == 1) {
         barChart_kegiatan();
         barChart_kro();
         barChart_akun();
+        barChart_dana();
         //barChart_lokasi();
     });
 </script>
