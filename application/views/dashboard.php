@@ -80,7 +80,7 @@ if ($this->session->userdata('id_user_level') == 1) {
     </form>
     <div class="row">
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-info rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
                     <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($pagu) ?>
@@ -100,7 +100,7 @@ if ($this->session->userdata('id_user_level') == 1) {
             </div>
         </div> -->
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-success-500 rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
                     <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($realisasi_pagu) ?>
@@ -110,7 +110,7 @@ if ($this->session->userdata('id_user_level') == 1) {
             </div>
         </div>
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-warning-600 rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
                     <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($realisasi_fisik) ?>
@@ -133,7 +133,7 @@ if ($this->session->userdata('id_user_level') == 1) {
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Pagu Anggaran Berdasarkan Akun
+                        Pagu Anggaran Berdasarkan Jenis Belanja
                     </h2>
                 </div>
                 <canvas id="akun"></canvas>
@@ -157,6 +157,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Sumber Dana</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li> -->
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
                         </ul>
@@ -176,6 +177,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                                     <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
                             </div>
+                            <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
+                                <div id="barChart_dana">
+                                    <canvas style="width:100%; height:300px;"></canvas>
+                                </div>
+                            </div> -->
                             <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
                                 <div id="barChart_lokasi">
                                     <canvas style="width:100%; height:300px;"></canvas>
@@ -303,7 +309,7 @@ if ($this->session->userdata('id_user_level') == 1) {
         options: {
             responsive: true,
             legend: {
-                display: false,
+                display: true,
                 // position: 'right',
                 // labels: {
                 //     boxWidth: 20,
@@ -560,6 +566,88 @@ if ($this->session->userdata('id_user_level') == 1) {
         }
         new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
     }
+
+    // var barChart_dana = function() {
+    //     var pr_dana = {
+    //         "pr_dana_array": <?php //echo json_encode($pagu_realisasi_dana) 
+                                ?>
+    //     };
+    //     var labels = pr_dana.pr_dana_array.map(function(e) {
+    //         return e.nama_akun;
+    //     });
+    //     var pagu = pr_dana.pr_dana_array.map(function(e) {
+    //         return e.pagu;
+    //     });
+    //     var realisasi = pr_dana.pr_dana_array.map(function(e) {
+    //         return e.realisasi;
+    //     });
+    //     var barChartData = {
+    //         labels: labels,
+    //         datasets: [{
+    //                 label: "Pagu",
+    //                 backgroundColor: myapp_get_color.success_300,
+    //                 borderColor: myapp_get_color.success_500,
+    //                 borderWidth: 1,
+    //                 data: pagu
+    //             },
+    //             {
+    //                 label: "Realisasi",
+    //                 backgroundColor: myapp_get_color.primary_300,
+    //                 borderColor: myapp_get_color.primary_500,
+    //                 borderWidth: 1,
+    //                 data: realisasi
+    //             }
+    //         ]
+
+    //     };
+    //     var config = {
+    //         type: 'bar',
+    //         data: barChartData,
+    //         options: {
+    //             responsive: true,
+    //             legend: {
+    //                 position: 'top',
+    //             },
+    //             title: {
+    //                 display: false,
+    //                 text: 'Bar Chart'
+    //             },
+    //             scales: {
+    //                 xAxes: [{
+    //                     display: true,
+    //                     scaleLabel: {
+    //                         display: false,
+    //                         labelString: '6 months forecast'
+    //                     },
+    //                     gridLines: {
+    //                         display: true,
+    //                         color: "#f2f2f2"
+    //                     },
+    //                     ticks: {
+    //                         beginAtZero: true,
+    //                         fontSize: 11
+    //                     }
+    //                 }],
+    //                 yAxes: [{
+    //                     display: true,
+    //                     scaleLabel: {
+    //                         display: false,
+    //                         labelString: 'Profit margin (approx)'
+    //                     },
+    //                     gridLines: {
+    //                         display: true,
+    //                         color: "#f2f2f2"
+    //                     },
+    //                     ticks: {
+    //                         beginAtZero: true,
+    //                         fontSize: 11
+    //                     }
+    //                 }]
+    //             }
+    //         }
+    //     }
+    //     new Chart($("#barChart_dana > canvas").get(0).getContext("2d"), config);
+    // }
 
     /* bar chart akun -- end */
     /* bar chart lokasi */

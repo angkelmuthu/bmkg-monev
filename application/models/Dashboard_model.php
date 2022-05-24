@@ -72,14 +72,16 @@ class Dashboard_model extends CI_Model
 
     function akun($ta, $satker)
     {
-        $this->db->select('c.nama_akun,sum(a.jumlah) as pagu');
+        $this->db->select('CASE
+        WHEN left(a.kode_akun,2)=51 THEN "Operasional"
+        WHEN left(a.kode_akun,2)=52 THEN "Barang"
+        ELSE "Modal" END as nama_akun,sum(a.jumlah) as pagu');
         $this->db->from('t_item a');
-        $this->db->join('ref_akun c', 'a.kode_akun = c.kode_akun', 'left');
         $this->db->where('a.tahun_anggaran', $ta);
         if (!empty($satker)) {
             $this->db->where('kode_satker', $satker);
         }
-        $this->db->group_by('a.kode_akun');
+        $this->db->group_by('left(a.kode_akun,2)');
         $query = $this->db->get();
         return $query->result();
     }
@@ -145,6 +147,22 @@ class Dashboard_model extends CI_Model
             $this->db->where('a.kode_satker', $satker);
         }
         $this->db->group_by('a.kode_akun');
+        return $this->db->get()->result();
+    }
+
+    function pagu_realisasi_dana($ta, $satker)
+    {
+        $this->db->select('c.nama_sumber_dana,
+        sum(a.jumlah) as pagu,
+        sum(ifnull(b.ang_januari,0))+sum(ifnull(b.ang_februari,0))+sum(ifnull(b.ang_maret,0))+sum(ifnull(b.ang_april,0))+sum(ifnull(b.ang_mei,0))+sum(ifnull(b.ang_juni,0))+sum(ifnull(b.ang_juli,0))+sum(ifnull(b.ang_agustus,0))+sum(ifnull(b.ang_september,0))+sum(ifnull(b.ang_oktober,0))+sum(ifnull(b.ang_november,0))+sum(ifnull(b.ang_desember,0)) as realisasi');
+        $this->db->from('t_item a');
+        $this->db->join('t_item_realisasi b', 'a.id_item = b.id_item', 'left');
+        $this->db->join('ref_sumber_dana c', 'a.kode_sumber_dana = c.kode_sumber_dana', 'left');
+        $this->db->where('a.tahun_anggaran', $ta);
+        if (!empty($satker)) {
+            $this->db->where('a.kode_satker', $satker);
+        }
+        $this->db->group_by('a.kode_sumber_dana');
         return $this->db->get()->result();
     }
 
