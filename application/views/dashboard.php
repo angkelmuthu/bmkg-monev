@@ -124,7 +124,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
                         <h2>
-                            Pagu Anggaran Berdasarkan Kegiatan
+                            Pagu Anggaran Berdasarkan Program
                         </h2>
                     </div>
                     <canvas id="kegiatan"></canvas>
@@ -258,7 +258,7 @@ if ($this->session->userdata('id_user_level') == 1) {
     };
 
     var labels = kegiatan_json.kegiatan_array.map(function(e) {
-        return e.nama_kegiatan;
+        return e.nama_program;
     });
     var data = kegiatan_json.kegiatan_array.map(function(e) {
         return e.pagu;
@@ -279,12 +279,23 @@ if ($this->session->userdata('id_user_level') == 1) {
         options: {
             responsive: true,
             legend: {
-                display: false,
+                display: true,
                 // position: 'right',
                 // labels: {
                 //     boxWidth: 20,
                 //     padding: 20
                 // }
+            },
+            tooltips: {
+                enabled: true,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index];
+                        var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                        return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                }
+
             }
         }
     });
@@ -323,6 +334,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                 //     boxWidth: 20,
                 //     padding: 20
                 // }
+            },
+            tooltips: {
+                enabled: true,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index];
+                        var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                        return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                }
+
             }
         }
     });
@@ -403,6 +425,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
@@ -486,6 +519,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
@@ -569,6 +613,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
@@ -650,6 +705,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
@@ -731,6 +797,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }

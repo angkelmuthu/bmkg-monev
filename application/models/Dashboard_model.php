@@ -58,14 +58,14 @@ class Dashboard_model extends CI_Model
 
     function kegiatan($ta, $satker)
     {
-        $this->db->select('c.nama_kegiatan,sum(a.jumlah) as pagu');
+        $this->db->select('c.nama_program,sum(a.jumlah) as pagu');
         $this->db->from('t_item a');
-        $this->db->join('ref_kegiatan c', 'a.kode_kegiatan = c.kode_kegiatan AND a.kode_program = c.kode_program', 'left');
+        $this->db->join('ref_program c', 'a.kode_program = c.kode_program', 'left');
         $this->db->where('a.tahun_anggaran', $ta);
         if (!empty($satker)) {
             $this->db->where('a.kode_satker', $satker);
         }
-        $this->db->group_by('a.kode_kegiatan');
+        $this->db->group_by('a.kode_program');
         $query = $this->db->get();
         return $query->result();
     }
@@ -73,7 +73,7 @@ class Dashboard_model extends CI_Model
     function akun($ta, $satker)
     {
         $this->db->select('CASE
-        WHEN left(a.kode_akun,2)=51 THEN "Operasional"
+        WHEN left(a.kode_akun,2)=51 THEN "Pegawai"
         WHEN left(a.kode_akun,2)=52 THEN "Barang"
         ELSE "Modal" END as nama_akun,sum(a.jumlah) as pagu');
         $this->db->from('t_item a');
@@ -153,7 +153,7 @@ class Dashboard_model extends CI_Model
     function pagu_realisasi_belanja($ta, $satker)
     {
         $this->db->select('CASE
-        WHEN left(a.kode_akun,2)=51 THEN "Operasional"
+        WHEN left(a.kode_akun,2)=51 THEN "Pegawai"
         WHEN left(a.kode_akun,2)=52 THEN "Barang"
         ELSE "Modal" END as nama_akun,
         sum(a.jumlah) as pagu,
