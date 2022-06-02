@@ -80,7 +80,7 @@ if ($this->session->userdata('id_user_level') == 1) {
     </form>
     <div class="row">
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-info rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
                     <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($pagu) ?>
@@ -100,7 +100,7 @@ if ($this->session->userdata('id_user_level') == 1) {
             </div>
         </div> -->
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-success-500 rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
                     <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($realisasi_pagu) ?>
@@ -110,7 +110,7 @@ if ($this->session->userdata('id_user_level') == 1) {
             </div>
         </div>
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-warning-600 rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
                     <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($realisasi_fisik) ?>
@@ -119,93 +119,107 @@ if ($this->session->userdata('id_user_level') == 1) {
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div id="panel-1" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Pagu Anggaran Berdasarkan Kegiatan
-                    </h2>
-                </div>
-                <canvas id="kegiatan"></canvas>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div id="panel-1" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Pagu Anggaran Berdasarkan Akun
-                    </h2>
-                </div>
-                <canvas id="akun"></canvas>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div id="panel-4" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Pagu Anggaran & Realisai</span>
-                    </h2>
-                    <div class="panel-toolbar">
-                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="panel-1" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Pagu Anggaran Berdasarkan Program
+                        </h2>
                     </div>
+                    <canvas id="kegiatan"></canvas>
                 </div>
-                <div class="panel-container show">
-                    <div class="panel-content">
-                        <ul class="nav nav-tabs nav-fill" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Detail Rincian</a></li>
-                        </ul>
-                        <div class="tab-content p-3">
-                            <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
-                                <div id="barChart_kegiatan">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+            </div>
+            <div class="col-sm-6">
+                <div id="panel-1" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Pagu Anggaran Berdasarkan Jenis Belanja
+                        </h2>
+                    </div>
+                    <canvas id="akun"></canvas>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="panel-4" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Pagu Anggaran & Realisai</span>
+                        </h2>
+                        <div class="panel-toolbar">
+                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                            <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                        </div>
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <ul class="nav nav-tabs nav-fill" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Berdasarkan Kegiatan</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Berdasarkan Output</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Berdasarkan Akun</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Sumber Dana</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-5" role="tab">Berdasarkan Jenis Belanja</a></li>
+                                <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-4" role="tab">Berdasarkan Lokasi</a></li> -->
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-6" role="tab">Detail Rincian</a></li>
+                            </ul>
+                            <div class="tab-content p-3">
+                                <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
+                                    <div id="barChart_kegiatan">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
-                                <div id="barChart_kro">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+                                <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
+                                    <div id="barChart_kro">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
-                                <div id="barChart_akun">
-                                    <canvas style="width:100%; height:300px;"></canvas>
+                                <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
+                                    <div id="barChart_akun">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
+                                <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
+                                    <div id="barChart_dana">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
+                                    <div id="barChart_belanja">
+                                        <canvas style="width:100%; height:300px;"></canvas>
+                                    </div>
+                                </div>
+                                <!-- <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
                                 <div id="barChart_lokasi">
                                     <canvas style="width:100%; height:300px;"></canvas>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab_justified-5" role="tabpanel">
-                                <table class="table table-striped table-bordered" id=myTable>
-                                    <thead class="thead-themed">
-                                        <tr>
-                                            <th>Satker</th>
-                                            <th>Kegiatan</th>
-                                            <th>Kro</th>
-                                            <th>Akun</th>
-                                            <th>Pagu</th>
-                                            <th>Realisasi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($pagu_realisasi_detail as $row) { ?>
+                            </div> -->
+                                <div class="tab-pane fade" id="tab_justified-6" role="tabpanel">
+                                    <table class="table table-striped table-bordered" id=myTable>
+                                        <thead class="thead-themed">
                                             <tr>
-                                                <td><?php echo $row->nama_satker ?></td>
-                                                <td><?php echo $row->nama_kegiatan ?></td>
-                                                <td><?php echo $row->nama_kro ?></td>
-                                                <td><?php echo $row->nama_akun ?></td>
-                                                <td class="text-right"><?php echo angka($row->pagu) ?></td>
-                                                <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                <th>Satker</th>
+                                                <th>Kegiatan</th>
+                                                <th>Kro</th>
+                                                <th>Akun</th>
+                                                <th>Pagu</th>
+                                                <th>Realisasi</th>
                                             </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($pagu_realisasi_detail as $row) { ?>
+                                                <tr>
+                                                    <td><?php echo $row->nama_satker ?></td>
+                                                    <td><?php echo $row->nama_kegiatan ?></td>
+                                                    <td><?php echo $row->nama_kro ?></td>
+                                                    <td><?php echo $row->nama_akun ?></td>
+                                                    <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -214,6 +228,8 @@ if ($this->session->userdata('id_user_level') == 1) {
         </div>
     </div>
 </main>
+<?php //$this->output->enable_profiler(TRUE);
+?>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
@@ -227,12 +243,22 @@ if ($this->session->userdata('id_user_level') == 1) {
             this.form.submit();
         });
     });
+
+    function getRandomColor() {
+        var letters = '789ABCD'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.round(Math.random() * 6)];
+        }
+        return color;
+    }
+
     var kegiatan_json = {
         "kegiatan_array": <?php echo json_encode($kegiatan) ?>
     };
 
     var labels = kegiatan_json.kegiatan_array.map(function(e) {
-        return e.nama_kegiatan;
+        return e.nama_program;
     });
     var data = kegiatan_json.kegiatan_array.map(function(e) {
         return e.pagu;
@@ -241,43 +267,35 @@ if ($this->session->userdata('id_user_level') == 1) {
     var ctx = document.getElementById('kegiatan').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'pie',
-        /* w  ww  .de mo  2s .  c  om*/
         data: {
             labels: labels,
             datasets: [{
                 label: 'Kegiatan',
                 data: data,
-                backgroundColor: [
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor()
-                ],
+                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
                 hoverOffset: 4
             }]
         },
         options: {
             responsive: true,
             legend: {
-                position: 'right',
-                labels: {
-                    boxWidth: 20,
-                    padding: 20
+                display: true,
+                // position: 'right',
+                // labels: {
+                //     boxWidth: 20,
+                //     padding: 20
+                // }
+            },
+            tooltips: {
+                enabled: true,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index];
+                        var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                        return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
                 }
+
             }
         }
     });
@@ -301,39 +319,32 @@ if ($this->session->userdata('id_user_level') == 1) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Jenis Belanja',
+                label: 'Kegiatan',
                 data: data,
-                backgroundColor: [
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor(),
-                    getRandomColor()
-                ],
+                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
                 hoverOffset: 4
             }]
         },
         options: {
             responsive: true,
             legend: {
-                position: 'right',
-                labels: {
-                    boxWidth: 20,
-                    padding: 20
+                display: true,
+                // position: 'right',
+                // labels: {
+                //     boxWidth: 20,
+                //     padding: 20
+                // }
+            },
+            tooltips: {
+                enabled: true,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index];
+                        var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                        return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
                 }
+
             }
         }
     });
@@ -414,6 +425,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
@@ -423,7 +445,8 @@ if ($this->session->userdata('id_user_level') == 1) {
     /* bar char kro */
     var barChart_kro = function() {
         var pr_kro = {
-            "pr_kro_array": <?php echo json_encode($pagu_realisasi_kro) ?>
+            "pr_kro_array": <?php echo json_encode($pagu_realisasi_kro)
+                            ?>
         };
         var labels = pr_kro.pr_kro_array.map(function(e) {
             return e.nama_kro;
@@ -496,6 +519,17 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
@@ -579,26 +613,34 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
         new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
     }
 
-    /* bar chart akun -- end */
-    /* bar chart lokasi */
-
-    var barChart_lokasi = function() {
-        var pr_lokasi = {
-            "pr_lokasi_array": <?php echo json_encode($pagu_realisasi_lokasi) ?>
+    var barChart_belanja = function() {
+        var pr_belanja = {
+            "pr_belanja_array": <?php echo json_encode($pagu_realisasi_belanja) ?>
         };
-        var labels = pr_lokasi.pr_lokasi_array.map(function(e) {
-            return e.nama_lokasi;
+        var labels = pr_belanja.pr_belanja_array.map(function(e) {
+            return e.nama_akun;
         });
-        var pagu = pr_lokasi.pr_lokasi_array.map(function(e) {
+        var pagu = pr_belanja.pr_belanja_array.map(function(e) {
             return e.pagu;
         });
-        var realisasi = pr_lokasi.pr_lokasi_array.map(function(e) {
+        var realisasi = pr_belanja.pr_belanja_array.map(function(e) {
             return e.realisasi;
         });
         var barChartData = {
@@ -663,26 +705,209 @@ if ($this->session->userdata('id_user_level') == 1) {
                             fontSize: 11
                         }
                     }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
                 }
             }
         }
-        new Chart($("#barChart_lokasi > canvas").get(0).getContext("2d"), config);
+        new Chart($("#barChart_belanja > canvas").get(0).getContext("2d"), config);
     }
 
-    /* bar chart lokasi -- end */
-    function getRandomColor() {
-        var letters = '789ABCD'.split('');
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.round(Math.random() * 6)];
+    var barChart_dana = function() {
+        var pr_dana = {
+            "pr_dana_array": <?php echo json_encode($pagu_realisasi_dana) ?>
+        };
+        var labels = pr_dana.pr_dana_array.map(function(e) {
+            return e.nama_beban;
+        });
+        var pagu = pr_dana.pr_dana_array.map(function(e) {
+            return e.pagu;
+        });
+        var realisasi = pr_dana.pr_dana_array.map(function(e) {
+            return e.realisasi;
+        });
+        var barChartData = {
+            labels: labels,
+            datasets: [{
+                    label: "Pagu",
+                    backgroundColor: myapp_get_color.success_300,
+                    borderColor: myapp_get_color.success_500,
+                    borderWidth: 1,
+                    data: pagu
+                },
+                {
+                    label: "Realisasi",
+                    backgroundColor: myapp_get_color.primary_300,
+                    borderColor: myapp_get_color.primary_500,
+                    borderWidth: 1,
+                    data: realisasi
+                }
+            ]
+
+        };
+        var config = {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '6 months forecast'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Profit margin (approx)'
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "#f2f2f2"
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 11
+                        }
+                    }]
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+
+                }
+            }
         }
-        return color;
+        new Chart($("#barChart_dana > canvas").get(0).getContext("2d"), config);
     }
+
+    /* bar chart akun -- end */
+    /* bar chart lokasi */
+
+    // var barChart_lokasi = function() {
+    //     var pr_lokasi = {
+    //         "pr_lokasi_array": <?php //echo json_encode($pagu_realisasi_lokasi)
+                                    ?>
+    //     };
+    //     var labels = pr_lokasi.pr_lokasi_array.map(function(e) {
+    //         return e.nama_lokasi;
+    //     });
+    //     var pagu = pr_lokasi.pr_lokasi_array.map(function(e) {
+    //         return e.pagu;
+    //     });
+    //     var realisasi = pr_lokasi.pr_lokasi_array.map(function(e) {
+    //         return e.realisasi;
+    //     });
+    //     var barChartData = {
+    //         labels: labels,
+    //         datasets: [{
+    //                 label: "Pagu",
+    //                 backgroundColor: myapp_get_color.success_300,
+    //                 borderColor: myapp_get_color.success_500,
+    //                 borderWidth: 1,
+    //                 data: pagu
+    //             },
+    //             {
+    //                 label: "Realisasi",
+    //                 backgroundColor: myapp_get_color.primary_300,
+    //                 borderColor: myapp_get_color.primary_500,
+    //                 borderWidth: 1,
+    //                 data: realisasi
+    //             }
+    //         ]
+
+    //     };
+    //     var config = {
+    //         type: 'bar',
+    //         data: barChartData,
+    //         options: {
+    //             responsive: true,
+    //             legend: {
+    //                 position: 'top',
+    //             },
+    //             title: {
+    //                 display: false,
+    //                 text: 'Bar Chart'
+    //             },
+    //             scales: {
+    //                 xAxes: [{
+    //                     display: true,
+    //                     scaleLabel: {
+    //                         display: false,
+    //                         labelString: '6 months forecast'
+    //                     },
+    //                     gridLines: {
+    //                         display: true,
+    //                         color: "#f2f2f2"
+    //                     },
+    //                     ticks: {
+    //                         beginAtZero: true,
+    //                         fontSize: 11
+    //                     }
+    //                 }],
+    //                 yAxes: [{
+    //                     display: true,
+    //                     scaleLabel: {
+    //                         display: false,
+    //                         labelString: 'Profit margin (approx)'
+    //                     },
+    //                     gridLines: {
+    //                         display: true,
+    //                         color: "#f2f2f2"
+    //                     },
+    //                     ticks: {
+    //                         beginAtZero: true,
+    //                         fontSize: 11
+    //                     }
+    //                 }]
+    //             }
+    //         }
+    //     }
+    //     new Chart($("#barChart_lokasi > canvas").get(0).getContext("2d"), config);
+    // }
+
+    /* bar chart lokasi -- end */
+
     /* initialize all charts */
     $(document).ready(function() {
         barChart_kegiatan();
         barChart_kro();
         barChart_akun();
-        barChart_lokasi();
+        barChart_dana();
+        barChart_belanja();
+        //barChart_lokasi();
     });
 </script>

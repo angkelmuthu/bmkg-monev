@@ -52,4 +52,31 @@ class Monitoring_model extends CI_Model
         //$this->db->group_by('a.kode_satker');
         return $this->db->get()->result();
     }
+
+    function monitoring_status($ta, $bulan)
+    {
+        $this->db->select('a.kode_satker,c.nama_satker,a.kode_program,a.nama_program,b.status');
+        $this->db->from('t_program a');
+        $this->db->join('t_status_kirim b', 'a.id_program = b.id_program AND a.tahun_anggaran = b.tahun and b.bulan=' . $bulan . '', 'left');
+        $this->db->join('ref_satker c', 'a.kode_satker = c.kode_satker', 'left');
+        if (!empty($ta)) {
+            $this->db->where('a.tahun_anggaran', $ta);
+        }
+        // if (!empty($bulan)) {
+        //     $this->db->where('b.bulan', $bulan);
+        // }
+        return $this->db->get()->result();
+    }
+
+    function chart($ta, $bulan)
+    {
+        $this->db->select('if(b.status is null,"Draft",b.`status`) as status,COUNT(ifnull(b.`status`,"Draft")) as jml');
+        $this->db->from('t_program a');
+        $this->db->join('t_status_kirim b', 'a.id_program = b.id_program AND a.tahun_anggaran = b.tahun and b.bulan=' . $bulan . '', 'left');
+        if (!empty($ta)) {
+            $this->db->where('a.tahun_anggaran', $ta);
+        }
+        $this->db->group_by('b.status');
+        return $this->db->get()->result();
+    }
 }

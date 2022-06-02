@@ -30,7 +30,7 @@ class Auth extends CI_Controller
             if (password_verify($password, $user['password'])) {
                 // retrive user data to session
                 $this->session->set_userdata($merger);
-                redirect('Dashboard');
+                redirect('Pok');
             } else {
                 redirect('auth');
             }
