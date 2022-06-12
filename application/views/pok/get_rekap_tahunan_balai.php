@@ -93,7 +93,76 @@
                 <td class="text-center"></td>
                
             </tr>
-				
+				<?php
+           $this->db->select('a.*,f.nama_balai,f.kode_balai,e.nama_lokasi,e.kode_lokasi,a.kode_satker,sum(b.volume)as vol,
+			(sum(c.nominal_kontrak_januari)+sum(c.nominal_kontrak_desember)+sum(c.nominal_kontrak_februari)+sum(c.nominal_kontrak_maret)
+			+sum(c.nominal_kontrak_april)+sum(c.nominal_kontrak_mei)+sum(c.nominal_kontrak_juni)+sum(c.nominal_kontrak_juli)+sum(c.nominal_kontrak_agustus)
+			+sum(c.nominal_kontrak_september)+sum(c.nominal_kontrak_oktober)+sum(c.nominal_kontrak_november))as kontrak,
+			(sum(c.ang_januari)+sum(c.ang_desember)+sum(c.ang_februari)+sum(c.ang_maret)
+			+sum(c.ang_april)+sum(c.ang_mei)+sum(c.ang_juni)+sum(c.ang_juli)+sum(c.ang_agustus)
+			+sum(c.ang_september)+sum(c.ang_oktober)+sum(c.ang_november))as anggaran,
+			sum(c.ang_januari)as jan,sum(c.ang_desember)as des,sum(c.ang_februari)as feb,sum(c.ang_maret)
+			as mar,sum(c.ang_april)as apr,sum(c.ang_mei)as mei,sum(c.ang_juni)as jun,sum(c.ang_juli)as jul,sum(c.ang_agustus)
+			as agu,sum(c.ang_september)as sep,sum(c.ang_oktober)as okt,sum(c.ang_november)as nov,sum(b.jumlah) as total');
+            $this->db->from('t_program a');
+			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
+            $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+            $this->db->join('ref_satker d', 'd.kode_satker=b.kode_satker', 'LEFT');
+            $this->db->join('ref_lokasi e', 'e.kode_lokasi=d.kode_lokasi', 'LEFT');
+            $this->db->join('ref_balai f', 'e.kode_balai=f.kode_balai', 'LEFT');
+            $this->db->where('a.tahun_anggaran', $tahun_anggaran);
+            $this->db->group_by('f.kode_balai');
+			$list_balai = $this->db->get()->result();
+		//	var_dump($list_balai);
+		
+			foreach ($list_balai as $balai) { ?>
+                <tr>
+                    <td class="text-right"><?php echo $balai->kode_balai ?></td>
+                    <td class="text-left fw-700"><?php echo $balai->nama_balai ?></td>
+                <td><?php echo $balai->vol ?></td>
+                    <td class="text-right fw-700"><?php echo angka($balai->total) ?></td>
+                    <td class="text-right fw-700"><?php echo round(($balai->anggaran/$balai->total)*100,2) ?></td>
+                    <td class="text-right fw-700"><?php echo angka($balai->kontrak) ?></td>
+                    <td class="text-right fw-700"><?php echo angka($balai->jan) ?></td>
+                    <td class="text-right fw-700"><?php echo round(($balai->jan/$balai->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb)/$balai->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar)/$balai->total)*100,2) ?></td>
+					 <td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr)/$balai->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei)/$balai->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun)
+					/$balai->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul)
+					/$balai->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu)
+					/$balai->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu+$balai->sep) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu+$balai->sep)
+					/$balai->total)*100,2) ?></td>
+					
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu+$balai->sep+$balai->okt) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu+$balai->sep+$balai->okt)
+					/$balai->total)*100,2) ?></td>
+					
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu+
+					$balai->sep+$balai->okt+$balai->nov) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+
+					$balai->agu+$balai->sep+$balai->okt+$balai->nov)
+					/$balai->total)*100,2) ?></td>
+					<td class="text-right fw-700"><?php echo angka($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+$balai->agu+
+					$balai->sep+$balai->okt+$balai->nov+$balai->des) ?></td>
+                    <td class="text-right fw-700"><?php echo round((($balai->jan+$balai->feb+$balai->mar+$balai->apr+$balai->mei+$balai->jun+$balai->jul+
+					$balai->agu+$balai->sep+$balai->okt+$balai->nov+$balai->des)
+					/$balai->total)*100,2) ?></td>
+                    <td class="text-right fw-700"></td>
+              
+                </tr>
               
 			  
             <!-- program -->
@@ -114,6 +183,7 @@
             $this->db->join('ref_satker d', 'd.kode_satker=b.kode_satker', 'LEFT');
             $this->db->join('ref_lokasi e', 'e.kode_lokasi=d.kode_lokasi', 'LEFT');
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
+            $this->db->where('e.kode_balai', $balai->kode_balai);
             $this->db->group_by('d.kode_lokasi');
 			$list_prov = $this->db->get()->result();
 			//$this->output->enable_profiler(TRUE);
@@ -186,6 +256,7 @@
 			 $this->db->join('ref_lokasi e', 'e.kode_lokasi=d.kode_lokasi', 'LEFT');
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
             $this->db->where('d.kode_lokasi', $prov->kode_lokasi);
+			  $this->db->where('e.kode_balai', $balai->kode_balai);
             $this->db->group_by('b.kode_satker');
             $list_program = $this->db->get()->result();
 			//$this->output->enable_profiler(TRUE);
@@ -239,6 +310,7 @@
                 </tr>
               
       
+            <?php } ?>
             <?php } ?>
             <?php } ?>
         </tbody>

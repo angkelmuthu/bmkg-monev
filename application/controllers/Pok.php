@@ -61,7 +61,13 @@ class Pok extends CI_Controller
     }
 
 
-
+   public function rekap_pertahun_balai()
+    {
+        $data = array(
+            'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+        );
+        $this->template->load('template', 'pok/rekap_pertahun_balai', $data);
+    }
     public function rekap_pertahun()
     {
         $data = array(
@@ -159,6 +165,14 @@ class Pok extends CI_Controller
             'tahun_anggaran' => $tahun,
         );
         $this->load->view('pok/get_rekap_tahunan', $data);
+    }
+	public function get_rekap_tahunan_balai($tahun)
+    {
+        //$this->output->enable_profiler(TRUE);
+        $data = array(
+            'tahun_anggaran' => $tahun,
+        );
+        $this->load->view('pok/get_rekap_tahunan_balai', $data);
     }
     public function read($id)
     {
@@ -598,7 +612,6 @@ class Pok extends CI_Controller
 				$bulan[]="";
 			}
 		}
-
         $getjan = json_decode(isset($real->ket_kontrak_januari) ? $real->ket_kontrak_januari : "");
         $getfeb = json_decode(isset($real->ket_kontrak_februari) ? $real->ket_kontrak_januari : "");
         $getmar = json_decode(isset($real->ket_kontrak_maret) ? $real->ket_kontrak_maret : "");
