@@ -52,6 +52,13 @@ class Pok extends CI_Controller
         }
         $this->template->load('template', 'pok/pok_realisasi_kegiatan', $data);
     }
+	public function final_all()
+    {
+        $data = array(
+            'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+        );
+        $this->template->load('template', 'pok/final_all', $data);
+    }
     public function laporan_bulanan()
     {
         $data = array(
@@ -821,6 +828,59 @@ class Pok extends CI_Controller
 		}
 		
     }
+	function final_realisasi()
+    {
+		$cek = $this->Pok_model->get_status_realisasi_all($_POST['tahun'],$_POST['bulan']);
+		foreach($cek as $key => $val) {
+
+			 $row = $this->Pok_model->get_kirim($val->kode_satker,$val->id_program,$_POST['tahun'],$_POST['bulan']);
+			 //	var_dump($row);
+			 if (!empty($row)) {
+				if($row->status!='Final')
+				{
+					$arr = array(
+					 'flag' => 0,
+					);
+					$this->db->where('kode_satker',$val->kode_satker);
+					$this->db->where('id_program', $val->id_program);
+					$this->db->where('tahun', $_POST['tahun']);
+					$this->db->where('bulan', $_POST['bulan']);
+					$this->db->update('t_status_kirim', $arr);
+					$arr_insert = array(
+					 'kode_satker' => $val->kode_satker,
+					 'id_program' =>$val->id_program,
+					 'tahun' => $_POST['tahun'],
+					 'bulan' => $_POST['bulan'],
+					 'status' => $_POST['status'],
+					 'tgl_kirim' =>  date('Y-m-d H:i:s'),
+					 'id_user' => $this->session->userdata('id_users'),
+					 'flag' => 1,
+					 'flag_otomatis' => 1,
+					);
+					$simpan=$this->db->insert('t_status_kirim', $arr_insert);
+				}
+				
+			}else{
+				$arr_insert = array(
+					 'kode_satker' => $val->kode_satker,
+					 'id_program' => $val->id_program,
+					 'tahun' => $_POST['tahun'],
+					 'bulan' => $_POST['bulan'],
+					 'status' => $_POST['status'],
+					 'tgl_kirim' =>  date('Y-m-d H:i:s'),
+					 'id_user' => $this->session->userdata('id_users'),
+					 'flag' => 1,
+					 'flag_otomatis' => 1,
+					);
+					$simpan=$this->db->insert('t_status_kirim', $arr_insert);
+				
+			}
+		}
+		//var_dump($this->session->userdata);
+		echo "{'kode':'200','msg':'Final otomatis berhasil'}";
+		
+		
+	}
 	function kirim_realisasi()
     {
         $cek = $this->Pok_model->get_status_realisasi($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);

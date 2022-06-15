@@ -229,12 +229,25 @@ class Pok_model extends CI_Model
         $this->db->where('id_item', $id);
         return $this->db->get('t_item_realisasi')->row();
     }
+	function get_status_realisasi_all($tahun, $bulan)
+    {
+        $this->db->select('c.*,a.kode_satker,a.id_program');
+        $this->db->from('t_item_realisasi c');
+        $this->db->join('t_item b', 'c.id_item=b.id_item', 'LEFT');
+        $this->db->join('t_program a', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker
+		and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
+        $this->db->where('b.tahun_anggaran', $tahun);
+        $this->db->group_by('a.kode_program');
+
+        return $this->db->get()->result();
+    }
     function get_status_realisasi($satker, $id_program, $tahun, $bulan)
     {
         $this->db->select('c.*');
         $this->db->from('t_item_realisasi c');
         $this->db->join('t_item b', 'c.id_item=b.id_item', 'LEFT');
-        $this->db->join('t_program a', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
+        $this->db->join('t_program a', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker
+		and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
         $this->db->where('a.id_program', $id_program);
         $this->db->where('a.kode_satker', $satker);
         $this->db->where('b.tahun_anggaran', $tahun);
