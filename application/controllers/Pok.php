@@ -58,6 +58,7 @@ class Pok extends CI_Controller
             'kode_unit_kerja' => $this->session->userdata('kode_satker'),
         );
         $this->template->load('template', 'pok/final_all', $data);
+		
     }
     public function laporan_bulanan()
     {
