@@ -79,4 +79,44 @@ class Monitoring_model extends CI_Model
         $this->db->group_by('b.status');
         return $this->db->get()->result();
     }
+
+    function monitoring_new($ta, $kode_balai, $kode_lokasi, $kode_satker)
+    {
+        $this->db->where('tahun_anggaran', $ta);
+        if (!empty($kode_balai)) {
+            $this->db->where('kode_balai', $kode_balai);
+        }
+        if (!empty($kode_lokasi)) {
+            $this->db->where('kode_lokasi', $kode_lokasi);
+        }
+        if (!empty($kode_satker)) {
+            $this->db->where('kode_satker', $kode_satker);
+        }
+        $this->db->group_by('kode_balai');
+        return $this->db->get('v_monitoring_new')->result();
+    }
+    function chart_new($ta, $kode_balai, $kode_lokasi, $kode_satker)
+    {
+        if (!empty($kode_balai)) {
+            $balai = ' and b.kode_balai="' . $kode_balai . '"';
+        } else {
+            $balai = '';
+        }
+        if (!empty($kode_lokasi)) {
+            $lokasi = ' and b.kode_lokasi="' . $kode_lokasi . '"';
+        } else {
+            $lokasi = '';
+        }
+        if (!empty($kode_satker)) {
+            $satker = ' and b.kode_satker="' . $kode_satker . '"';
+        } else {
+            $satker = '';
+        }
+        $filter = 'a.status=b.status and b.tahun_anggaran=' . $ta . $balai . $lokasi . $satker;
+        $this->db->select('a.status, COUNT(b.status) as jml');
+        $this->db->from('ref_status a');
+        $this->db->join('v_monitoring_new b', $filter, 'left');
+        $this->db->group_by('a.status');
+        return $this->db->get()->result();
+    }
 }

@@ -46,4 +46,31 @@ class Monitoring extends CI_Controller
         $data['chart'] = $this->Monitoring_model->chart($ta, $bulan);
         $this->template->load('template', 'monitoring_status', $data);
     }
+
+    public function new()
+    {
+        if (!empty($_POST['ta'])) {
+            $ta = $_POST['ta'];
+        } else {
+            $ta = date('Y');
+        }
+        if (!empty($_POST['kode_balai'])) {
+            $kode_balai = $_POST['kode_balai'];
+        } else {
+            $kode_balai = '';
+        }
+        if (!empty($_POST['kode_lokasi'])) {
+            $kode_lokasi = $_POST['kode_lokasi'];
+        } else {
+            $kode_lokasi = '';
+        }
+        if (!empty($_POST['kode_satker'])) {
+            $kode_satker = $_POST['kode_satker'];
+        } else {
+            $kode_satker = '';
+        }
+        $data['monitoring'] = $this->Monitoring_model->monitoring_new($ta, $kode_balai, $kode_lokasi, $kode_satker);
+        $data['chart'] = $this->Monitoring_model->chart_new($ta, $kode_balai, $kode_lokasi, $kode_satker);
+        $this->template->load('template', 'monitoring_new', $data);
+    }
 }
