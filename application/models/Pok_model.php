@@ -229,6 +229,14 @@ class Pok_model extends CI_Model
         $this->db->where('id_item', $id);
         return $this->db->get('t_item_realisasi')->row();
     }
+	function get_satker_sakti()
+    {
+        $this->db->select('*');
+        $this->db->from('refAdmin');
+    
+
+        return $this->db->get()->result();
+    }
 	function get_status_realisasi_all($tahun, $bulan)
     {
         $this->db->select('c.*,a.kode_satker,a.id_program');

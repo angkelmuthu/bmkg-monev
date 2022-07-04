@@ -12,11 +12,45 @@ class Pok extends CI_Controller
         $this->load->model('Pok_model');
         $this->load->library('form_validation');
         $this->load->library('datatables');
+		$this->load->helper("api_sakti_helper");
     }
 
     public function index()
     {
         $this->template->load('template', 'pok/pok_list');
+    }
+	public function realisasi_sakti()
+    {
+         $row = $this->Pok_model->get_satker_sakti();
+		 $data = array(
+            'row' => $row
+         );
+		 $this->template->load('template', 'pok/realisasi_sakti',$data);
+		
+    }
+	public function get_realisasi_sakti($satker)
+    {
+          $get=realisasi($satker);
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_realisasi_sakti', $data);
+		
+    }
+	public function refAdmin()
+    {
+         //$get=refAdmin();
+		 $this->template->load('template', 'pok/refAdmin');
+		
+    }
+	public function get_refAdmin()
+    {
+          $get=refAdmin();
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_refAdmin', $data);
+		
     }
     public function realisasi()
     {
@@ -50,6 +84,7 @@ class Pok extends CI_Controller
                 'pagu' => '0',
             );
         }
+		
         $this->template->load('template', 'pok/pok_realisasi_kegiatan', $data);
     }
 	public function final_all()

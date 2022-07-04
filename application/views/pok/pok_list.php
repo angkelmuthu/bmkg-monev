@@ -89,7 +89,13 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+        
+
+      
+    });
+	
+	function getdata{
+		$.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
                 "iStart": oSettings._iDisplayStart,
                 "iEnd": oSettings.fnDisplayEnd(),
@@ -100,8 +106,7 @@
                 "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
             };
         };
-
-        var t = $("#dt-basic-example").dataTable({
+		  var t = $("#dt-basic-example").dataTable({
             initComplete: function() {
                 var api = this.api();
                 $('#mytable_filter input')
@@ -152,5 +157,6 @@
                 $('td:eq(0)', row).html(index);
             }
         });
-    });
+		
+	}
 </script>
