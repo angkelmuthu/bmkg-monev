@@ -43,6 +43,102 @@ class Pok extends CI_Controller
 		 $this->template->load('template', 'pok/refAdmin');
 		
     }
+	public function ref_status_sakti()
+    {
+		  $row = $this->Pok_model->get_satker_sakti();
+		 $data = array(
+            'row' => $row
+         );
+		 $this->template->load('template', 'pok/ref_status_sakti',$data);
+    }
+	public function ref_uraian_sakti()
+    {
+		
+		 $this->template->load('template', 'pok/ref_uraian_sakti');
+    }
+	public function get_uraian($jenis)
+    {
+          $get=refuraian($jenis);
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_uraian', $data);
+		
+    }
+	public function ref_jenis_spp()
+    {
+		
+		 $this->template->load('template', 'pok/ref_jenis_spp');
+    }
+	public function get_jenisspp()
+    {
+          $get=refjenispp();
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_jenisspp', $data);
+		
+    }
+	public function anggaran_sakti()
+    {
+		 $row = $this->Pok_model->get_satker_sakti();
+		 $data = array(
+            'row' => $row
+         );
+		 $this->template->load('template', 'pok/anggaran_sakti',$data);
+    }
+	public function get_anggaran($satker)
+    {
+          $get=anggaran($satker);
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_anggaran', $data);
+		
+    }
+	public function pejabat_sakti()
+    {
+		 $row = $this->Pok_model->get_satker_sakti();
+		 $data = array(
+            'row' => $row
+         );
+		 $this->template->load('template', 'pok/pejabat_sakti',$data);
+    }
+	public function get_pejabat($satker)
+    {
+          $get=pejabat($satker);
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_pejabat', $data);
+		
+    }
+	public function capaian_ro()
+    {
+		 $row = $this->Pok_model->get_satker_sakti();
+		 $data = array(
+            'row' => $row
+         );
+		 $this->template->load('template', 'pok/capaian_ro',$data);
+    }
+	public function get_capaianro($satker,$tahun,$bulan)
+    {
+          $get=capaian_ro($satker,$tahun,$bulan);
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_capaianro', $data);
+		
+    }
+	public function get_refstatus($satker)
+    {
+          $get=refstatus($satker);
+		  $data = array(
+            'get' => $get
+          );
+		  $this->load->view('pok/get_refstatus', $data);
+		
+    }
 	public function get_refAdmin()
     {
           $get=refAdmin();
