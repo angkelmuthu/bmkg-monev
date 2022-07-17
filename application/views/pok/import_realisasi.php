@@ -1,3 +1,4 @@
+
 <main id="js-page-content" role="main" class="page-content">
     <div class="row">
         <div class="col-xl-12">
@@ -12,7 +13,7 @@
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-					<form  method="post" enctype="multipart/form-data"  class="form-horizontal" role="form">
+					<form  method="post" enctype="multipart/form-data"  class="form-horizontal" role="form" onsubmit="return confSubmit();">
                         <table class="table table-clean">
 							<tr>
                                 <td>Tahun Anggaran</td>
@@ -36,6 +37,9 @@
 
                         </table>
 					</form>
+					 <div class="ajax-loader text-center">
+                            <img id="loading-pok" style="display:none;" src="<?php echo base_url() ?>assets/smartadmin/img/loading.gif" class="img-responsive" />
+						</div>
                         <div id="tampil"></div>
 
                     </div>
@@ -51,15 +55,22 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script>
+ function confSubmit() {
+	var r=confirm('Apakah ingin di import..??');
+     $("#loading-pok").show();
+      return r;  
+ }
     $(document).ready(function() {
         //$.fn.modal.Constructor.prototype.enforceFocus = function() {};
         //Tampilkan Data
+		 $("#loading-pok").show();
         $.ajax({
             type: 'POST',
             url: "<?php echo base_url(); ?>"+"pok/data_realisasi_omspan",
             cache: false,
             success: function(data) {
                 $("#tampil").html(data);
+				 $("#loading-pok").hide();
             }
         });
     });

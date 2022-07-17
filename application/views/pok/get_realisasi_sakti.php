@@ -4,6 +4,7 @@
         z-index: 9999 !important;
     }
 </style>
+
 <div>
     <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">

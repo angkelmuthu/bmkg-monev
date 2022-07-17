@@ -45,12 +45,14 @@
     $(document).ready(function() {
         //$.fn.modal.Constructor.prototype.enforceFocus = function() {};
         //Tampilkan Data
+		
         $.ajax({
             type: 'POST',
             url: "<?php echo base_url(); ?>pok/pok_data_realisasi/<?php echo $this->uri->segment(3) ?>",
             cache: false,
             success: function(data) {
                 $("#tampil").html(data);
+				
             }
         });
     });
