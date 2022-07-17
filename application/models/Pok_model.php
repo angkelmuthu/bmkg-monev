@@ -201,6 +201,12 @@ class Pok_model extends CI_Model
         $this->db->where('id_akun', $id_akun);
         return $this->db->get('ref_akun')->row();
     }
+	function data_ompsan()
+    {
+        $this->db->select('*');
+        $this->db->from('realisasi_omspan');
+        return $this->db->get()->result();
+    }
 
     function get_item_head($kode_dept, $kode_unit_kerja, $kode_program, $kode_kegiatan, $kode_kro, $kode_ro, $kode_komponen, $kode_komponen_sub, $kode_akun)
     {
@@ -219,6 +225,11 @@ class Pok_model extends CI_Model
         return $this->db->get('t_item')->result();
     }
 
+    function cek_realisasi_omspan($tahun)
+	{
+		$this->db->where('tahun', $tahun);
+		$this->db->delete('realisasi_omspan');
+	}
     function get_item_id($id)
     {
         $this->db->where('id_item', $id);

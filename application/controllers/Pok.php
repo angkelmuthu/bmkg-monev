@@ -43,6 +43,46 @@ class Pok extends CI_Controller
 		 $this->template->load('template', 'pok/refAdmin');
 		
     }
+	public function import_realisasi()
+    {
+         $post = $this->input->post();
+		 if(isset($post['submit'])){
+					$cek = $this->Pok_model->cek_realisasi_omspan($this->input->post('ta'));
+			 		$fp = fopen($_FILES['impor']['tmp_name'], 'rb');
+					$i=0;			  
+					while ( ($line = fgets($fp)) !== false) {
+						$i++;  
+						 $get = explode(",", $line);
+						 if ($i != 1) 
+						 {
+							 $arr = array(
+									'tahun' => $this->input->post('ta'),
+									'kdsatker' => str_replace('"','',$get[0]),
+									'ba' => str_replace('"','',$get[1]),
+									'baes1' =>str_replace('"','',$get[2]),
+									'akun' => str_replace('"','',$get[3]),
+									'program' => str_replace('"','',$get[4]),
+									'kegiatan' => str_replace('"','',$get[5]),
+									'output' => str_replace('"','',$get[6]),
+									'kewenangan' => str_replace('"','',$get[7]),
+									'sumber_dana' => str_replace('"','',$get[8]),
+									'cara_tarik' => str_replace('"','',$get[9]),
+									'kdregister' => str_replace('"','',$get[10]),
+									'lokasi' => str_replace('"','',$get[11]),
+									'budget_type' => str_replace('"','',$get[12]),
+									'tanggal' => str_replace('"','',$get[13]),
+									'amount' => str_replace('"','',$get[14]),
+									'create_date' => date('Y-m-d H:i:s'),
+								);
+								$this->db->insert('realisasi_omspan', $arr);
+						 }
+					}
+		              
+
+		 }
+		 $this->template->load('template', 'pok/import_realisasi');
+		
+    }
 	public function ref_status_sakti()
     {
 		  $row = $this->Pok_model->get_satker_sakti();
@@ -345,7 +385,14 @@ class Pok extends CI_Controller
         );
         $this->load->view('pok/pok_data_realisasi', $data);
     }
-
+	public function data_realisasi_omspan()
+    {
+        $row = $this->Pok_model->data_ompsan();
+        $data = array(
+            'row' => $row
+         );
+        $this->load->view('pok/data_realisasi_omspan', $data);
+    }
     public function pok_data($id)
     {
         $row = $this->Pok_model->pok_data($id);
