@@ -248,7 +248,7 @@ function formatRP($angka)
     return $angka;
 }
 
-function number_short($n, $precision = 1)
+function number_short($n, $precision = 2)
 {
     if ($n < 900) {
         // 0 - 900
