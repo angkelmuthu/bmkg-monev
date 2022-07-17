@@ -100,13 +100,13 @@
                                     <h2>
                                         BADAN METEOROLOGI KLIMATOLOGI DAN GEOFISIKA
                                         <span class="badge badge-pill badge-warning fw-400 l-h-n">
-                                            ​Bidang Pemantauan dan Evaluasi - Biro Perencanaan
+                                            Bidang Pemantauan dan Evaluasi - Biro Perencanaan
                                         </span>
                                     </h2>
                                     <div class="panel-toolbar">
                                         <div class="btn-group" role="group" aria-label="Group C">
-                                            <a href="#" class="btn btn-secondary waves-effect waves-themed" disabled><span class="fal fa-check mr-1"></span> Sumber Data SAKTI</a>
-                                            <a href="<?php echo site_url('Dashboard_eksekutif/omspan') ?>" class="btn btn-default waves-effect waves-themed">Sumber Data OMSPAN</a>
+                                            <a href="<?php echo site_url('Dashboard_eksekutif') ?>" class="btn btn-default waves-effect waves-themed">Sumber Data SAKTI</a>
+                                            <a href="#" class="btn btn-secondary waves-effect waves-themed disable"><span class="fal fa-check mr-1"></span> Sumber Data OMSPAN</a>
                                         </div>
                                     </div>
                                 </div>
