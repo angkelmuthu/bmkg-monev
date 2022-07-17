@@ -100,7 +100,7 @@
                                     <h2>
                                         BADAN METEOROLOGI KLIMATOLOGI DAN GEOFISIKA
                                         <span class="badge badge-pill badge-warning fw-400 l-h-n">
-                                            ​BIRO PERENCANAAN - BIDANG PEMANTAUAN DAN EVALUASI
+                                            ​Bidang Pemantauan dan Evaluasi - Biro Perencanaan
                                         </span>
                                     </h2>
                                     <div class="panel-toolbar">
