@@ -109,6 +109,12 @@
                                             <a href="<?php echo site_url('Dashboard_eksekutif/omspan') ?>" class="btn btn-default waves-effect waves-themed">Sumber Data OMSPAN</a>
                                         </div>
                                     </div>
+                                    <div class="panel-toolbar ml-2">
+                                        <a href="<?php echo site_url('Dashboard') ?>" class="btn btn-dark waves-effect waves-themed">
+                                            <span class="fal fa-arrow-left mr-1"></span>
+                                            Kembali
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
