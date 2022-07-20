@@ -61,6 +61,22 @@ class Pok_model extends CI_Model
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
         return $this->datatables->generate();
     }
+	function json_realisasi_fisik()
+    {
+        $this->datatables->select('id_program,tahun_anggaran,kode_dept,nama_dept,kode_unit_kerja,nama_unit_kerja,kode_satker,nama_satker,create_date,kirim');
+        $this->datatables->from('v_list_pok');
+        if ($this->session->userdata('id_user_level') == 1) {
+            $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
+        } else {
+            $this->datatables->where('kode_dept', $this->session->userdata('kode_dept'));
+            $this->datatables->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+            $this->datatables->where('kode_satker', $this->session->userdata('kode_satker'));
+            $this->datatables->where('tahun_anggaran', $this->session->userdata('ta'));
+            $this->datatables->group_by('tahun_anggaran');
+        }
+        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan_fisik/$1'), 'Realisasi Fisik', array('class' => 'btn btn-xs btn-info')), 'id_program,kirim');
+        return $this->datatables->generate();
+    }
 
     // get data by id
     function read($id)
@@ -201,10 +217,12 @@ class Pok_model extends CI_Model
         $this->db->where('id_akun', $id_akun);
         return $this->db->get('ref_akun')->row();
     }
-	function data_ompsan()
+	function data_ompsan($satker,$tahun)
     {
         $this->db->select('*');
         $this->db->from('realisasi_omspan');
+		 $this->db->where('tahun', $tahun);
+        $this->db->where('kdsatker', $satker);
         return $this->db->get()->result();
     }
 
@@ -230,6 +248,24 @@ class Pok_model extends CI_Model
 		$this->db->where('tahun', $tahun);
 		$this->db->delete('realisasi_omspan');
 	}
+	function get_akun_id($id,$tahun,$kom,$ro,$kro,$kegiatan,$subkom,$satker,$program)
+    {
+	    $this->db->select('t_item.*,sum(jumlah)as total');
+        $this->db->from('t_item');
+		$this->db->join('t_akun', 't_akun.id_item=b.id_item', 'LEFT');
+        $this->db->where('kode_akun', $id);
+		
+		$this->db->where('t_item.kode_komponen_sub', $subkom);
+        $this->db->where('t_item.kode_komponen', $kom);
+        $this->db->where('t_item.kode_ro', $ro);
+        $this->db->where('t_item.kode_kro', $kro);
+        $this->db->where('t_item.kode_kegiatan', $kegiatan);
+        $this->db->where('t_item.kode_program', $program);
+        $this->db->where('t_item.kode_satker', $satker);
+        $this->db->where('t_item.tahun_anggaran', $tahun);
+		$this->db->group_by('kode_akun');
+		return $this->db->get()->result();
+    }
     function get_item_id($id)
     {
         $this->db->where('id_item', $id);

@@ -80,7 +80,10 @@ class Pok extends CI_Controller
 		              
 
 		 }
-		 $this->template->load('template', 'pok/import_realisasi');
+		  $data = array(
+            'kode_unit_kerja' => $this->session->userdata('kode_satker'),
+        );
+		 $this->template->load('template', 'pok/import_realisasi',$data);
 		
     }
 	public function ref_status_sakti()
@@ -89,6 +92,7 @@ class Pok extends CI_Controller
 		 $data = array(
             'row' => $row
          );
+		 
 		 $this->template->load('template', 'pok/ref_status_sakti',$data);
     }
 	public function ref_uraian_sakti()
@@ -188,6 +192,11 @@ class Pok extends CI_Controller
 		  $this->load->view('pok/get_refAdmin', $data);
 		
     }
+	public function realisasi_fisik()
+    {
+
+        $this->template->load('template', 'pok/pok_realisasi_fisik');
+    }
     public function realisasi()
     {
 
@@ -203,6 +212,32 @@ class Pok extends CI_Controller
         header('Content-Type: application/json');
         echo $this->Pok_model->json_realisasi();
     }
+	public function json_realisasi_fisik()
+    {
+        header('Content-Type: application/json');
+        echo $this->Pok_model->json_realisasi_fisik();
+    }
+	public function realisasi_kegiatan_fisik($id)
+    {
+        $row = $this->Pok_model->read($id);
+        //$this->output->enable_profiler(TRUE);
+        if ($row) {
+            $data = array(
+                'tahun_anggaran' => $row->tahun_anggaran,
+                'nama_satker' => $row->nama_satker,
+                'pagu' => $row->total,
+            );
+        } else {
+            $data = array(
+                'tahun_anggaran' => $this->session->userdata('ta'),
+                'nama_satker' => $this->session->userdata('nama_satker'),
+                'pagu' => '0',
+            );
+        }
+		
+        $this->template->load('template', 'pok/pok_realisasi_kegiatan_fisik', $data);
+    }
+
     public function realisasi_kegiatan($id)
     {
         $row = $this->Pok_model->read($id);
@@ -385,9 +420,22 @@ class Pok extends CI_Controller
         );
         $this->load->view('pok/pok_data_realisasi', $data);
     }
-	public function data_realisasi_omspan()
+	public function pok_data_realisasi_fisik($id)
     {
-        $row = $this->Pok_model->data_ompsan();
+        $row = $this->Pok_model->pok_data($id);
+        //	$this->output->enable_profiler(TRUE);
+        $data = array(
+            'kode_dept' => $row->kode_dept,
+            'kode_unit_kerja' => $row->kode_unit_kerja,
+            'kode_program' => $row->kode_program,
+            'tahun_anggaran' => $row->tahun_anggaran,
+            'kode_satker' => $row->kode_satker,
+        );
+        $this->load->view('pok/pok_data_realisasi_fisik', $data);
+    }
+	public function data_realisasi_omspan($satker,$tahun)
+    {
+        $row = $this->Pok_model->data_ompsan($satker,$tahun);
         $data = array(
             'row' => $row
          );
@@ -903,6 +951,132 @@ class Pok extends CI_Controller
 
         );
         $this->load->view('pok/pok_modal_item_realisasi', $data);
+    }
+	function get_realisasi_fisik()
+    {
+
+        $row = $this->Pok_model->get_akun_id($this->input->post('id'),$this->input->post('tahun'),$this->input->post('kom')
+		,$this->input->post('ro'),$this->input->post('kro'),$this->input->post('kegiatan'),$this->input->post('subkom')
+		,$this->input->post('satker'),$this->input->post('program'));
+        $real = $this->Pok_model->get_real_item_id($this->input->post('id'));
+		for ($x = 0; $x <= 12; $x++) {
+			$get = $this->Pok_model->get_kirim($_POST['satker'],$_POST['program'],$_POST['tahun'],$x);
+			if(!empty($get)){
+				if($get->status=='Revisi')
+				{
+					$bulan[]="";
+				}else{
+					$bulan[]=isset($get->bulan) ? $get->bulan : "";
+				}
+			}else{
+				$bulan[]="";
+			}
+		}
+        $getjan = json_decode(isset($real->ket_kontrak_januari) ? $real->ket_kontrak_januari : "");
+        $getfeb = json_decode(isset($real->ket_kontrak_februari) ? $real->ket_kontrak_januari : "");
+        $getmar = json_decode(isset($real->ket_kontrak_maret) ? $real->ket_kontrak_maret : "");
+        $getapr = json_decode(isset($real->ket_kontrak_april) ? $real->ket_kontrak_april : "");
+        $getmei = json_decode(isset($real->ket_kontrak_mei) ? $real->ket_kontrak_mei : "");
+        $getjun = json_decode(isset($real->ket_kontrak_juni) ? $real->ket_kontrak_juni : "");
+        $getjul = json_decode(isset($real->ket_kontrak_juli) ? $real->ket_kontrak_juli : "");
+        $getagu = json_decode(isset($real->ket_kontrak_agustus) ? $real->ket_kontrak_agustus : "");
+        $getsep = json_decode(isset($real->ket_kontrak_september) ? $real->ket_kontrak_september : "");
+        $getokt = json_decode(isset($real->ket_kontrak_oktober) ? $real->ket_kontrak_oktober : "");
+        $getnov = json_decode(isset($real->ket_kontrak_november) ? $real->ket_kontrak_november : "");
+        $getdes = json_decode(isset($real->ket_kontrak_desember) ? $real->ket_kontrak_desember : "");
+        $data = array(
+            'bulan' => $bulan,
+            'pok' => $this->input->post('pok'),
+            'item' => isset($row->item) ? $row->item : "",
+            'id_item' => isset($row->id_item) ? $row->id_item : "",
+            'jumlah' => isset($row->jumlah) ? $row->total : "",
+            'januari' => isset($row->januari) ? $row->januari : "0",
+            'februari' => isset($row->februari) ? $row->februari : "0",
+            'maret' => isset($row->maret) ? $row->maret : "0",
+            'april' => isset($row->april) ? $row->april : "0",
+            'mei' => isset($row->mei) ? $row->mei : "0",
+            'juni' => isset($row->juni) ? $row->juni : "0",
+            'juli' => isset($row->juli) ? $row->juli : "0",
+            'agustus' => isset($row->agustus) ? $row->agustus : "0",
+            'september' => isset($row->september) ? $row->september : "0",
+            'oktober' => isset($row->oktober) ? $row->oktober : "0",
+            'november' => isset($row->november) ? $row->november : "0",
+            'desember' => isset($row->desember) ? $row->desember : "0",
+            'ang_januari' => isset($real->ang_januari) ? $real->ang_januari : 0,
+            'ang_februari' => isset($real->ang_februari) ? $real->ang_februari : 0,
+            'ang_maret' => isset($real->ang_maret) ? $real->ang_maret : 0,
+            'ang_april' => isset($real->ang_april) ? $real->ang_april : 0,
+            'ang_mei' => isset($real->ang_mei) ? $real->ang_mei : 0,
+            'ang_juni' => isset($real->ang_juni) ? $real->ang_juni : 0,
+            'ang_juli' => isset($real->ang_juli) ? $real->ang_juli : 0,
+            'ang_agustus' => isset($real->ang_agustus) ? $real->ang_agustus : 0,
+            'ang_september' => isset($real->ang_september) ? $real->ang_september : 0,
+            'ang_oktober' => isset($real->ang_oktober) ? $real->ang_oktober : 0,
+            'ang_november' => isset($real->ang_november) ? $real->ang_november : 0,
+            'ang_desember' => isset($real->ang_desember) ? $real->ang_desember : 0,
+            'fisik_januari' => isset($real->fisik_januari) ? $real->fisik_januari : 0,
+            'fisik_februari' => isset($real->fisik_februari) ? $real->fisik_februari : 0,
+            'fisik_maret' => isset($real->fisik_maret) ? $real->fisik_maret : 0,
+            'fisik_april' => isset($real->fisik_april) ? $real->fisik_april : 0,
+            'fisik_mei' => isset($real->fisik_mei) ? $real->fisik_mei : 0,
+            'fisik_juni' => isset($real->fisik_juni) ? $real->fisik_juni : 0,
+            'fisik_juli' => isset($real->fisik_juli) ? $real->fisik_juli : 0,
+            'fisik_agustus' => isset($real->fisik_agustus) ? $real->fisik_agustus : 0,
+            'fisik_september' => isset($real->fisik_september) ? $real->fisik_september : 0,
+            'fisik_oktober' => isset($real->fisik_oktober) ? $real->fisik_oktober : 0,
+            'fisik_november' => isset($real->fisik_november) ? $real->fisik_november : 0,
+            'fisik_desember' => isset($real->fisik_desember) ? $real->fisik_desember : 0,
+            'nominal_kontrak_januari' => isset($real->nominal_kontrak_januari) ? $real->nominal_kontrak_januari : 0,
+            'nominal_kontrak_februari' => isset($real->nominal_kontrak_februari) ? $real->nominal_kontrak_februari : 0,
+            'nominal_kontrak_maret' => isset($real->nominal_kontrak_maret) ? $real->nominal_kontrak_maret : 0,
+            'nominal_kontrak_april' => isset($real->nominal_kontrak_april) ? $real->nominal_kontrak_april : 0,
+            'nominal_kontrak_mei' => isset($real->nominal_kontrak_mei) ? $real->nominal_kontrak_mei : 0,
+            'nominal_kontrak_juni' => isset($real->nominal_kontrak_juni) ? $real->nominal_kontrak_juni : 0,
+            'nominal_kontrak_juli' => isset($real->nominal_kontrak_juli) ? $real->nominal_kontrak_juli : 0,
+            'nominal_kontrak_agustus' => isset($real->nominal_kontrak_agustus) ? $real->nominal_kontrak_agustus : 0,
+            'nominal_kontrak_september' => isset($real->nominal_kontrak_september) ? $real->nominal_kontrak_september : 0,
+            'nominal_kontrak_oktober' => isset($real->nominal_kontrak_oktober) ? $real->nominal_kontrak_oktober : 0,
+            'nominal_kontrak_november' => isset($real->nominal_kontrak_november) ? $real->nominal_kontrak_november : 0,
+            'nominal_kontrak_desember' => isset($real->nominal_kontrak_desember) ? $real->nominal_kontrak_desember : 0,
+            'nomor_januari' => isset($getjan->nomor) ? $getjan->nomor : '',
+            'nomor_februari' => isset($getfeb->nomor) ? $getfeb->nomor : '',
+            'nomor_maret' => isset($getmar->nomor) ? $getmar->nomor : '',
+            'nomor_april' => isset($getapr->nomor) ? $getapr->nomor : '',
+            'nomor_mei' => isset($getmei->nomor) ? $getmei->nomor : '',
+            'nomor_juni' => isset($getjun->nomor) ? $getjun->nomor : '',
+            'nomor_juli' => isset($getjul->nomor) ? $getjul->nomor : '',
+            'nomor_agustus' => isset($getagu->nomor) ? $getagu->nomor : '',
+            'nomor_september' => isset($getsep->nomor) ? $getsep->nomor : '',
+            'nomor_oktober' => isset($getokt->nomor) ? $getokt->nomor : '',
+            'nomor_november' => isset($getnov->nomor) ? $getnov->nomor : '',
+            'nomor_desember' => isset($getdes->nomor) ? $getdes->nomor : '',
+            'tgl_januari' => isset($getjan->tanggal) ? $getjan->tanggal : '',
+            'tgl_februari' => isset($getfeb->tanggal) ? $getfeb->tanggal : '',
+            'tgl_maret' => isset($getmar->tanggal) ? $getmar->tanggal : '',
+            'tgl_april' => isset($getapr->tanggal) ? $getapr->tanggal : '',
+            'tgl_mei' => isset($getmei->tanggal) ? $getmei->tanggal : '',
+            'tgl_juni' => isset($getjun->tanggal) ? $getjun->tanggal : '',
+            'tgl_juli' => isset($getjul->tanggal) ? $getjul->tanggal : '',
+            'tgl_agustus' => isset($getagu->tanggal) ? $getagu->tanggal : '',
+            'tgl_september' => isset($getsep->tanggal) ? $getsep->tanggal : '',
+            'tgl_oktober' => isset($getokt->tanggal) ? $getokt->tanggal : '',
+            'tgl_november' => isset($getnov->tanggal) ? $getnov->tanggal : '',
+            'tgl_desember' => isset($getdes->tanggal) ? $getdes->tanggal : '',
+            'ket_januari' => isset($getjan->ket) ? $getjan->ket : '',
+            'ket_februari' => isset($getfeb->ket) ? $getfeb->ket : '',
+            'ket_maret' => isset($getmar->ket) ? $getmar->ket : '',
+            'ket_april' => isset($getapr->ket) ? $getapr->ket : '',
+            'ket_mei' => isset($getmei->ket) ? $getmei->ket : '',
+            'ket_juni' => isset($getjun->ket) ? $getjun->ket : '',
+            'ket_juli' => isset($getjul->ket) ? $getjul->ket : '',
+            'ket_agustus' => isset($getagu->ket) ? $getagu->ket : '',
+            'ket_september' => isset($getsep->ket) ? $getsep->ket : '',
+            'ket_oktober' => isset($getokt->ket) ? $getokt->ket : '',
+            'ket_november' => isset($getnov->ket) ? $getnov->ket : '',
+            'ket_desember' => isset($getdes->ket) ? $getdes->ket : '',
+
+        );
+        $this->load->view('pok/pok_modal_item_realisasi_fisik', $data);
     }
     function get_penarikan()
     {
