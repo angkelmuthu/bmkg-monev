@@ -219,6 +219,7 @@ class Pok_model extends CI_Model
     }
 	function data_ompsan($satker,$tahun)
     {
+		
         $this->db->select('*');
         $this->db->from('realisasi_omspan');
 		 $this->db->where('tahun', $tahun);

@@ -435,6 +435,7 @@ class Pok extends CI_Controller
     }
 	public function data_realisasi_omspan($satker,$tahun)
     {
+		
         $row = $this->Pok_model->data_ompsan($satker,$tahun);
         $data = array(
             'row' => $row
