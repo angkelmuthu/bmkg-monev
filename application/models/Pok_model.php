@@ -54,7 +54,8 @@ class Pok_model extends CI_Model
         //var_dump($this->datatables);
         //add this line for join
         //$this->datatables->join('table2', 't_program.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')), 'id_program,kirim');
+        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')) ."
+         " . anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi Fisik Omspan', array('class' => 'btn btn-xs btn-warning')), 'id_program');
 
         // $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
         //     " . anchor(site_url('pok/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
@@ -80,6 +81,19 @@ class Pok_model extends CI_Model
 
     // get data by id
     function read($id)
+    {
+        $this->db->select('a.tahun_anggaran,c.nama_satker,sum(b.jumlah) as total');
+        $this->db->from('t_program a');
+        $this->db->join('t_item b', 'a.kode_satker=b.kode_satker and a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.tahun_anggaran=b.tahun_anggaran', 'left');
+        $this->db->join('ref_satker c', 'a.kode_satker=c.kode_satker', 'left');
+        $this->db->where('a.id_program', $id);
+        // $this->db->where('kode_dept', $this->session->userdata('kode_dept'));
+        // $this->db->where('kode_unit_kerja', $this->session->userdata('kode_unit_kerja'));
+        // $this->db->where('tahun_anggaran', $this->session->userdata('ta'));
+        return $this->db->get()->row();
+    }
+	
+	function read_fisik($id)
     {
         $this->db->select('a.tahun_anggaran,c.nama_satker,sum(b.jumlah) as total');
         $this->db->from('t_program a');
@@ -251,12 +265,44 @@ class Pok_model extends CI_Model
 	}
 	function get_akun_id($id,$tahun,$kom,$ro,$kro,$kegiatan,$subkom,$satker,$program)
     {
-	    $this->db->select('t_item.*,sum(jumlah)as total');
-        $this->db->from('t_item');
-		$this->db->join('t_akun', 't_akun.id_item=b.id_item', 'LEFT');
-        $this->db->where('kode_akun', $id);
 		
-		$this->db->where('t_item.kode_komponen_sub', $subkom);
+		  $this->db->select('t_item.*, sum(jumlah)as total,
+							t_akun.nama_akun,t_output.nama_kro,t_kegiatan.nama_kegiatan,t_program.nama_program,
+							v_pagu_realisasi_omspan.real_januari,v_pagu_realisasi_omspan.real_februari,v_pagu_realisasi_omspan.real_maret,
+							v_pagu_realisasi_omspan.real_april,v_pagu_realisasi_omspan.real_mei,v_pagu_realisasi_omspan.real_juni,
+							v_pagu_realisasi_omspan.real_juli,v_pagu_realisasi_omspan.real_agustus,v_pagu_realisasi_omspan.real_september,
+							v_pagu_realisasi_omspan.real_oktober,v_pagu_realisasi_omspan.real_november,v_pagu_realisasi_omspan.real_desember');
+        $this->db->from('t_item');
+        $this->db->join('t_akun', 't_akun.tahun_anggaran=t_item.tahun_anggaran and t_akun.kode_satker=t_item.kode_satker
+												and t_akun.kode_program=t_item.kode_program
+												and t_akun.kode_kegiatan=t_item.kode_kegiatan
+												and t_akun.kode_kro=t_item.kode_kro
+												and t_akun.kode_ro=t_item.kode_ro
+												and t_akun.kode_komponen=t_item.kode_komponen	
+												and t_akun.kode_komponen_sub=t_item.kode_komponen_sub
+												and t_akun.kode_akun=t_item.kode_akun
+												and t_akun.kode_beban=t_item.kode_beban', 'LEFT');
+		$this->db->join('t_output', 't_output.tahun_anggaran=t_item.tahun_anggaran
+												and t_output.kode_satker=t_item.kode_satker
+												and t_output.kode_program=t_item.kode_program
+												and t_output.kode_kegiatan=t_item.kode_kegiatan
+												and t_output.kode_kro=t_item.kode_kro', 'LEFT');
+		$this->db->join('t_kegiatan', 't_kegiatan.tahun_anggaran=t_item.tahun_anggaran
+												and t_kegiatan.kode_satker=t_item.kode_satker
+												and t_kegiatan.kode_program=t_item.kode_program
+												and t_kegiatan.kode_kegiatan=t_item.kode_kegiatan', 'LEFT');
+		$this->db->join('t_program', 't_program.tahun_anggaran=t_item.tahun_anggaran
+												and t_program.kode_satker=t_item.kode_satker
+												and t_program.kode_program=t_item.kode_program', 'LEFT');
+		$this->db->join('v_pagu_realisasi_omspan', 'v_pagu_realisasi_omspan.tahun_anggaran=t_item.tahun_anggaran and v_pagu_realisasi_omspan.kode_satker=t_item.kode_satker
+												and v_pagu_realisasi_omspan.kode_program=t_item.kode_program
+												and v_pagu_realisasi_omspan.kode_kegiatan=t_item.kode_kegiatan
+												and v_pagu_realisasi_omspan.kode_kro=t_item.kode_kro
+												
+												and v_pagu_realisasi_omspan.kode_akun=t_item.kode_akun
+												and v_pagu_realisasi_omspan.kode_beban=t_item.kode_beban', 'LEFT');
+        $this->db->where('t_item.kode_akun', $id);
+        $this->db->where('t_item.kode_komponen_sub', $subkom);
         $this->db->where('t_item.kode_komponen', $kom);
         $this->db->where('t_item.kode_ro', $ro);
         $this->db->where('t_item.kode_kro', $kro);
@@ -264,8 +310,10 @@ class Pok_model extends CI_Model
         $this->db->where('t_item.kode_program', $program);
         $this->db->where('t_item.kode_satker', $satker);
         $this->db->where('t_item.tahun_anggaran', $tahun);
-		$this->db->group_by('kode_akun');
-		return $this->db->get()->result();
+		$this->db->group_by('t_item.kode_program,t_item.kode_kegiatan,t_item.kode_kro,t_item.kode_akun');
+         return $this->db->get()->row();
+
+		//return $query->result_array;
     }
     function get_item_id($id)
     {
@@ -276,6 +324,19 @@ class Pok_model extends CI_Model
     {
         $this->db->where('id_item', $id);
         return $this->db->get('t_item_realisasi')->row();
+    }
+	function get_real_item_id_fisik($id,$tahun,$kom,$ro,$kro,$kegiatan,$subkom,$satker,$program)
+    {
+        $this->db->where('kode_akun', $id);
+        $this->db->where('tahun_anggaran', $tahun);
+        $this->db->where('kode_komponen', $kom);
+        $this->db->where('kode_komponen_sub', $subkom);
+        $this->db->where('kode_ro', $ro);
+        $this->db->where('kode_kro', $kro);
+        $this->db->where('kode_kegiatan', $kegiatan);
+        $this->db->where('kode_satker', $satker);
+        $this->db->where('kode_program', $program);
+        return $this->db->get('t_item_realisasi_fisik')->row();
     }
 	function get_satker_sakti()
     {
@@ -339,6 +400,15 @@ class Pok_model extends CI_Model
         $this->db->where('bulan', $bulan);
         $this->db->where('flag', 1);
         return $this->db->get('t_status_kirim')->row();
+    }
+	function get_kirim_fisik($satker, $id_program, $tahun, $bulan)
+    {
+        $this->db->where('kode_satker', $satker);
+        $this->db->where('id_program', $id_program);
+        $this->db->where('tahun', $tahun);
+        $this->db->where('bulan', $bulan);
+        $this->db->where('flag', 1);
+        return $this->db->get('t_status_kirim_fisik')->row();
     }
 }
 
