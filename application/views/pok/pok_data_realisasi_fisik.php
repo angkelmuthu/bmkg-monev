@@ -116,7 +116,7 @@
             $this->db->from('t_program a');
 			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
             $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-			$this->db->join('v_pagu_realisasi_omspan d', ' d.kode_dept=a.kode_dept and a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+			$this->db->join('v_pagu_realisasi_omspan d', '  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
 
             $this->db->where('a.kode_dept', $kode_dept);
             $this->db->where('a.kode_unit_kerja', $kode_unit_kerja);
@@ -267,7 +267,7 @@
                     $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                     $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
 					$this->db->join('v_pagu_realisasi_omspan d', 'd.kode_kro=a.kode_kro 
-                                                     and d.kode_kegiatan=a.kode_kegiatan and d.kode_dept=a.kode_dept and a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+                                                     and d.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
 
 					$this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
                     $this->db->where('a.kode_program', $program->kode_program);
@@ -347,7 +347,7 @@
                                     $this->db->from('t_akun a');
                                     $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_akun=b.kode_akun and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                                     $this->db->join('v_pagu_realisasi_omspan d', 'd.kode_akun=a.kode_akun and d.kode_kro=a.kode_kro and d.kode_beban=a.kode_beban
-                                                     and d.kode_kegiatan=a.kode_kegiatan and d.kode_dept=a.kode_dept and a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+                                                     and d.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
 
                                     $this->db->where('a.kode_kro', $kro->kode_kro);
                                     $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
