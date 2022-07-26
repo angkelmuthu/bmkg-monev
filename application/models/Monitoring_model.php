@@ -38,9 +38,9 @@ class Monitoring_model extends CI_Model
         a.kode_lokasi,
         b.nama_lokasi,
         ( SELECT ifnull(SUM( jumlah),0 ) FROM v_item_realisasi WHERE kode_satker = a.kode_satker and tahun_anggaran=' . $ta . ') AS pagu,
-        ( SELECT ifnull(SUM( ang_januari )+ SUM( ang_februari )+ SUM( ang_maret )+ SUM( ang_april )+ SUM( ang_mei )+ SUM( ang_juni )+ SUM( ang_juli )+ SUM( ang_agustus )+ SUM( ang_september )+ SUM( ang_oktober )+ SUM( ang_november )+ SUM( ang_desember ),0)
+        ( SELECT ifnull(SUM( real_januari )+ SUM( real_februari )+ SUM( real_maret )+ SUM( real_april )+ SUM( real_mei )+ SUM( real_juni )+ SUM( real_juli )+ SUM( real_agustus )+ SUM( real_september )+ SUM( real_oktober )+ SUM( real_november )+ SUM( real_desember ),0)
         FROM
-            v_item_realisasi
+        v_pagu_realisasi_omspan
         WHERE
             kode_satker = a.kode_satker and tahun_anggaran=' . $ta . '
         ) AS realisasi');
