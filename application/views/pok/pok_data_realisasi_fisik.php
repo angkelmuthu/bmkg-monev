@@ -191,7 +191,7 @@
                 $this->db->from('t_kegiatan a');
                 $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
                 $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-				$this->db->join('v_pagu_realisasi_omspan d', 'd.kode_kegiatan=a.kode_kegiatan and d.kode_dept=a.kode_dept and a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+				$this->db->join('v_pagu_realisasi_omspan d', 'd.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
 
 				$this->db->where('a.kode_program', $program->kode_program);
                 $this->db->where('a.kode_dept', $program->kode_dept);
