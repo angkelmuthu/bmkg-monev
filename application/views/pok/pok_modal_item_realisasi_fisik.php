@@ -13,6 +13,7 @@
 	 <h3><?php echo "--".$nama_kegiatan ?></h3>
 	 <h3><?php echo "---".$nama_kro ?></h3>
 	 <h3><?php echo "----".$nama_akun ?></h3>
+	 
     <div class="alert alert-warning" role="alert">
         <strong>Perhatian!</strong> Total Realisasi tidak boleh melebihi Pagu Anggaran sebesar Rp. <?php echo angka($jumlah) ?>
     </div>

@@ -1487,6 +1487,7 @@ class Pok extends CI_Controller
             );
             $this->db->insert('t_item_realisasi_fisik', $arr);
         }
+		
     }
 
     function hapus_item()

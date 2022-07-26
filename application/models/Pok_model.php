@@ -37,6 +37,7 @@ class Pok_model extends CI_Model
         //         " . anchor(site_url('pok/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_program');
         return $this->datatables->generate();
     }
+	
     function json_realisasi()
     {
         $this->datatables->select('id_program,tahun_anggaran,kode_dept,nama_dept,kode_unit_kerja,nama_unit_kerja,kode_satker,nama_satker,create_date,kirim');

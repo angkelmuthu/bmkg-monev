@@ -26,9 +26,8 @@
                 <th class="text-center">amount</th>
                 <th class="text-center">create_date</th>
                 <th class="text-center">tahun</th>
-
             </tr>
-         
+  
         </thead>
         <tbody>
 		<?php 

@@ -51,7 +51,6 @@
                 "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
             };
         };
-
         var t = $("#dt-basic-example").dataTable({
             initComplete: function() {
                 var api = this.api();

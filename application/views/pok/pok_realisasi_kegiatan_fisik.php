@@ -25,7 +25,6 @@
                                 <td>PLAFON/PAGU ANGGARAN</td>
                                 <td>Rp. <?php echo angka($pagu) ?></td>
                             </tr>
-
                         </table>
 
                         <div id="tampil"></div>

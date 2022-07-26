@@ -52,6 +52,7 @@
             };
         };
 
+
         var t = $("#dt-basic-example").dataTable({
             initComplete: function() {
                 var api = this.api();
