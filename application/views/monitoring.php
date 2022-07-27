@@ -113,7 +113,7 @@ if (!empty($_GET['lokasi'])) {
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        Keterangan : <span class="badge bg-info-300">Realisasi > 50%</span> <span class="badge bg-success-300">Realisasi < 50%</span> <span class="badge bg-warning-300">Realisasi 0%</span>
+                        Keterangan : <span class="badge bg-info-500">Penyerapan > 50%</span> <span class="badge bg-success-500">Penyerapan < 50%</span> <span class="badge bg-warning-500">Penyerapan 0%</span>
                                 <table class="table table-bordered table-hover w-100" id="myTable">
                                     <thead>
                                         <tr>
@@ -124,7 +124,9 @@ if (!empty($_GET['lokasi'])) {
                                             <th>KPA</th>
                                             <th>Kontak</th>
                                             <th>Email</th>
+                                            <th>Pagu</th>
                                             <th>Realisasi</th>
+                                            <th>Penyerapan</th>
                                             <!-- <th>Status</th> -->
                                         </tr>
                                     </thead>
@@ -137,11 +139,11 @@ if (!empty($_GET['lokasi'])) {
                                             }
 
                                             if ($persen >= 50) {
-                                                echo '<tr class="bg-info-300">';
+                                                echo '<tr class="bg-info-500">';
                                             } elseif (($persen > 0) && ($persen <= 49)) {
-                                                echo '<tr class="bg-success-300">';
+                                                echo '<tr class="bg-success-500">';
                                             } else {
-                                                echo '<tr class="bg-warning-300">';
+                                                echo '<tr class="bg-warning-500">';
                                             }
                                         ?>
                                             <td><?php echo $dt->kode_satker ?></td>
@@ -151,12 +153,14 @@ if (!empty($_GET['lokasi'])) {
                                             <td><?php echo $dt->kpa ?></td>
                                             <td><?php echo $dt->kontak ?></td>
                                             <td><?php echo $dt->email ?></td>
+                                            <td><?php echo 'Rp. ' . angka($dt->pagu) ?></td>
+                                            <td><?php echo 'Rp. ' . angka($dt->realisasi) ?></td>
                                             <td><?php echo $persen ?>%</td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
                                 </table>
-                                Keterangan : <span class="badge bg-info-300">Realisasi > 50%</span> <span class="badge bg-success-300">Realisasi < 50%</span> <span class="badge bg-warning-300">Realisasi 0%</span>
+                                Keterangan : <span class="badge bg-info-500">Penyerapan > 50%</span> <span class="badge bg-success-500">Penyerapan < 50%</span> <span class="badge bg-warning-500">Penyerapan 0%</span>
                     </div>
                 </div>
                 <?php //$this->output->enable_profiler(TRUE);
