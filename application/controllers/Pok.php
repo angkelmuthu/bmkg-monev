@@ -848,7 +848,7 @@ class Pok extends CI_Controller
 			}
 		}
         $getjan = json_decode(isset($real->ket_kontrak_januari) ? $real->ket_kontrak_januari : "");
-        $getfeb = json_decode(isset($real->ket_kontrak_februari) ? $real->ket_kontrak_januari : "");
+        $getfeb = json_decode(isset($real->ket_kontrak_februari) ? $real->ket_kontrak_februari : "");
         $getmar = json_decode(isset($real->ket_kontrak_maret) ? $real->ket_kontrak_maret : "");
         $getapr = json_decode(isset($real->ket_kontrak_april) ? $real->ket_kontrak_april : "");
         $getmei = json_decode(isset($real->ket_kontrak_mei) ? $real->ket_kontrak_mei : "");
@@ -877,18 +877,18 @@ class Pok extends CI_Controller
             'oktober' => isset($row->oktober) ? $row->oktober : "0",
             'november' => isset($row->november) ? $row->november : "0",
             'desember' => isset($row->desember) ? $row->desember : "0",
-            'ang_januari' => isset($row->real_januari) ? $row->real_januari : 0,
-            'ang_februari' => isset($row->real_februari) ? $row->real_februari : 0,
-            'ang_maret' => isset($row->real_maret) ? $row->real_maret : 0,
-            'ang_april' => isset($row->real_april) ? $row->real_april : 0,
-            'ang_mei' => isset($row->real_mei) ? $row->real_mei : 0,
-            'ang_juni' => isset($row->real_juni) ? $row->real_juni : 0,
-            'ang_juli' => isset($row->real_juli) ? $row->real_juli : 0,
-            'ang_agustus' => isset($row->real_agustus) ? $row->real_agustus : 0,
-            'ang_september' => isset($row->real_september) ? $row->real_september : 0,
-            'ang_oktober' => isset($row->real_oktober) ? $row->real_oktober : 0,
-            'ang_november' => isset($row->real_november) ? $row->real_november : 0,
-            'ang_desember' => isset($row->real_desember) ? $row->real_desember : 0,
+            'ang_januari' => isset($real->ang_januari) ? $real->ang_januari : 0,
+            'ang_februari' => isset($real->ang_februari) ? $real->ang_februari : 0,
+            'ang_maret' => isset($real->ang_maret) ? $real->ang_maret : 0,
+            'ang_april' => isset($real->ang_april) ? $real->ang_april : 0,
+            'ang_mei' => isset($real->ang_mei) ? $real->ang_mei : 0,
+            'ang_juni' => isset($real->ang_juni) ? $real->ang_juni : 0,
+            'ang_juli' => isset($real->ang_juli) ? $real->ang_juli : 0,
+            'ang_agustus' => isset($real->ang_agustus) ? $real->ang_agustus : 0,
+            'ang_september' => isset($real->ang_september) ? $real->ang_september : 0,
+            'ang_oktober' => isset($real->ang_oktober) ? $real->ang_oktober : 0,
+            'ang_november' => isset($real->ang_november) ? $real->ang_november : 0,
+            'ang_desember' => isset($real->ang_desember) ? $real->ang_desember : 0,
             'fisik_januari' => isset($real->fisik_januari) ? $real->fisik_januari : 0,
             'fisik_februari' => isset($real->fisik_februari) ? $real->fisik_februari : 0,
             'fisik_maret' => isset($real->fisik_maret) ? $real->fisik_maret : 0,

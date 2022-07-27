@@ -55,8 +55,8 @@ class Pok_model extends CI_Model
         //var_dump($this->datatables);
         //add this line for join
         //$this->datatables->join('table2', 't_program.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi', array('class' => 'btn btn-xs btn-info')) ."
-         " . anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi Fisik Omspan', array('class' => 'btn btn-xs btn-warning')), 'id_program');
+        $this->datatables->add_column('action', anchor(site_url('pok/realisasi_kegiatan/$1'), 'Realisasi Per Item', array('class' => 'btn btn-xs btn-info')) ."
+         " . anchor(site_url('pok/realisasi_kegiatan_fisik/$1'), 'Realisasi Per Akun', array('class' => 'btn btn-xs btn-warning')), 'id_program');
 
         // $this->datatables->add_column('action', anchor(site_url('pok/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
         //     " . anchor(site_url('pok/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
@@ -341,9 +341,9 @@ class Pok_model extends CI_Model
     }
 	function get_satker_sakti()
     {
-        $this->db->select('*');
+        $this->db->select('refAdmin.*,if(ref_satker.nama_satker is null,refAdmin.nama_kppn,ref_satker.nama_satker)as nama_satker');
         $this->db->from('refAdmin');
-    
+		$this->db->join('ref_satker', 'ref_satker.kode_satker=refAdmin.kdsatker', 'LEFT');
 
         return $this->db->get()->result();
     }

@@ -26,7 +26,9 @@
                                 <td>Rp. <?php echo angka($pagu) ?></td>
                             </tr>
                         </table>
-
+                            <div class="ajax-loader text-center">
+                            <img id="loading-pok" style="display:none;" src="<?php echo base_url() ?>assets/smartadmin/img/loading.gif" class="img-responsive" />
+						</div>
                         <div id="tampil"></div>
 
                     </div>
@@ -44,14 +46,14 @@
     $(document).ready(function() {
         //$.fn.modal.Constructor.prototype.enforceFocus = function() {};
         //Tampilkan Data
-		
+		$("#loading-pok").show();
         $.ajax({
             type: 'POST',
             url: "<?php echo base_url(); ?>pok/pok_data_realisasi_fisik/<?php echo $this->uri->segment(3) ?>",
             cache: false,
             success: function(data) {
                 $("#tampil").html(data);
-				
+				 $("#loading-pok").hide();
             }
         });
     });

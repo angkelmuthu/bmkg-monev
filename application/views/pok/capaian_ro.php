@@ -23,7 +23,7 @@
 			
 									   foreach ($row as $value) {
                                        ?>
-									      <option value='<?php echo $value->kdsatker ?>'> <?php echo $value->nama_kppn ?> </option>
+									      <option value='<?php echo $value->kdsatker ?>'> <?php echo $value->nama_satker ?> </option>
 									   <?php
                                         }
                                         ?>

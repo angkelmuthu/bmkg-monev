@@ -114,19 +114,24 @@
             <?php
             $this->db->select('a.*,sum(d.pagu) as total, sum(d.real_januari) as ttl_januari, sum(d.real_februari) as ttl_februari, sum(d.real_maret) as ttl_maret, sum(d.real_april) as ttl_april, sum(d.real_mei) as ttl_mei, sum(d.real_juni) as ttl_juni, sum(d.real_juli) as ttl_juli, sum(d.real_agustus) as ttl_agustus, sum(d.real_september) as ttl_september, sum(d.real_november) as ttl_november, sum(d.real_oktober) as ttl_oktober, sum(d.real_desember) as ttl_desember');
             $this->db->from('t_program a');
-			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
-            $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-			$this->db->join('v_pagu_realisasi_omspan d', '  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+
+			$this->db->join('v_pagu_realisasi_omspan d', ' a.kode_dept=d.kode_dept and d.tahun_anggaran=a.tahun_anggaran and 
+			                                     d.kode_satker=a.kode_satker
+												and d.kode_program=a.kode_program', 'LEFT');
 
             $this->db->where('a.kode_dept', $kode_dept);
             $this->db->where('a.kode_unit_kerja', $kode_unit_kerja);
             $this->db->where('a.kode_satker', $kode_satker);
             $this->db->where('a.tahun_anggaran', $tahun_anggaran);
-            $this->db->group_by('a.kode_program');
+            $this->db->group_by('a.tahun_anggaran,a.kode_dept,a.kode_program,a.kode_dept');
             //$this->db->order_by('create_date', 'ASC');
             //$q = $this->db->get();
             //var_dump($q);
+			$this->output->enable_profiler(TRUE);
+			
             $list_program = $this->db->get()->result();
+		//	var_dump($list_program);
+			//exit();
             foreach ($list_program as $program) { ?>
                 <tr>
                     <td class="text-center"><span class="badge badge-success">Program</span></td>
@@ -187,19 +192,22 @@
                 </tr>
                 <!-- kegiatan -->
                 <?php
+				$this->output->enable_profiler(TRUE);
                 $this->db->select('a.*,sum(d.pagu) as total, sum(d.real_januari) as ttl_januari, sum(d.real_februari) as ttl_februari, sum(d.real_maret) as ttl_maret, sum(d.real_april) as ttl_april, sum(d.real_mei) as ttl_mei, sum(d.real_juni) as ttl_juni, sum(d.real_juli) as ttl_juli, sum(d.real_agustus) as ttl_agustus, sum(d.real_september) as ttl_september, sum(d.real_november) as ttl_november, sum(d.real_oktober) as ttl_oktober, sum(d.real_desember) as ttl_desember');
                 $this->db->from('t_kegiatan a');
-                $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-				$this->db->join('v_pagu_realisasi_omspan d', 'd.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+				$this->db->join('v_pagu_realisasi_omspan d', 'a.kode_dept=d.kode_dept and a.kode_satker=d.kode_satker 
+				and d.kode_kegiatan=a.kode_kegiatan 
+				and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja 
+				and a.kode_program=d.kode_program', 'LEFT');
 
 				$this->db->where('a.kode_program', $program->kode_program);
                 $this->db->where('a.kode_dept', $program->kode_dept);
                 $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
                 $this->db->where('a.kode_satker', $program->kode_satker);
                 $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                $this->db->group_by('a.kode_kegiatan');
+                $this->db->group_by('a.kode_kegiatan,a.tahun_anggaran,a.kode_dept,a.kode_program,a.kode_dept');
                 $list_kegiatan = $this->db->get()->result();
+				
                 foreach ($list_kegiatan as $kegiatan) { ?>
                     <tr>
                         <td class="text-center"><span class="badge badge-success">Kegiatan</span></td>
@@ -264,10 +272,11 @@
                     <?php
                     $this->db->select('a.*,sum(d.pagu) as total, sum(d.real_januari) as ttl_januari, sum(d.real_februari) as ttl_februari, sum(d.real_maret) as ttl_maret, sum(d.real_april) as ttl_april, sum(d.real_mei) as ttl_mei, sum(d.real_juni) as ttl_juni, sum(d.real_juli) as ttl_juli, sum(d.real_agustus) as ttl_agustus, sum(d.real_september) as ttl_september, sum(d.real_november) as ttl_november, sum(d.real_oktober) as ttl_oktober, sum(d.real_desember) as ttl_desember');
                     $this->db->from('t_output a');
-                    $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                    $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-					$this->db->join('v_pagu_realisasi_omspan d', 'd.kode_kro=a.kode_kro 
-                                                     and d.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+					$this->db->join('v_pagu_realisasi_omspan d', 'a.kode_dept=d.kode_dept and a.kode_satker=d.kode_satker
+					and d.kode_kro=a.kode_kro 
+                                                     and d.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran 
+													 and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program'
+													 , 'LEFT');
 
 					$this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
                     $this->db->where('a.kode_program', $program->kode_program);
@@ -275,7 +284,7 @@
                     $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
                     $this->db->where('a.kode_satker', $program->kode_satker);
                     $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                    $this->db->group_by('a.kode_kro');
+                    $this->db->group_by('a.kode_kro,a.tahun_anggaran,a.kode_dept,a.kode_program,a.kode_dept');
                     $list_kro = $this->db->get()->result();
 
                     foreach ($list_kro as $kro) { ?>
@@ -345,9 +354,11 @@
                                     <?php
                                     $this->db->select('a.*,sum(d.pagu) as total, sum(d.real_januari) as ttl_januari, sum(d.real_februari) as ttl_februari, sum(d.real_maret) as ttl_maret, sum(d.real_april) as ttl_april, sum(d.real_mei) as ttl_mei, sum(d.real_juni) as ttl_juni, sum(d.real_juli) as ttl_juli, sum(d.real_agustus) as ttl_agustus, sum(d.real_september) as ttl_september, sum(d.real_november) as ttl_november, sum(d.real_oktober) as ttl_oktober, sum(d.real_desember) as ttl_desember');
                                     $this->db->from('t_akun a');
-                                    $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_akun=b.kode_akun and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                                    $this->db->join('v_pagu_realisasi_omspan d', 'd.kode_akun=a.kode_akun and d.kode_kro=a.kode_kro and d.kode_beban=a.kode_beban
-                                                     and d.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
+                                    $this->db->join('v_pagu_realisasi_omspan d', 'a.kode_dept=d.kode_dept and a.kode_satker=d.kode_satker 
+									and d.kode_akun=a.kode_akun and d.kode_kro=a.kode_kro
+									and d.kode_beban=a.kode_beban 
+                                                     and d.kode_kegiatan=a.kode_kegiatan and  a.tahun_anggaran=d.tahun_anggaran 
+													 and a.kode_unit_kerja=d.kode_unit_kerja and a.kode_program=d.kode_program', 'LEFT');
 
                                     $this->db->where('a.kode_kro', $kro->kode_kro);
                                     $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
@@ -356,8 +367,10 @@
                                     $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
                                     $this->db->where('a.kode_satker', $program->kode_satker);
                                     $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                                    $this->db->group_by('a.kode_akun');
+                                    $this->db->group_by('a.kode_akun,a.kode_kro,a.tahun_anggaran,a.kode_dept,a.kode_program,a.kode_dept');
+									
                                     $list_akun = $this->db->get()->result();
+								
                                     foreach ($list_akun as $akun) { ?>
                                         <tr>
                                             <td class="text-center"><span class="badge badge-success">Akun</span></td>
@@ -428,7 +441,7 @@
     <script>
         $(document).ready(function() {
              var table = $('#dt-basic-example').DataTable({
-                scrollY: "400px",
+                scrollY: "800px",
                 scrollX: true,
                 scrollCollapse: true,
                 ordering: false,

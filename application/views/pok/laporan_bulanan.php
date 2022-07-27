@@ -66,6 +66,9 @@
 							</tr>
 
                         </table>
+						 <div class="ajax-loader text-center">
+                            <img id="loading-pok" style="display:none;" src="<?php echo base_url() ?>assets/smartadmin/img/loading.gif" class="img-responsive" />
+						</div>
                         <div id="tampil"></div>
 
                     </div>
@@ -83,6 +86,7 @@
 <script>
   function cari()
   {
+	   $("#loading-pok").show();
 	  satker= $("#kode_satker").val();
 	  tahun= $("#ta").val();
 	  bulan= $("#bulan").val();
@@ -92,6 +96,7 @@
             cache: false,
             success: function(data) {
                 $("#tampil").html(data);
+				 $("#loading-pok").hide();
             }
         });
     }

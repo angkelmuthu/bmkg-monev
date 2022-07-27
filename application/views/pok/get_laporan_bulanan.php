@@ -503,12 +503,12 @@
                                                     <?php } else { ?>
                                                         <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item->item ?></td>
                                                     <?php } ?>
-                                                    <td class="text-center"><?php echo $item->volume ?></td>
+                                                    <td class="text-center"><?php echo isset($item->volume) ? $item->volume : "0" ?></td>
                                                     <td class="text-right"><?php echo angka($item->jumlah) ?></td>
                                                     <td class="text-right"><?php echo isset($list_program[0]->total) ? round(($item->jumlah/$list_program[0]->total)*100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo angka($nominal) ?></td>
                                                     <td class="text-right"><?php echo angka($realisasi) ?></td>
-                                                    <td class="text-right"><?php echo round((($realisasi)/$item->jumlah)*100,2) ?></td>
+                                                    <td class="text-right"><?php echo isset($realisasi) ? round((($realisasi)/$item->jumlah)*100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo $fisik ?></td>
                                                     <td class="text-right"><?php echo isset($list_program[0]->total) ? round((round(($item->jumlah/$list_program[0]->total)*100,2)*($fisik))/100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo angka($item->jumlah-($nominal)) ?></td>
