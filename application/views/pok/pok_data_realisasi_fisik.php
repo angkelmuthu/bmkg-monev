@@ -127,7 +127,7 @@
             //$this->db->order_by('create_date', 'ASC');
             //$q = $this->db->get();
             //var_dump($q);
-			$this->output->enable_profiler(TRUE);
+		//	$this->output->enable_profiler(TRUE);
 			
             $list_program = $this->db->get()->result();
 		//	var_dump($list_program);
@@ -192,7 +192,7 @@
                 </tr>
                 <!-- kegiatan -->
                 <?php
-				$this->output->enable_profiler(TRUE);
+				//$this->output->enable_profiler(TRUE);
                 $this->db->select('a.*,sum(d.pagu) as total, sum(d.real_januari) as ttl_januari, sum(d.real_februari) as ttl_februari, sum(d.real_maret) as ttl_maret, sum(d.real_april) as ttl_april, sum(d.real_mei) as ttl_mei, sum(d.real_juni) as ttl_juni, sum(d.real_juli) as ttl_juli, sum(d.real_agustus) as ttl_agustus, sum(d.real_september) as ttl_september, sum(d.real_november) as ttl_november, sum(d.real_oktober) as ttl_oktober, sum(d.real_desember) as ttl_desember');
                 $this->db->from('t_kegiatan a');
 				$this->db->join('v_pagu_realisasi_omspan d', 'a.kode_dept=d.kode_dept and a.kode_satker=d.kode_satker 

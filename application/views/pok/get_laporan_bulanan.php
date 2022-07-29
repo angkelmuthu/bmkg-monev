@@ -507,8 +507,25 @@
                                                     <td class="text-right"><?php echo angka($item->jumlah) ?></td>
                                                     <td class="text-right"><?php echo isset($list_program[0]->total) ? round(($item->jumlah/$list_program[0]->total)*100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo angka($nominal) ?></td>
-                                                    <td class="text-right"><?php echo angka($realisasi) ?></td>
-                                                    <td class="text-right"><?php echo isset($realisasi) ? round((($realisasi)/$item->jumlah)*100,2) : 0 ?></td>
+                                                    <td class="text-right"><?php echo isset($realisasi) ? angka($realisasi) : 0 ?></td>
+                                                    <td class="text-right"><?php 
+													$jml=0;
+													$realisasi=0;
+													if(empty($realisasi) || !isset($realisasi))
+													{
+														$real=0;
+													}
+													if(!empty($item->jumlah) || isset($item->jumlah))
+													{
+														$jml=$item->jumlah;
+													}
+													if($real!=0 || $jml!=0)
+													{
+														echo  round((($real)/round($jml))*100,2);
+													}
+													
+													
+													?></td>
                                                     <td class="text-right"><?php echo $fisik ?></td>
                                                     <td class="text-right"><?php echo isset($list_program[0]->total) ? round((round(($item->jumlah/$list_program[0]->total)*100,2)*($fisik))/100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo angka($item->jumlah-($nominal)) ?></td>
