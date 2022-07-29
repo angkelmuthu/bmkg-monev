@@ -70,7 +70,11 @@
             //$this->db->order_by('create_date', 'ASC');
             //$q = $this->db->get();
             //var_dump($q);
-            $list_program = $this->db->get()->result();
+
+			  $list_program = $this->db->get()->result();
+			if(!empty($list_program))
+			{
+				          
 			$id=$list_program[0]->id_program;
             foreach ($list_program as $program) { ?>
                 <tr>
@@ -542,12 +546,14 @@
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
+            <?php } ?>
         </tbody>
     </table>
 </div>
 
 <?php
-
+if(!empty($list_program))
+			{
 	$status = explode(",", $row);
 	foreach($status as $val) {
 		if($val=="Terkirim")
@@ -606,7 +612,7 @@
 			
 	 
  }
-
+			}
 ?>
 
 </br>
