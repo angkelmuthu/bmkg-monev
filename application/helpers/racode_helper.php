@@ -257,15 +257,15 @@ function number_short($n, $precision = 2)
     } else if ($n < 900000) {
         // 0.9k-850k
         $n_format = number_format($n / 1000, $precision);
-        $suffix = 'K';
+        $suffix = '';
     } else if ($n < 900000000) {
         // 0.9m-850m
         $n_format = number_format($n / 1000000, $precision);
-        $suffix = 'M';
+        $suffix = 'K';
     } else if ($n < 900000000000) {
         // 0.9b-850b
         $n_format = number_format($n / 1000000000, $precision);
-        $suffix = 'B';
+        $suffix = 'M';
     } else {
         // 0.9t+
         $n_format = number_format($n / 1000000000000, $precision);

@@ -236,6 +236,7 @@ if ($this->session->userdata('id_user_level') == 1) {
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/chartjs/chartjs.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
@@ -277,74 +278,109 @@ if ($this->session->userdata('id_user_level') == 1) {
             }]
         },
         options: {
-            responsive: true,
-            legend: {
-                display: true,
-                // position: 'right',
-                // labels: {
-                //     boxWidth: 20,
-                //     padding: 20
-                // }
-            },
-            tooltips: {
-                enabled: true,
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.labels[tooltipItem.index];
-                        var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                        return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    }
-                }
+            events: false,
+            animation: {
+                duration: 500,
+                easing: "easeOutQuart",
+                onComplete: function() {
+                    var ctx = this.chart.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
 
+                    this.data.datasets.forEach(function(dataset) {
+
+                        for (var i = 0; i < dataset.data.length; i++) {
+                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                start_angle = model.startAngle,
+                                end_angle = model.endAngle,
+                                mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                            var x = mid_radius * Math.cos(mid_angle);
+                            var y = mid_radius * Math.sin(mid_angle);
+
+                            ctx.fillStyle = '#fff';
+                            if (i == 3) { // Darker text color for lighter background
+                                ctx.fillStyle = '#444';
+                            }
+                            var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
+                            //Don't Display If Legend is hide or value is 0
+                            if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
+                                // Display percent in another line, line break doesn't work for fillText
+                                ctx.fillText(percent, model.x + x, model.y + y + 15);
+                            }
+                        }
+                    });
+                }
             }
         }
     });
 
     ///Akun
-    var jsonfile = {
-        "jsonarray": <?php echo json_encode($akun) ?>
+    var jsonfile2 = {
+        "jsonarray2": <?php echo json_encode($akun) ?>
     };
 
-    var labels = jsonfile.jsonarray.map(function(e) {
+    var labelsx = jsonfile2.jsonarray2.map(function(e) {
         return e.nama_akun;
     });
-    var data = jsonfile.jsonarray.map(function(e) {
+    var datax = jsonfile2.jsonarray2.map(function(e) {
         return e.pagu;
     });
 
-    var ctx = document.getElementById('akun').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var cto = document.getElementById('akun').getContext('2d');
+    var myChart = new Chart(cto, {
         type: 'pie',
-        /* w  ww  .de mo  2s .  c  om*/
         data: {
-            labels: labels,
+            labels: labelsx,
             datasets: [{
-                label: 'Kegiatan',
-                data: data,
+                label: 'Jenis Belanja',
+                data: datax,
                 backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
                 hoverOffset: 4
             }]
         },
         options: {
-            responsive: true,
-            legend: {
-                display: true,
-                // position: 'right',
-                // labels: {
-                //     boxWidth: 20,
-                //     padding: 20
-                // }
-            },
-            tooltips: {
-                enabled: true,
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.labels[tooltipItem.index];
-                        var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                        return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    }
-                }
+            events: false,
+            animation: {
+                duration: 500,
+                easing: "easeOutQuart",
+                onComplete: function() {
+                    var cto = this.chart.cto;
+                    cto.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                    cto.textAlign = 'center';
+                    cto.textBaseline = 'bottom';
 
+                    this.data.datasets.forEach(function(dataset) {
+
+                        for (var i = 0; i < dataset.data.length; i++) {
+                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                start_angle = model.startAngle,
+                                end_angle = model.endAngle,
+                                mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                            var x = mid_radius * Math.cos(mid_angle);
+                            var y = mid_radius * Math.sin(mid_angle);
+
+                            cto.fillStyle = '#fff';
+                            if (i == 3) { // Darker text color for lighter background
+                                cto.fillStyle = '#444';
+                            }
+                            var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
+                            //Don't Display If Legend is hide or value is 0
+                            if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
+                                cto.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
+                                // Display percent in another line, line break doesn't work for fillText
+                                cto.fillText(percent, model.x + x, model.y + y + 15);
+                            }
+                        }
+                    });
+                }
             }
         }
     });
@@ -394,6 +430,15 @@ if ($this->session->userdata('id_user_level') == 1) {
                     display: false,
                     text: 'Bar Chart'
                 },
+                tooltips: {
+                    callbacks: {
+                        label: function(t, d) {
+                            var xLabel = d.datasets[t.datasetIndex].label;
+                            var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                            return xLabel + ': ' + yLabel;
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         display: true,
@@ -422,7 +467,14 @@ if ($this->session->userdata('id_user_level') == 1) {
                         },
                         ticks: {
                             beginAtZero: true,
-                            fontSize: 11
+                            fontSize: 11,
+                            callback: function(value, index, values) {
+                                if (parseInt(value) >= 1000) {
+                                    return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                } else {
+                                    return 'Rp. ' + value;
+                                }
+                            }
                         }
                     }]
                 },
@@ -432,10 +484,35 @@ if ($this->session->userdata('id_user_level') == 1) {
                         label: function(tooltipItem, data) {
                             var label = data.labels[tooltipItem.index];
                             var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                         }
                     }
 
+                },
+                animation: {
+                    duration: 500,
+                    easing: "easeOutQuart",
+                    onComplete: function() {
+                        var ctx = this.chart.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function(dataset) {
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                                ctx.fillStyle = '#444';
+                                var y_pos = model.y - 5;
+                                // Make sure data value does not get overflown and hidden
+                                // when the bar's value is too close to max value of scale
+                                // Note: The y value is reverse, it counts from top down
+                                if ((scale_max - model.y) / scale_max >= 0.93)
+                                    y_pos = model.y + 20;
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -488,6 +565,15 @@ if ($this->session->userdata('id_user_level') == 1) {
                     display: false,
                     text: 'Bar Chart'
                 },
+                tooltips: {
+                    callbacks: {
+                        label: function(t, d) {
+                            var xLabel = d.datasets[t.datasetIndex].label;
+                            var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                            return xLabel + ': ' + yLabel;
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         display: true,
@@ -516,7 +602,14 @@ if ($this->session->userdata('id_user_level') == 1) {
                         },
                         ticks: {
                             beginAtZero: true,
-                            fontSize: 11
+                            fontSize: 11,
+                            callback: function(value, index, values) {
+                                if (parseInt(value) >= 1000) {
+                                    return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                } else {
+                                    return 'Rp. ' + value;
+                                }
+                            }
                         }
                     }]
                 },
@@ -526,10 +619,35 @@ if ($this->session->userdata('id_user_level') == 1) {
                         label: function(tooltipItem, data) {
                             var label = data.labels[tooltipItem.index];
                             var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                         }
                     }
 
+                },
+                animation: {
+                    duration: 500,
+                    easing: "easeOutQuart",
+                    onComplete: function() {
+                        var ctx = this.chart.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function(dataset) {
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                                ctx.fillStyle = '#444';
+                                var y_pos = model.y - 5;
+                                // Make sure data value does not get overflown and hidden
+                                // when the bar's value is too close to max value of scale
+                                // Note: The y value is reverse, it counts from top down
+                                if ((scale_max - model.y) / scale_max >= 0.93)
+                                    y_pos = model.y + 20;
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -582,6 +700,15 @@ if ($this->session->userdata('id_user_level') == 1) {
                     display: false,
                     text: 'Bar Chart'
                 },
+                tooltips: {
+                    callbacks: {
+                        label: function(t, d) {
+                            var xLabel = d.datasets[t.datasetIndex].label;
+                            var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                            return xLabel + ': ' + yLabel;
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         display: true,
@@ -610,7 +737,14 @@ if ($this->session->userdata('id_user_level') == 1) {
                         },
                         ticks: {
                             beginAtZero: true,
-                            fontSize: 11
+                            fontSize: 11,
+                            callback: function(value, index, values) {
+                                if (parseInt(value) >= 1000) {
+                                    return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                } else {
+                                    return 'Rp. ' + value;
+                                }
+                            }
                         }
                     }]
                 },
@@ -620,10 +754,35 @@ if ($this->session->userdata('id_user_level') == 1) {
                         label: function(tooltipItem, data) {
                             var label = data.labels[tooltipItem.index];
                             var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                         }
                     }
 
+                },
+                animation: {
+                    duration: 500,
+                    easing: "easeOutQuart",
+                    onComplete: function() {
+                        var ctx = this.chart.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function(dataset) {
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                                ctx.fillStyle = '#444';
+                                var y_pos = model.y - 5;
+                                // Make sure data value does not get overflown and hidden
+                                // when the bar's value is too close to max value of scale
+                                // Note: The y value is reverse, it counts from top down
+                                if ((scale_max - model.y) / scale_max >= 0.93)
+                                    y_pos = model.y + 20;
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -674,6 +833,15 @@ if ($this->session->userdata('id_user_level') == 1) {
                     display: false,
                     text: 'Bar Chart'
                 },
+                tooltips: {
+                    callbacks: {
+                        label: function(t, d) {
+                            var xLabel = d.datasets[t.datasetIndex].label;
+                            var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                            return xLabel + ': ' + yLabel;
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         display: true,
@@ -702,7 +870,14 @@ if ($this->session->userdata('id_user_level') == 1) {
                         },
                         ticks: {
                             beginAtZero: true,
-                            fontSize: 11
+                            fontSize: 11,
+                            callback: function(value, index, values) {
+                                if (parseInt(value) >= 1000) {
+                                    return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                } else {
+                                    return 'Rp. ' + value;
+                                }
+                            }
                         }
                     }]
                 },
@@ -712,10 +887,35 @@ if ($this->session->userdata('id_user_level') == 1) {
                         label: function(tooltipItem, data) {
                             var label = data.labels[tooltipItem.index];
                             var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                         }
                     }
 
+                },
+                animation: {
+                    duration: 500,
+                    easing: "easeOutQuart",
+                    onComplete: function() {
+                        var ctx = this.chart.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function(dataset) {
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                                ctx.fillStyle = '#444';
+                                var y_pos = model.y - 5;
+                                // Make sure data value does not get overflown and hidden
+                                // when the bar's value is too close to max value of scale
+                                // Note: The y value is reverse, it counts from top down
+                                if ((scale_max - model.y) / scale_max >= 0.93)
+                                    y_pos = model.y + 20;
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -766,6 +966,15 @@ if ($this->session->userdata('id_user_level') == 1) {
                     display: false,
                     text: 'Bar Chart'
                 },
+                tooltips: {
+                    callbacks: {
+                        label: function(t, d) {
+                            var xLabel = d.datasets[t.datasetIndex].label;
+                            var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                            return xLabel + ': ' + yLabel;
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         display: true,
@@ -794,7 +1003,14 @@ if ($this->session->userdata('id_user_level') == 1) {
                         },
                         ticks: {
                             beginAtZero: true,
-                            fontSize: 11
+                            fontSize: 11,
+                            callback: function(value, index, values) {
+                                if (parseInt(value) >= 1000) {
+                                    return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                } else {
+                                    return 'Rp. ' + value;
+                                }
+                            }
                         }
                     }]
                 },
@@ -804,10 +1020,35 @@ if ($this->session->userdata('id_user_level') == 1) {
                         label: function(tooltipItem, data) {
                             var label = data.labels[tooltipItem.index];
                             var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return label + ':' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                         }
                     }
 
+                },
+                animation: {
+                    duration: 500,
+                    easing: "easeOutQuart",
+                    onComplete: function() {
+                        var ctx = this.chart.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function(dataset) {
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                                ctx.fillStyle = '#444';
+                                var y_pos = model.y - 5;
+                                // Make sure data value does not get overflown and hidden
+                                // when the bar's value is too close to max value of scale
+                                // Note: The y value is reverse, it counts from top down
+                                if ((scale_max - model.y) / scale_max >= 0.93)
+                                    y_pos = model.y + 20;
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                            }
+                        });
+                    }
                 }
             }
         }
