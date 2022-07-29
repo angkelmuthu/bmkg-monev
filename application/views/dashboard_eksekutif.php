@@ -561,6 +561,15 @@
                         display: false,
                         text: 'Bar Chart'
                     },
+                    tooltips: {
+                        callbacks: {
+                            label: function(t, d) {
+                                var xLabel = d.datasets[t.datasetIndex].label;
+                                var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                                return xLabel + ': ' + yLabel;
+                            }
+                        }
+                    },
                     scales: {
                         xAxes: [{
                             display: true,
@@ -589,7 +598,14 @@
                             },
                             ticks: {
                                 beginAtZero: true,
-                                fontSize: 11
+                                fontSize: 11,
+                                callback: function(value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                    } else {
+                                        return 'Rp. ' + value;
+                                    }
+                                }
                             }
                         }]
                     },
@@ -613,7 +629,7 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    ctx.fillText(dataset.data[i], model.x, y_pos);
+                                    ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
                                 }
                             });
                         }
@@ -666,6 +682,15 @@
                         display: false,
                         text: 'Bar Chart'
                     },
+                    tooltips: {
+                        callbacks: {
+                            label: function(t, d) {
+                                var xLabel = d.datasets[t.datasetIndex].label;
+                                var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                                return xLabel + ': ' + yLabel;
+                            }
+                        }
+                    },
                     scales: {
                         xAxes: [{
                             display: true,
@@ -694,7 +719,14 @@
                             },
                             ticks: {
                                 beginAtZero: true,
-                                fontSize: 11
+                                fontSize: 11,
+                                callback: function(value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                    } else {
+                                        return 'Rp. ' + value;
+                                    }
+                                }
                             }
                         }]
                     },
@@ -718,7 +750,7 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    ctx.fillText(dataset.data[i], model.x, y_pos);
+                                    ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
                                 }
                             });
                         }

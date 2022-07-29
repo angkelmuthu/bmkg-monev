@@ -236,6 +236,7 @@ if ($this->session->userdata('id_user_level') == 1) {
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/chartjs/chartjs.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
@@ -285,6 +286,13 @@ if ($this->session->userdata('id_user_level') == 1) {
                 //     boxWidth: 20,
                 //     padding: 20
                 // }
+            },
+            plugins: {
+                labels: {
+                    render: 'percentage',
+                    fontColor: ['black'],
+                    precision: 2
+                }
             },
             tooltips: {
                 enabled: true,
