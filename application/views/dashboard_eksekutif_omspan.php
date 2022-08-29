@@ -123,192 +123,202 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-5">
+                        <div class="col-xl-6">
+                            <div id="panel-10" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        Realisasi
+                                    </h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="row">
+                                        <div class="col-xl-4">
+                                            <div class="panel-content">
+                                                <h4 class="text-center">BMKG</h4>
+                                                <div id="bmkg" style="width:100%; height:150px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="panel-content">
+                                                <h4 class="text-center">Program DUKMAN</h4>
+                                                <div id="dukman" style="width:100%; height:150px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="panel-container show">
+                                                <div class="panel-content">
+                                                    <h4 class="text-center">Program PMKG</h4>
+                                                    <div id="pmkg" style="width:100%; height:150px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div id="panel-10" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        Realisasi Perjenis Belanja
+                                    </h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div id="barChart">
+                                            <canvas style="width:100%; height:180px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div id="panel-10" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        Realisasi Perbulan
+                                    </h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div id="barlineCombine">
+                                            <canvas style="width:100%; height:170px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div id="panel-10" class="panel mb-1">
+                                    <div id="panel-10" class="panel">
                                         <div class="panel-hdr">
                                             <h2>
-                                                Realisasi
+                                                Realisasi <span class="fw-300"><i>Persumber Dana</i></span>
                                             </h2>
                                         </div>
                                         <div class="panel-container show">
-                                            <div class="row">
-                                                <div class="col-xl-4">
-                                                    <div class="panel-content">
-                                                        <h4 class="text-center">BMKG</h4>
-                                                        <div id="bmkg" style="width:100%; height:150px;"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-4">
-                                                    <div class="panel-content">
-                                                        <h4 class="text-center">Program DUKMAN</h4>
-                                                        <div id="dukman" style="width:100%; height:150px;"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-4">
-                                                    <div class="panel-container show">
-                                                        <div class="panel-content">
-                                                            <h4 class="text-center">Program PMKG</h4>
-                                                            <div id="pmkg" style="width:100%; height:150px;"></div>
-                                                        </div>
-                                                    </div>
+                                            <div class="panel-content p-1">
+                                                <table class="table table-striped table-bordered table-sm fs-nano">
+                                                    <thead class="thead-themed">
+                                                        <tr>
+                                                            <th>Sumber Dana</th>
+                                                            <th>Pagu</th>
+                                                            <th>Realisasi</th>
+                                                            <th>%</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        foreach ($sumber_dana as $row) { ?>
+                                                            <tr>
+                                                                <td><?php echo $row->nama ?></td>
+                                                                <td><?php echo number_short($row->pagu) ?></td>
+                                                                <td><?php echo number_short($row->realisasi) ?></td>
+                                                                <td><?php echo $row->persen ?></td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div id="panel-10" class="panel">
+                                        <div class="panel-hdr">
+                                            <h2>
+                                                Realisasi <span class="fw-300"><i>Persumber Dana</i></span>
+                                            </h2>
+                                        </div>
+                                        <div class="panel-container show">
+                                            <div class="panel-content p-1">
+                                                <div id="barChart2">
+                                                    <canvas style="width:100%; height:165px;"></canvas>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-12">
-                                    <div id="panel-10" class="panel mb-1">
-                                        <div class="panel-hdr">
-                                            <h2>
-                                                Realisasi Perbulan
-                                            </h2>
-                                        </div>
-                                        <div class="panel-container show">
-                                            <div class="panel-content">
-                                                <div id="barlineCombine">
-                                                    <canvas style="width:100%; height:170px;"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5">
+                            <div id="panel-10" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        Cari Satker</span>
+                                    </h2>
                                 </div>
-                                <div class="col-xl-12">
-                                    <div id="panel-8" class="panel">
-                                        <div class="panel-hdr">
-                                            <h2>
-                                                Realisasi Perjenis Belanja
-                                            </h2>
-                                        </div>
-                                        <div class="panel-container show">
-                                            <div class="panel-content">
-                                                <div id="barChart">
-                                                    <canvas style="width:100%; height:160px;"></canvas>
-                                                </div>
-                                            </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content p-1">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-sm fs-nano" id="example">
+                                                <thead class="thead-themed">
+                                                    <tr>
+                                                        <th>Sumber Dana</th>
+                                                        <th>Pagu</th>
+                                                        <th>Realisasi</th>
+                                                        <th>%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    foreach ($satker as $row) { ?>
+                                                        <tr>
+                                                            <td><?php echo $row->nama ?></td>
+                                                            <td><?php echo number_short($row->pagu) ?></td>
+                                                            <td><?php echo number_short($row->realisasi) ?></td>
+                                                            <td><?php echo $row->persen ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-7">
-                            <div class="row">
-                                <div class="col-xl-5">
-                                    <div class="row">
-                                        <div class="col-xl-12">
-                                            <div id="panel-10" class="panel mb-1 ml-1">
-                                                <div class="panel-hdr">
-                                                    <h2>
-                                                        Realisasi <span class="fw-300"><i>Persumber Dana</i></span>
-                                                    </h2>
-                                                </div>
-                                                <div class="panel-container show">
-                                                    <div class="panel-content p-1">
-                                                        <table class="table table-striped table-bordered table-sm fs-nano">
-                                                            <thead class="thead-themed">
-                                                                <tr>
-                                                                    <th>Sumber Dana</th>
-                                                                    <th>Pagu</th>
-                                                                    <th>Realisasi</th>
-                                                                    <th>%</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <?php
-                                                                foreach ($sumber_dana as $row) { ?>
-                                                                    <tr>
-                                                                        <td><?php echo $row->nama ?></td>
-                                                                        <td><?php echo number_short($row->pagu) ?></td>
-                                                                        <td><?php echo number_short($row->realisasi) ?></td>
-                                                                        <td><?php echo $row->persen ?></td>
-                                                                    </tr>
-                                                                <?php } ?>
-                                                            </tbody>
-                                                        </table>
-                                                        <div id="barChart2">
-                                                            <canvas style="width:100%; height:165px;"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div id="panel-10" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        Realisasi <span class="fw-300"><i>Per Kegiatan</i></span>
+                                    </h2>
                                 </div>
-                                <div class="col-xl-7">
-                                    <div id="panel-10" class="panel mb-1">
-                                        <div class="panel-hdr">
-                                            <h2>
-                                                Cari Satker</span>
-                                            </h2>
-                                        </div>
-                                        <div class="panel-container show">
-                                            <div class="panel-content p-1">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-bordered table-sm fs-nano" id="example">
-                                                        <thead class="thead-themed">
-                                                            <tr>
-                                                                <th>Sumber Dana</th>
-                                                                <th>Pagu</th>
-                                                                <th>Realisasi</th>
-                                                                <th>%</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            foreach ($satker as $row) { ?>
-                                                                <tr>
-                                                                    <td><?php echo $row->nama ?></td>
-                                                                    <td><?php echo number_short($row->pagu) ?></td>
-                                                                    <td><?php echo number_short($row->realisasi) ?></td>
-                                                                    <td><?php echo $row->persen ?></td>
-                                                                </tr>
-                                                            <?php } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-12">
-                                    <div id="panel-10" class="panel">
-                                        <div class="panel-hdr">
-                                            <h2>
-                                                Realisasi <span class="fw-300"><i>Per Kegiatan</i></span>
-                                            </h2>
-                                        </div>
-                                        <div class="panel-container show">
-                                            <div class="panel-content p-1">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-bordered table-sm fs-nano" id="example2">
-                                                        <thead class="thead-themed">
-                                                            <tr>
-                                                                <th>Sumber Dana</th>
-                                                                <th>Pagu</th>
-                                                                <th>Realisasi</th>
-                                                                <th>%</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            foreach ($kegiatan as $row) { ?>
-                                                                <tr>
-                                                                    <td><?php echo $row->nama ?></td>
-                                                                    <td><?php echo number_short($row->pagu) ?></td>
-                                                                    <td><?php echo number_short($row->realisasi) ?></td>
-                                                                    <td><?php echo $row->persen ?></td>
-                                                                </tr>
-                                                            <?php } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content p-1">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-sm fs-nano" id="example2">
+                                                <thead class="thead-themed">
+                                                    <tr>
+                                                        <th>Sumber Dana</th>
+                                                        <th>Pagu</th>
+                                                        <th>Realisasi</th>
+                                                        <th>%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    foreach ($kegiatan as $row) { ?>
+                                                        <tr>
+                                                            <td><?php echo $row->nama ?></td>
+                                                            <td><?php echo number_short($row->pagu) ?></td>
+                                                            <td><?php echo number_short($row->realisasi) ?></td>
+                                                            <td><?php echo $row->persen ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </main>
             </div>
@@ -320,6 +330,7 @@
     <!-- dependency for c3 charts : this dependency is a BSD license with clause 3 -->
     <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/d3/d3.js"></script>
     <!-- c3 charts : MIT license -->
+    <script src="https://unpkg.com/@develoka/angka-rupiah-js/index.min.js"></script>
     <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/c3/c3.js"></script>
     <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/demo-data/demo-c3.js"></script>
     <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/chartjs/chartjs.bundle.js"></script>
@@ -558,9 +569,9 @@
                 type: 'bar',
                 data: barChartData,
                 options: {
-                    responsive: true,
+                    responsive: false,
                     legend: {
-                        position: 'top',
+                        position: 'bottom',
                     },
                     title: {
                         display: false,
@@ -618,7 +629,12 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    ctx.fillText(dataset.data[i], model.x, y_pos);
+                                    //ctx.fillText(dataset.data[i], model.x, y_pos);
+                                    ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
+                                        useUnit: true,
+                                        symbol: null,
+                                        k: true
+                                    }), model.x, y_pos);
                                 }
                             });
                         }
@@ -723,7 +739,12 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    ctx.fillText(dataset.data[i], model.x, y_pos);
+                                    //ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                                    ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
+                                        useUnit: true,
+                                        symbol: null,
+                                        k: true
+                                    }), model.x, y_pos);
                                 }
                             });
                         }

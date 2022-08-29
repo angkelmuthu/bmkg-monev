@@ -51,6 +51,11 @@ class Dashboard extends CI_Controller
         );
         $this->template->load('template', 'dashboard', $data);
     }
+
+    public function esimon()
+    {
+        $this->template->load('template', 'dashboard_esimon');
+    }
     // public function master_rs($id)
     // {
     //     $row2 = $this->Dashboard_model->get_master_rs($id);

@@ -236,6 +236,7 @@ if ($this->session->userdata('id_user_level') == 1) {
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/statistics/chartjs/chartjs.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
+<script src="https://unpkg.com/@develoka/angka-rupiah-js/index.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
 <script>
     $(document).ready(function() {
@@ -308,7 +309,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
                             //Don't Display If Legend is hide or value is 0
                             if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
+                                ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
+                                    useUnit: true,
+                                    symbol: null,
+                                    k: true
+                                }), model.x + x, model.y + y);
                                 // Display percent in another line, line break doesn't work for fillText
                                 ctx.fillText(percent, model.x + x, model.y + y + 15);
                             }
@@ -320,19 +325,19 @@ if ($this->session->userdata('id_user_level') == 1) {
     });
 
     ///Akun
-    var jsonfile2 = {
-        "jsonarray2": <?php echo json_encode($akun) ?>
+    var akun_json = {
+        "akun_array": <?php echo json_encode($akun) ?>
     };
 
-    var labelsx = jsonfile2.jsonarray2.map(function(e) {
+    var labelsx = akun_json.akun_array.map(function(e) {
         return e.nama_akun;
     });
-    var datax = jsonfile2.jsonarray2.map(function(e) {
+    var datax = akun_json.akun_array.map(function(e) {
         return e.pagu;
     });
 
-    var cto = document.getElementById('akun').getContext('2d');
-    var myChart = new Chart(cto, {
+    var ctx = document.getElementById('akun').getContext('2d');
+    var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labelsx,
@@ -349,10 +354,10 @@ if ($this->session->userdata('id_user_level') == 1) {
                 duration: 500,
                 easing: "easeOutQuart",
                 onComplete: function() {
-                    var cto = this.chart.cto;
-                    cto.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                    cto.textAlign = 'center';
-                    cto.textBaseline = 'bottom';
+                    var ctx = this.chart.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
 
                     this.data.datasets.forEach(function(dataset) {
 
@@ -367,17 +372,21 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
-                            cto.fillStyle = '#fff';
+                            ctx.fillStyle = '#fff';
                             if (i == 3) { // Darker text color for lighter background
-                                cto.fillStyle = '#444';
+                                ctx.fillStyle = '#444';
                             }
                             var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
                             //Don't Display If Legend is hide or value is 0
-                            if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                                cto.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
-                                // Display percent in another line, line break doesn't work for fillText
-                                cto.fillText(percent, model.x + x, model.y + y + 15);
-                            }
+                            //if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
+                            ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
+                                useUnit: true,
+                                symbol: null,
+                                k: true
+                            }), model.x + x, model.y + y);
+                            // Display percent in another line, line break doesn't work for fillText
+                            ctx.fillText(percent, model.x + x, model.y + y + 15);
+                            //}
                         }
                     });
                 }
@@ -488,32 +497,36 @@ if ($this->session->userdata('id_user_level') == 1) {
                         }
                     }
 
-                },
-                animation: {
-                    duration: 500,
-                    easing: "easeOutQuart",
-                    onComplete: function() {
-                        var ctx = this.chart.ctx;
-                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-
-                        this.data.datasets.forEach(function(dataset) {
-                            for (var i = 0; i < dataset.data.length; i++) {
-                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                                ctx.fillStyle = '#444';
-                                var y_pos = model.y - 5;
-                                // Make sure data value does not get overflown and hidden
-                                // when the bar's value is too close to max value of scale
-                                // Note: The y value is reverse, it counts from top down
-                                if ((scale_max - model.y) / scale_max >= 0.93)
-                                    y_pos = model.y + 20;
-                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                            }
-                        });
-                    }
                 }
+                // animation: {
+                //     duration: 500,
+                //     easing: "easeOutQuart",
+                //     onComplete: function() {
+                //         var ctx = this.chart.ctx;
+                //         ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                //         ctx.textAlign = 'center';
+                //         ctx.textBaseline = 'bottom';
+
+                //         this.data.datasets.forEach(function(dataset) {
+                //             for (var i = 0; i < dataset.data.length; i++) {
+                //                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                //                     scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                //                 ctx.fillStyle = '#444';
+                //                 var y_pos = model.y - 5;
+                //                 // Make sure data value does not get overflown and hidden
+                //                 // when the bar's value is too close to max value of scale
+                //                 // Note: The y value is reverse, it counts from top down
+                //                 if ((scale_max - model.y) / scale_max >= 0.93)
+                //                     y_pos = model.y + 20;
+                //                 ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
+                //                     useUnit: true,
+                //                     symbol: null,
+                //                     k: true
+                //                 }), model.x, y_pos);
+                //             }
+                //         });
+                //     }
+                // }
             }
         }
         new Chart($("#barChart_kegiatan > canvas").get(0).getContext("2d"), config);
@@ -623,32 +636,32 @@ if ($this->session->userdata('id_user_level') == 1) {
                         }
                     }
 
-                },
-                animation: {
-                    duration: 500,
-                    easing: "easeOutQuart",
-                    onComplete: function() {
-                        var ctx = this.chart.ctx;
-                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-
-                        this.data.datasets.forEach(function(dataset) {
-                            for (var i = 0; i < dataset.data.length; i++) {
-                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                                ctx.fillStyle = '#444';
-                                var y_pos = model.y - 5;
-                                // Make sure data value does not get overflown and hidden
-                                // when the bar's value is too close to max value of scale
-                                // Note: The y value is reverse, it counts from top down
-                                if ((scale_max - model.y) / scale_max >= 0.93)
-                                    y_pos = model.y + 20;
-                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                            }
-                        });
-                    }
                 }
+                // animation: {
+                //     duration: 500,
+                //     easing: "easeOutQuart",
+                //     onComplete: function() {
+                //         var ctx = this.chart.ctx;
+                //         ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                //         ctx.textAlign = 'center';
+                //         ctx.textBaseline = 'bottom';
+
+                //         this.data.datasets.forEach(function(dataset) {
+                //             for (var i = 0; i < dataset.data.length; i++) {
+                //                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                //                     scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                //                 ctx.fillStyle = '#444';
+                //                 var y_pos = model.y - 5;
+                //                 // Make sure data value does not get overflown and hidden
+                //                 // when the bar's value is too close to max value of scale
+                //                 // Note: The y value is reverse, it counts from top down
+                //                 if ((scale_max - model.y) / scale_max >= 0.93)
+                //                     y_pos = model.y + 20;
+                //                 ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                //             }
+                //         });
+                //     }
+                // }
             }
         }
         new Chart($("#barChart_kro > canvas").get(0).getContext("2d"), config);
@@ -758,32 +771,32 @@ if ($this->session->userdata('id_user_level') == 1) {
                         }
                     }
 
-                },
-                animation: {
-                    duration: 500,
-                    easing: "easeOutQuart",
-                    onComplete: function() {
-                        var ctx = this.chart.ctx;
-                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-
-                        this.data.datasets.forEach(function(dataset) {
-                            for (var i = 0; i < dataset.data.length; i++) {
-                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                                ctx.fillStyle = '#444';
-                                var y_pos = model.y - 5;
-                                // Make sure data value does not get overflown and hidden
-                                // when the bar's value is too close to max value of scale
-                                // Note: The y value is reverse, it counts from top down
-                                if ((scale_max - model.y) / scale_max >= 0.93)
-                                    y_pos = model.y + 20;
-                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                            }
-                        });
-                    }
                 }
+                // animation: {
+                //     duration: 500,
+                //     easing: "easeOutQuart",
+                //     onComplete: function() {
+                //         var ctx = this.chart.ctx;
+                //         ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                //         ctx.textAlign = 'center';
+                //         ctx.textBaseline = 'bottom';
+
+                //         this.data.datasets.forEach(function(dataset) {
+                //             for (var i = 0; i < dataset.data.length; i++) {
+                //                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                //                     scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                //                 ctx.fillStyle = '#444';
+                //                 var y_pos = model.y - 5;
+                //                 // Make sure data value does not get overflown and hidden
+                //                 // when the bar's value is too close to max value of scale
+                //                 // Note: The y value is reverse, it counts from top down
+                //                 if ((scale_max - model.y) / scale_max >= 0.93)
+                //                     y_pos = model.y + 20;
+                //                 ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                //             }
+                //         });
+                //     }
+                // }
             }
         }
         new Chart($("#barChart_akun > canvas").get(0).getContext("2d"), config);
@@ -891,32 +904,32 @@ if ($this->session->userdata('id_user_level') == 1) {
                         }
                     }
 
-                },
-                animation: {
-                    duration: 500,
-                    easing: "easeOutQuart",
-                    onComplete: function() {
-                        var ctx = this.chart.ctx;
-                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-
-                        this.data.datasets.forEach(function(dataset) {
-                            for (var i = 0; i < dataset.data.length; i++) {
-                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                                ctx.fillStyle = '#444';
-                                var y_pos = model.y - 5;
-                                // Make sure data value does not get overflown and hidden
-                                // when the bar's value is too close to max value of scale
-                                // Note: The y value is reverse, it counts from top down
-                                if ((scale_max - model.y) / scale_max >= 0.93)
-                                    y_pos = model.y + 20;
-                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                            }
-                        });
-                    }
                 }
+                // animation: {
+                //     duration: 500,
+                //     easing: "easeOutQuart",
+                //     onComplete: function() {
+                //         var ctx = this.chart.ctx;
+                //         ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                //         ctx.textAlign = 'center';
+                //         ctx.textBaseline = 'bottom';
+
+                //         this.data.datasets.forEach(function(dataset) {
+                //             for (var i = 0; i < dataset.data.length; i++) {
+                //                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                //                     scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                //                 ctx.fillStyle = '#444';
+                //                 var y_pos = model.y - 5;
+                //                 // Make sure data value does not get overflown and hidden
+                //                 // when the bar's value is too close to max value of scale
+                //                 // Note: The y value is reverse, it counts from top down
+                //                 if ((scale_max - model.y) / scale_max >= 0.93)
+                //                     y_pos = model.y + 20;
+                //                 ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                //             }
+                //         });
+                //     }
+                // }
             }
         }
         new Chart($("#barChart_belanja > canvas").get(0).getContext("2d"), config);
@@ -1024,32 +1037,32 @@ if ($this->session->userdata('id_user_level') == 1) {
                         }
                     }
 
-                },
-                animation: {
-                    duration: 500,
-                    easing: "easeOutQuart",
-                    onComplete: function() {
-                        var ctx = this.chart.ctx;
-                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-
-                        this.data.datasets.forEach(function(dataset) {
-                            for (var i = 0; i < dataset.data.length; i++) {
-                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                                ctx.fillStyle = '#444';
-                                var y_pos = model.y - 5;
-                                // Make sure data value does not get overflown and hidden
-                                // when the bar's value is too close to max value of scale
-                                // Note: The y value is reverse, it counts from top down
-                                if ((scale_max - model.y) / scale_max >= 0.93)
-                                    y_pos = model.y + 20;
-                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                            }
-                        });
-                    }
                 }
+                // animation: {
+                //     duration: 500,
+                //     easing: "easeOutQuart",
+                //     onComplete: function() {
+                //         var ctx = this.chart.ctx;
+                //         ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                //         ctx.textAlign = 'center';
+                //         ctx.textBaseline = 'bottom';
+
+                //         this.data.datasets.forEach(function(dataset) {
+                //             for (var i = 0; i < dataset.data.length; i++) {
+                //                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                //                     scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                //                 ctx.fillStyle = '#444';
+                //                 var y_pos = model.y - 5;
+                //                 // Make sure data value does not get overflown and hidden
+                //                 // when the bar's value is too close to max value of scale
+                //                 // Note: The y value is reverse, it counts from top down
+                //                 if ((scale_max - model.y) / scale_max >= 0.93)
+                //                     y_pos = model.y + 20;
+                //                 ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                //             }
+                //         });
+                //     }
+                // }
             }
         }
         new Chart($("#barChart_dana > canvas").get(0).getContext("2d"), config);
