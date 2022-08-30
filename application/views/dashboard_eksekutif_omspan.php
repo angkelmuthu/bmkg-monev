@@ -199,7 +199,7 @@
                                         </div>
                                         <div class="panel-container show">
                                             <div class="panel-content p-1">
-                                                <table class="table table-striped table-bordered table-sm fs-nano">
+                                                <table class="table table-striped table-bordered table-sm">
                                                     <thead class="thead-themed">
                                                         <tr>
                                                             <th>Sumber Dana</th>
@@ -256,7 +256,7 @@
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-sm fs-nano" id="example">
+                                            <table class="table table-striped table-bordered table-sm" id="example">
                                                 <thead class="thead-themed">
                                                     <tr>
                                                         <th>Sumber Dana</th>
@@ -292,7 +292,7 @@
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-sm fs-nano" id="example2">
+                                            <table class="table table-striped table-bordered table-sm" id="example2">
                                                 <thead class="thead-themed">
                                                     <tr>
                                                         <th>Sumber Dana</th>
@@ -305,7 +305,7 @@
                                                     <?php
                                                     foreach ($kegiatan as $row) { ?>
                                                         <tr>
-                                                            <td><?php echo $row->nama ?></td>
+                                                            <td><?php echo $row->kode_kegiatan . ' | ' . $row->nama ?></td>
                                                             <td><?php echo number_short($row->pagu) ?></td>
                                                             <td><?php echo number_short($row->realisasi) ?></td>
                                                             <td><?php echo $row->persen ?></td>
@@ -577,6 +577,15 @@
                         display: false,
                         text: 'Bar Chart'
                     },
+                    tooltips: {
+                        callbacks: {
+                            label: function(t, d) {
+                                var xLabel = d.datasets[t.datasetIndex].label;
+                                var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                                return xLabel + ': ' + yLabel;
+                            }
+                        }
+                    },
                     scales: {
                         xAxes: [{
                             display: true,
@@ -605,7 +614,14 @@
                             },
                             ticks: {
                                 beginAtZero: true,
-                                fontSize: 11
+                                fontSize: 11,
+                                callback: function(value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                    } else {
+                                        return 'Rp. ' + value;
+                                    }
+                                }
                             }
                         }]
                     },
@@ -629,7 +645,7 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    //ctx.fillText(dataset.data[i], model.x, y_pos);
+                                    //ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
                                     ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
                                         useUnit: true,
                                         symbol: null,

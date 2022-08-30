@@ -195,7 +195,7 @@
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
-                                        <table class="table table-striped table-bordered table-sm fs-nano">
+                                        <table class="table table-striped table-bordered table-sm">
                                             <thead class="thead-themed">
                                                 <tr>
                                                     <th>Sumber Dana</th>
@@ -247,7 +247,7 @@
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-sm fs-nano" id="example">
+                                            <table class="table table-striped table-bordered table-sm" id="example">
                                                 <thead class="thead-themed">
                                                     <tr>
                                                         <th>Sumber Dana</th>
@@ -283,7 +283,7 @@
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-sm fs-nano" id="example2">
+                                            <table class="table table-striped table-bordered table-sm" id="example2">
                                                 <thead class="thead-themed">
                                                     <tr>
                                                         <th>Sumber Dana</th>
@@ -296,7 +296,7 @@
                                                     <?php
                                                     foreach ($kegiatan as $row) { ?>
                                                         <tr>
-                                                            <td><?php echo $row->nama ?></td>
+                                                            <td><?php echo $row->kode_kegiatan . ' | ' . $row->nama ?></td>
                                                             <td><?php echo number_short($row->pagu) ?></td>
                                                             <td><?php echo number_short($row->realisasi) ?></td>
                                                             <td><?php echo $row->persen ?></td>
