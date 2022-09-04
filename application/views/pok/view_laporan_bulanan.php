@@ -18,7 +18,7 @@
                 </div>
                 <div class="panel-container show">
 				<?php
-				$bulans=['Januari','Februari'];
+				$bulans=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 					 $this->db->select('a.*,d.nama_satker,d.alamat,d.no_tlpn,
 					(SELECT count(*) FROM t_kegiatan c
 					WHERE`a`.`kode_dept` = `c`.`kode_dept`
