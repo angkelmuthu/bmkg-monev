@@ -88,6 +88,7 @@
                     "data": "create_date"
                 },
 				{
+					'searchable': false,
                     render: function(data,type,row){
 						if(row.kirim==null)
 						{

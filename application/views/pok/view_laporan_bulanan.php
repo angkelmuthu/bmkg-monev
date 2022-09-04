@@ -44,7 +44,7 @@
 					 <center> <h2>LAPORAN BULANAN PELAKSANAAN KEGIATAN </h2></center>
 					 <center> <h3>TAHUN ANGGARAN <?= $tahun_anggaran ?></h3></center>
 					 <center> <h3> Posisi  : Bulan <?= $bulans[$bulan-1] ?> </h3></center>
-					 <center>  <h4><table>
+					  <h4><table>
 					 <tr>
 					 <td>NAMA SATKER </td><td>:</td><td><?= $list_program[0]->nama_satker ?></td>
 					 </tr>
@@ -60,7 +60,7 @@
 					  <tr>
 					 <td>NOMOR TELEPON</td><td>:</td><td><?= $list_program[0]->no_tlpn ?></td>
 					 </tr>
-					 </table></h4> </center> 
+					 </table></h4>
 <div>
     <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">
@@ -79,12 +79,12 @@
             </tr>
             <tr>
  
-                <th class="text-right">RUPIAH</th>
-                <th class="text-right">PROSEN (7 : 4) X 100</th>
-                <th class="text-right">PER KEG.</th>
-                <th class="text-right">THD SELURUH PEKERJAAN ( 9 x 5) /100</th>
-                <th class="text-right">THD NILAI KONTRAK (4-6)</th>
-                <th class="text-right">THD REALIASASI KEUANGAN (4-7)</th>
+                <th class="text-center">RUPIAH</th>
+                <th class="text-center">PROSEN (7 : 4) X 100</th>
+                <th class="text-center">PER KEG.</th>
+                <th class="text-center">THD SELURUH PEKERJAAN ( 9 x 5) /100</th>
+                <th class="text-center">THD NILAI KONTRAK (4-6)</th>
+                <th class="text-center">THD REALIASASI KEUANGAN (4-7)</th>
             </tr>
         </thead>
         <tbody>
@@ -109,7 +109,16 @@
             <!-- program -->
             <?php
 			//var_dump($this->session->userdata('kode_satker'));
-           
+           $totalvolume=0;
+           $totalpagu=0;
+           $totalbobot=0;
+           $totalkontrak=0;
+           $totalrealisasi=0;
+           $totalprosen=0;
+           $totalfisik=0;
+           $totalseluruh=0;
+           $totalsisa1=0;
+           $totalsisa2=0;
             foreach ($list_program as $program) { ?>
                 <tr>
                     <td class="text-right"><?php echo $program->kode_dept . '.' . $program->kode_unit_kerja . '.' . $program->kode_program ?></td>
@@ -179,7 +188,9 @@
                     $this->db->group_by('a.kode_kro');
                     $list_kro = $this->db->get()->result();
 
-                    foreach ($list_kro as $kro) { ?>
+                    foreach ($list_kro as $kro) {
+						$totalpagu=$totalpagu+$kro->total;
+						?>
                         <tr>
                             <td class="text-right"><?php echo $kro->kode_kro ?></td>
                             <td class="text-left"><i class="fal fa-angle-right mr-1"></i><?php echo $kro->nama_kro ?></td>
@@ -366,6 +377,7 @@
                                         $this->db->order_by('id_item');
                                         $list_item_title = $this->db->get()->result();
 										//$this->output->enable_profiler(TRUE);
+										
                                         foreach ($list_item_title as $item_title) {
                                             if (!empty($item_title->item_title)) {
                                         ?>
@@ -533,6 +545,15 @@
 													$ket=json_decode($item->ket_kontrak_desember);
 												}
 												
+												$totalvolume=$totalvolume+$item->volume;
+												$totalbobot=$totalbobot+round(($item->jumlah/$list_program[0]->total)*100,2);
+												$totalkontrak=$totalkontrak+$nominal;
+												$totalrealisasi=$totalrealisasi+$realisasi;
+												$totalfisik=$totalfisik+$fisik;
+												$totalseluruh=$totalseluruh+(round((round(($item->jumlah/$list_program[0]->total)*100,2)*($fisik))/100,2));
+												$totalsisa1=$totalsisa1+($item->jumlah-($nominal));
+												$totalsisa2=$totalsisa2+($item->jumlah-($realisasi));
+												
                                             ?>
                                                 <tr>
                                                     <td class="text-right"></td>
@@ -546,7 +567,27 @@
                                                     <td class="text-right"><?php echo round(($item->jumlah/$list_program[0]->total)*100,2) ?></td>
                                                     <td class="text-right"><?php echo angka($nominal) ?></td>
                                                     <td class="text-right"><?php echo angka($realisasi) ?></td>
-                                                    <td class="text-right"><?php echo round((($realisasi)/$item->jumlah)*100,2) ?></td>
+                                                    <td class="text-right"><?php 
+													//$jml=0;
+													//$realisasi=0;
+													$real=0;
+													if(empty($realisasi) || !isset($realisasi))
+													{
+														$real=0;
+													}
+													if(!empty($item->jumlah) || isset($item->jumlah))
+													{
+														$jml=$item->jumlah;
+													}
+													if($jml!=0)
+													{
+														echo  round((($realisasi)/round($jml))*100,2);
+														$totalprosen=$totalprosen+(round((($realisasi)/round($jml))*100,2));
+														
+													}
+													
+													
+													?></td>
                                                     <td class="text-right"><?php echo $fisik ?></td>
                                                     <td class="text-right"><?php echo round((round(($item->jumlah/$list_program[0]->total)*100,2)*($fisik))/100,2) ?></td>
                                                     <td class="text-right"><?php echo angka($item->jumlah-($nominal)) ?></td>
@@ -556,6 +597,8 @@
                                                 </tr>
                                             <?php } ?>
                                         <?php } ?>
+										
+										
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>
@@ -563,6 +606,20 @@
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
+			<tr>
+					<td class="text-center" colspan=2>Total</td>                            
+					<td class="text-right"><?php echo $totalvolume; ?></td>                             
+					<td class="text-right"><?php echo angka($totalpagu); ?></td>                                
+					<td class="text-right"><?php echo $totalbobot; ?></td>                             
+					<td class="text-right"><?php echo angka($totalkontrak); ?></td>                             
+					<td class="text-right"><?php echo angka($totalrealisasi); ?></td>                             
+					<td class="text-right"><?php echo $totalprosen; ?></td>                             
+					<td class="text-right"><?php echo $totalfisik; ?></td>           
+					<td class="text-right"><?php echo $totalseluruh; ?></td>                             
+					<td class="text-right"><?php echo angka($totalsisa1); ?></td>                             
+					<td class="text-right"><?php echo angka($totalsisa2); ?></td>                                 
+					<td class="text-right"></td>                             
+            </tr>
         </tbody>
     </table>
 	<?php

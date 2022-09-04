@@ -23,12 +23,12 @@
             </tr>
             <tr>
  
-                <th class="text-right">RUPIAH</th>
-                <th class="text-right">PROSEN (7 : 4) X 100</th>
-                <th class="text-right">PER KEG.</th>
-                <th class="text-right">THD SELURUH PEKERJAAN ( 9 x 5) /100</th>
-                <th class="text-right">THD NILAI KONTRAK (4-6)</th>
-                <th class="text-right">THD REALIASASI KEUANGAN (4-7)</th>
+                <th class="text-center">RUPIAH</th>
+                <th class="text-center">PROSEN (7 : 4) X 100</th>
+                <th class="text-center">PER KEG.</th>
+                <th class="text-center">THD SELURUH PEKERJAAN ( 9 x 5) /100</th>
+                <th class="text-center">THD NILAI KONTRAK (4-6)</th>
+                <th class="text-center">THD REALIASASI KEUANGAN (4-7)</th>
             </tr>
         </thead>
         <tbody>
@@ -76,6 +76,16 @@
 			{
 				          
 			$id=$list_program[0]->id_program;
+			 $totalvolume=0;
+           $totalpagu=0;
+           $totalbobot=0;
+           $totalkontrak=0;
+           $totalrealisasi=0;
+           $totalprosen=0;
+           $totalfisik=0;
+           $totalseluruh=0;
+           $totalsisa1=0;
+           $totalsisa2=0;
             foreach ($list_program as $program) { ?>
                 <tr>
                     <td class="text-right"><?php echo $program->kode_dept . '.' . $program->kode_unit_kerja . '.' . $program->kode_program ?></td>
@@ -109,7 +119,9 @@
                 $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
                 $this->db->group_by('a.kode_kegiatan');
                 $list_kegiatan = $this->db->get()->result();
-                foreach ($list_kegiatan as $kegiatan) { ?>
+                foreach ($list_kegiatan as $kegiatan) { 
+				$totalpagu=$totalpagu+$kegiatan->total;
+				?>
                     <tr>
                  
                         <td class="text-right"><?php echo $kegiatan->kode_kegiatan ?></td>
@@ -498,7 +510,14 @@
 													+$item->fisik_november+$item->fisik_desember;
 													$ket=json_decode($item->ket_kontrak_desember);
 												}
-												
+												$totalvolume=$totalvolume+$item->volume;
+												$totalbobot=$totalbobot+round(($item->jumlah/$list_program[0]->total)*100,2);
+												$totalkontrak=$totalkontrak+$nominal;
+												$totalrealisasi=$totalrealisasi+$realisasi;
+												$totalfisik=$totalfisik+$fisik;
+												$totalseluruh=$totalseluruh+(round((round(($item->jumlah/$list_program[0]->total)*100,2)*($fisik))/100,2));
+												$totalsisa1=$totalsisa1+($item->jumlah-($nominal));
+												$totalsisa2=$totalsisa2+($item->jumlah-($realisasi));
                                             ?>
                                                 <tr>
                                                     <td class="text-right"></td>
@@ -511,10 +530,11 @@
                                                     <td class="text-right"><?php echo angka($item->jumlah) ?></td>
                                                     <td class="text-right"><?php echo isset($list_program[0]->total) ? round(($item->jumlah/$list_program[0]->total)*100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo angka($nominal) ?></td>
-                                                    <td class="text-right"><?php echo isset($realisasi) ? angka($realisasi) : 0 ?></td>
+                                                    <td class="text-right"><?php echo  angka($realisasi) ?></td>
                                                     <td class="text-right"><?php 
-													$jml=0;
-													$realisasi=0;
+													//$jml=0;
+													//$realisasi=0;
+													$real=0;
 													if(empty($realisasi) || !isset($realisasi))
 													{
 														$real=0;
@@ -523,9 +543,11 @@
 													{
 														$jml=$item->jumlah;
 													}
-													if($real!=0 || $jml!=0)
+													if($jml!=0)
 													{
-														echo  round((($real)/round($jml))*100,2);
+														echo  round((($realisasi)/round($jml))*100,2);
+														$totalprosen=$totalprosen+(round((($realisasi)/round($jml))*100,2));
+														
 													}
 													
 													
@@ -547,6 +569,20 @@
                 <?php } ?>
             <?php } ?>
             <?php } ?>
+			<tr>
+					<td class="text-center" colspan=2>Total</td>                            
+					<td class="text-right"><?php echo $totalvolume; ?></td>                             
+					<td class="text-right"><?php echo angka($totalpagu); ?></td>                                
+					<td class="text-right"><?php echo $totalbobot; ?></td>                             
+					<td class="text-right"><?php echo angka($totalkontrak); ?></td>                             
+					<td class="text-right"><?php echo angka($totalrealisasi); ?></td>                             
+					<td class="text-right"><?php echo $totalprosen; ?></td>                             
+					<td class="text-right"><?php echo $totalfisik; ?></td>           
+					<td class="text-right"><?php echo $totalseluruh; ?></td>                             
+					<td class="text-right"><?php echo angka($totalsisa1); ?></td>                             
+					<td class="text-right"><?php echo angka($totalsisa2); ?></td>                                 
+					<td class="text-right"></td>                             
+            </tr>
         </tbody>
     </table>
 </div>
