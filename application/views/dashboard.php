@@ -79,43 +79,74 @@ if ($this->session->userdata('id_user_level') == 1) {
         </div>
     </form>
     <div class="row">
-        <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-info rounded overflow-hidden position-relative text-white mb-g">
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-info rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                        <?php echo angka($pagu) ?>
+                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                        Rp. <?php echo angka($pagu) ?>
                         <small class="m-0 l-h-n">Total Pagu Anggaran</small>
-                    </h3>
+                    </h4>
                 </div>
             </div>
         </div>
         <!-- <div class="col-sm-6 col-xl-3">
             <div class="p-3 bg-warning-400 rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($penarikan) ?>
                         <small class="m-0 l-h-n">Total Rencana Penarikan</small>
-                    </h3>
+                    </h4>
                 </div>
             </div>
         </div> -->
-        <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-success-500 rounded overflow-hidden position-relative text-white mb-g">
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-success rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                        <?php echo angka($realisasi_pagu) ?>
-                        <small class="m-0 l-h-n">Total Realisasi Anggaran</small>
-                    </h3>
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                                <?php echo 'Rp. ' . angka($realisasi_pagu_omspan) ?>
+                                <small class="m-0 l-h-n">Realisasi Omspan</small>
+                            </h6>
+                        </div>
+                        <div class="col-sm-5">
+                            <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                                <?php echo angka($realisasi_pagu_omspan / $pagu * 100) . '%'; ?>
+                                <small class="m-0 l-h-n">Serapan</small>
+                            </h6>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-warning-600 rounded overflow-hidden position-relative text-white mb-g">
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-danger rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                                <?php echo 'Rp. ' . angka($realisasi_pagu_inputan) ?>
+                                <small class="m-0 l-h-n">Realisasi Inputan</small>
+                            </h6>
+                        </div>
+                        <div class="col-sm-5">
+                            <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                                <?php echo angka($realisasi_pagu_inputan / $pagu * 100) . '%'; ?>
+                                <small class="m-0 l-h-n">Serapan</small>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-warning-600 rounded overflow-hidden position-relative text-black mb-g">
+                <div class="">
+                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <?php echo angka($realisasi_fisik) ?>
-                        <small class="m-0 l-h-n">Total Realisasi Fisik</small>
-                    </h3>
+                        <small class="m-0 l-h-n">Realisasi Fisik</small>
+                    </h4>
                 </div>
             </div>
         </div>
@@ -204,6 +235,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                                                 <th>Akun</th>
                                                 <th>Pagu</th>
                                                 <th>Realisasi</th>
+                                                <th>Serapan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -215,6 +247,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                                                     <td><?php echo $row->nama_akun ?></td>
                                                     <td class="text-right"><?php echo angka($row->pagu) ?></td>
                                                     <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi / $row->pagu * 100) . '%'; ?></td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -274,7 +307,12 @@ if ($this->session->userdata('id_user_level') == 1) {
             datasets: [{
                 label: 'Kegiatan',
                 data: data,
-                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                backgroundColor: [
+                    myapp_get_color.primary_500,
+                    myapp_get_color.warning_500,
+                    myapp_get_color.danger_500,
+                    myapp_get_color.success_500
+                ],
                 hoverOffset: 4
             }]
         },
@@ -302,7 +340,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
-                            ctx.fillStyle = '#fff';
+                            ctx.fillStyle = '#000';
                             if (i == 3) { // Darker text color for lighter background
                                 ctx.fillStyle = '#444';
                             }
@@ -344,7 +382,12 @@ if ($this->session->userdata('id_user_level') == 1) {
             datasets: [{
                 label: 'Jenis Belanja',
                 data: datax,
-                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                backgroundColor: [
+                    myapp_get_color.primary_500,
+                    myapp_get_color.warning_500,
+                    myapp_get_color.danger_500,
+                    myapp_get_color.success_500
+                ],
                 hoverOffset: 4
             }]
         },
@@ -372,7 +415,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
-                            ctx.fillStyle = '#fff';
+                            ctx.fillStyle = '#000';
                             if (i == 3) { // Darker text color for lighter background
                                 ctx.fillStyle = '#444';
                             }

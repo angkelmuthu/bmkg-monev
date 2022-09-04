@@ -32,12 +32,14 @@ class Dashboard extends CI_Controller
         }
         $pagu = $this->Dashboard_model->ttl_pagu($ta, $satker);
         $penarikan = $this->Dashboard_model->ttl_penarikan($ta, $satker);
-        $realisasi_anggaran = $this->Dashboard_model->realisasi_pagu($ta, $satker);
+        $realisasi_omspan = $this->Dashboard_model->realisasi_pagu_omspan($ta, $satker);
+        $realisasi_inputan = $this->Dashboard_model->realisasi_pagu_inputan($ta, $satker);
         $realisasi_fisik = $this->Dashboard_model->realisasi_fisik($ta, $satker);
         $data = array(
             'pagu' => $pagu->pagu,
             'penarikan' => $penarikan->januari + $penarikan->februari + $penarikan->maret + $penarikan->april + $penarikan->mei + $penarikan->juni + $penarikan->juli + $penarikan->agustus + $penarikan->september + $penarikan->oktober + $penarikan->november + $penarikan->desember,
-            'realisasi_pagu' => $realisasi_anggaran->ang_januari + $realisasi_anggaran->ang_februari + $realisasi_anggaran->ang_maret + $realisasi_anggaran->ang_april + $realisasi_anggaran->ang_mei + $realisasi_anggaran->ang_juni + $realisasi_anggaran->ang_juli + $realisasi_anggaran->ang_agustus + $realisasi_anggaran->ang_september + $realisasi_anggaran->ang_oktober + $realisasi_anggaran->ang_november + $realisasi_anggaran->ang_desember,
+            'realisasi_pagu_omspan' => $realisasi_omspan->ang_januari + $realisasi_omspan->ang_februari + $realisasi_omspan->ang_maret + $realisasi_omspan->ang_april + $realisasi_omspan->ang_mei + $realisasi_omspan->ang_juni + $realisasi_omspan->ang_juli + $realisasi_omspan->ang_agustus + $realisasi_omspan->ang_september + $realisasi_omspan->ang_oktober + $realisasi_omspan->ang_november + $realisasi_omspan->ang_desember,
+            'realisasi_pagu_inputan' => $realisasi_inputan->real_januari + $realisasi_inputan->real_februari + $realisasi_inputan->real_maret + $realisasi_inputan->real_april + $realisasi_inputan->real_mei + $realisasi_inputan->real_juni + $realisasi_inputan->real_juli + $realisasi_inputan->real_agustus + $realisasi_inputan->real_september + $realisasi_inputan->real_oktober + $realisasi_inputan->real_november + $realisasi_inputan->real_desember,
             'realisasi_fisik' => $realisasi_fisik->fisik_januari + $realisasi_fisik->fisik_februari + $realisasi_fisik->fisik_maret + $realisasi_fisik->fisik_april + $realisasi_fisik->fisik_mei + $realisasi_fisik->fisik_juni + $realisasi_fisik->fisik_juli + $realisasi_fisik->fisik_agustus + $realisasi_fisik->fisik_september + $realisasi_fisik->fisik_oktober + $realisasi_fisik->fisik_november + $realisasi_fisik->fisik_desember,
             'kegiatan' => $this->Dashboard_model->kegiatan($ta, $satker),
             'akun' => $this->Dashboard_model->akun($ta, $satker),

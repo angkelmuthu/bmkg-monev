@@ -36,9 +36,19 @@ class Dashboard_model extends CI_Model
         return $this->db->get('v_dashboard')->row();
     }
 
-    function realisasi_pagu($ta, $satker)
+    function realisasi_pagu_omspan($ta, $satker)
     {
         $this->db->select('sum(ifnull(ang_januari,0)) as ang_januari,sum(ifnull(ang_februari,0)) as ang_februari,sum(ifnull(ang_maret,0)) as ang_maret,sum(ifnull(ang_april,0)) as ang_april,sum(ifnull(ang_mei,0)) as ang_mei,sum(ifnull(ang_juni,0)) as ang_juni,sum(ifnull(ang_juli,0)) as ang_juli,sum(ifnull(ang_agustus,0)) as ang_agustus,sum(ifnull(ang_september,0)) as ang_september,sum(ifnull(ang_oktober,0)) as ang_oktober,sum(ifnull(ang_november,0)) as ang_november,sum(ifnull(ang_desember,0)) as ang_desember');
+        $this->db->where('tahun_anggaran', $ta);
+        if (!empty($satker)) {
+            $this->db->where('kode_satker', $satker);
+        }
+        return $this->db->get('v_dashboard')->row();
+    }
+
+    function realisasi_pagu_inputan($ta, $satker)
+    {
+        $this->db->select('sum(ifnull(real_januari,0)) as real_januari,sum(ifnull(real_februari,0)) as real_februari,sum(ifnull(real_maret,0)) as real_maret,sum(ifnull(real_april,0)) as real_april,sum(ifnull(real_mei,0)) as real_mei,sum(ifnull(real_juni,0)) as real_juni,sum(ifnull(real_juli,0)) as real_juli,sum(ifnull(real_agustus,0)) as real_agustus,sum(ifnull(real_september,0)) as real_september,sum(ifnull(real_oktober,0)) as real_oktober,sum(ifnull(real_november,0)) as real_november,sum(ifnull(real_desember,0)) as real_desember');
         $this->db->where('tahun_anggaran', $ta);
         if (!empty($satker)) {
             $this->db->where('kode_satker', $satker);
