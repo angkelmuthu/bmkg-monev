@@ -32,6 +32,11 @@
     <script src="<?php echo base_url() ?>assets/bootstrap/js/sweetalert.min.js"></script>
     <!-- <link id="mytheme" rel="stylesheet" href="<?php echo base_url() ?>assets/smartadmin-slim/css/themes/cust-theme-5.css"> -->
     <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
+    <style>
+        .c3-chart-arc text {
+            fill: black;
+        }
+    </style>
 </head>
 
 <body class="mod-bg-1 mod-pace-custom nav-mobile-push nav-mobile-slide-out header-function-fixed nav-function-fixed desktop chrome webkit pace-done blur">
@@ -125,26 +130,31 @@
                                     <h2>
                                         Realisasi
                                     </h2>
+                                    <div class="panel-toolbar">
+                                        <h5 class="m-0">
+                                            Satuan Milyar
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="row">
                                         <div class="col-xl-4">
-                                            <div class="panel-content">
+                                            <div class="panel-content ml-1">
                                                 <h4 class="text-center">BMKG</h4>
-                                                <div id="bmkg" style="width:100%; height:150px;"></div>
+                                                <div id="bmkg" style="width:100%; height:180px;"></div>
                                             </div>
                                         </div>
                                         <div class="col-xl-4">
-                                            <div class="panel-content">
+                                            <div class="panel-content ml-1">
                                                 <h4 class="text-center">Program DUKMAN</h4>
-                                                <div id="dukman" style="width:100%; height:150px;"></div>
+                                                <div id="dukman" style="width:100%; height:180px;"></div>
                                             </div>
                                         </div>
                                         <div class="col-xl-4">
                                             <div class="panel-container show">
                                                 <div class="panel-content">
                                                     <h4 class="text-center">Program PMKG</h4>
-                                                    <div id="pmkg" style="width:100%; height:150px;"></div>
+                                                    <div id="pmkg" style="width:100%; height:180px;"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,11 +168,16 @@
                                     <h2>
                                         Realisasi Perjenis Belanja
                                     </h2>
+                                    <div class="panel-toolbar">
+                                        <h5 class="m-0">
+                                            Satuan Milyar
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
                                         <div id="barChart">
-                                            <canvas style="width:100%; height:180px;"></canvas>
+                                            <canvas style="width:100%; height:210px;"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +193,7 @@
                                 <div class="panel-container show">
                                     <div class="panel-content">
                                         <div id="barlineCombine">
-                                            <canvas style="width:100%; height:170px;"></canvas>
+                                            <canvas style="width:100%; height:200px;"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -192,10 +207,15 @@
                                     <h2>
                                         Realisasi <span class="fw-300"><i>Persumber Dana</i></span>
                                     </h2>
+                                    <div class="panel-toolbar">
+                                        <h5 class="m-0">
+                                            Satuan Milyar
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
-                                        <table class="table table-striped table-bordered table-sm">
+                                        <table class="table table-striped table-bordered">
                                             <thead class="thead-themed">
                                                 <tr>
                                                     <th>Sumber Dana</th>
@@ -209,9 +229,9 @@
                                                 foreach ($sumber_dana as $row) { ?>
                                                     <tr>
                                                         <td><?php echo $row->nama ?></td>
-                                                        <td><?php echo number_short($row->pagu) ?></td>
-                                                        <td><?php echo number_short($row->realisasi) ?></td>
-                                                        <td><?php echo $row->persen ?></td>
+                                                        <td class="text-right"><?php echo 'Rp. ' . $row->pagu ?></td>
+                                                        <td class="text-right"><?php echo 'Rp. ' . $row->realisasi ?></td>
+                                                        <td class="text-right"><?php echo $row->persen ?></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -226,11 +246,16 @@
                                     <h2>
                                         Realisasi <span class="fw-300"><i>Persumber Dana</i></span>
                                     </h2>
+                                    <div class="panel-toolbar">
+                                        <h5 class="m-0">
+                                            Satuan Milyar
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div id="barChart2">
-                                            <canvas style="width:100%; height:150px;"></canvas>
+                                            <canvas style="width:100%; height:280px;"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -241,13 +266,18 @@
                             <div id="panel-10" class="panel mb-1">
                                 <div class="panel-hdr">
                                     <h2>
-                                        Cari Satker</span>
+                                        Satuan Kerja</span>
                                     </h2>
+                                    <div class="panel-toolbar">
+                                        <h5 class="m-0">
+                                            Satuan Milyar
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-sm" id="example">
+                                            <table class="table table-striped table-bordered" id="example">
                                                 <thead class="thead-themed">
                                                     <tr>
                                                         <th>Sumber Dana</th>
@@ -260,10 +290,10 @@
                                                     <?php
                                                     foreach ($satker as $row) { ?>
                                                         <tr>
-                                                            <td><?php echo $row->nama ?></td>
-                                                            <td><?php echo number_short($row->pagu) ?></td>
-                                                            <td><?php echo number_short($row->realisasi) ?></td>
-                                                            <td><?php echo $row->persen ?></td>
+                                                            <td><?php echo $row->kode . ' | ' . $row->nama ?></td>
+                                                            <td class="text-right"><?php echo 'Rp. ' . $row->pagu ?></td>
+                                                            <td class="text-right"><?php echo 'Rp. ' . $row->realisasi ?></td>
+                                                            <td class="text-right"><?php echo $row->persen ?></td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
@@ -279,11 +309,16 @@
                                     <h2>
                                         Realisasi <span class="fw-300"><i>Per Kegiatan</i></span>
                                     </h2>
+                                    <div class="panel-toolbar">
+                                        <h5 class="m-0">
+                                            Satuan Milyar
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content p-1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-sm" id="example2">
+                                            <table class="table table-striped table-bordered" id="example2">
                                                 <thead class="thead-themed">
                                                     <tr>
                                                         <th>Sumber Dana</th>
@@ -297,9 +332,9 @@
                                                     foreach ($kegiatan as $row) { ?>
                                                         <tr>
                                                             <td><?php echo $row->kode_kegiatan . ' | ' . $row->nama ?></td>
-                                                            <td><?php echo number_short($row->pagu) ?></td>
-                                                            <td><?php echo number_short($row->realisasi) ?></td>
-                                                            <td><?php echo $row->persen ?></td>
+                                                            <td class="text-right"><?php echo 'Rp. ' . $row->pagu ?></td>
+                                                            <td class="text-right"><?php echo 'Rp. ' . $row->realisasi ?></td>
+                                                            <td class="text-right"><?php echo $row->persen ?></td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
@@ -334,8 +369,8 @@
             data: {
                 // iris data from R
                 columns: [
-                    ['Pagu : <?php echo number_short($bmkg_pagu) ?>', <?php echo $bmkg_pagu ?>],
-                    ['Realisasi : <?php echo number_short($bmkg_realisasi) ?>', <?php echo $bmkg_realisasi ?>],
+                    ['Pagu : <?php echo $bmkg_pagu ?>', <?php echo $bmkg_pagu ?>],
+                    ['Realisasi : <?php echo $bmkg_realisasi ?>', <?php echo $bmkg_realisasi ?>],
                 ],
                 type: 'donut' //,
                 /*onclick: function (d, i) { console.log("onclick", d, i); },
@@ -355,8 +390,8 @@
             data: {
                 // iris data from R
                 columns: [
-                    ['Pagu : <?php echo number_short($dukman_pagu) ?>', <?php echo $dukman_pagu ?>],
-                    ['Realisasi : <?php echo number_short($dukman_realisasi) ?>', <?php echo $dukman_realisasi ?>],
+                    ['Pagu : <?php echo $dukman_pagu ?>', <?php echo $dukman_pagu ?>],
+                    ['Realisasi : <?php echo $dukman_realisasi ?>', <?php echo $dukman_realisasi ?>],
                 ],
                 type: 'donut' //,
                 /*onclick: function (d, i) { console.log("onclick", d, i); },
@@ -376,8 +411,8 @@
             data: {
                 // iris data from R
                 columns: [
-                    ['Pagu : <?php echo number_short($pmkg_pagu) ?>', <?php echo $pmkg_pagu ?>],
-                    ['Realisasi : <?php echo number_short($pmkg_realisasi) ?>', <?php echo $pmkg_realisasi ?>],
+                    ['Pagu : <?php echo $pmkg_pagu ?>', <?php echo $pmkg_pagu ?>],
+                    ['Realisasi : <?php echo $pmkg_realisasi ?>', <?php echo $pmkg_realisasi ?>],
                 ],
                 type: 'donut' //,
                 /*onclick: function (d, i) { console.log("onclick", d, i); },
@@ -456,7 +491,7 @@
                 options: {
                     responsive: true,
                     legend: {
-                        position: 'top',
+                        position: 'bottom',
                     },
                     title: {
                         display: false,
@@ -560,7 +595,7 @@
                 type: 'bar',
                 data: barChartData,
                 options: {
-                    responsive: false,
+                    responsive: true,
                     legend: {
                         position: 'bottom',
                     },
@@ -637,11 +672,7 @@
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
                                     //ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                                    ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
-                                        useUnit: true,
-                                        symbol: null,
-                                        k: true
-                                    }), model.x, y_pos);
+                                    ctx.fillText('Rp. ' + dataset.data[i], model.x, y_pos);
                                 }
                             });
                         }
@@ -688,7 +719,7 @@
                 options: {
                     responsive: true,
                     legend: {
-                        position: 'top',
+                        position: 'bottom',
                     },
                     title: {
                         display: false,
@@ -763,11 +794,7 @@
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
                                     //ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                                    ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
-                                        useUnit: true,
-                                        symbol: null,
-                                        k: true
-                                    }), model.x, y_pos);
+                                    ctx.fillText('Rp. ' + dataset.data[i], model.x, y_pos);
                                 }
                             });
                         }
