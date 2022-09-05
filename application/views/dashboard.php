@@ -157,6 +157,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                         <h2>
                             Pagu Anggaran Berdasarkan Program
                         </h2>
+                        <div class="panel-toolbar">
+                            <h5 class="m-0">
+                                Satuan Milyar
+                            </h5>
+                        </div>
                     </div>
                     <canvas id="kegiatan"></canvas>
                 </div>
@@ -167,6 +172,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                         <h2>
                             Pagu Anggaran Berdasarkan Jenis Belanja
                         </h2>
+                        <div class="panel-toolbar">
+                            <h5 class="m-0">
+                                Satuan Milyar
+                            </h5>
+                        </div>
                     </div>
                     <canvas id="akun"></canvas>
                 </div>
@@ -178,9 +188,9 @@ if ($this->session->userdata('id_user_level') == 1) {
                             Pagu Anggaran & Realisai</span>
                         </h2>
                         <div class="panel-toolbar">
-                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                            <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                            <h5 class="m-0">
+                                Satuan Milyar
+                            </h5>
                         </div>
                     </div>
                     <div class="panel-container show">
@@ -340,6 +350,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
+                            ctx.font = "14px Verdana";
                             ctx.fillStyle = '#000';
                             if (i == 3) { // Darker text color for lighter background
                                 ctx.fillStyle = '#444';
@@ -347,13 +358,10 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
                             //Don't Display If Legend is hide or value is 0
                             if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                                ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
-                                    useUnit: true,
-                                    symbol: null,
-                                    k: true
-                                }), model.x + x, model.y + y);
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
                                 // Display percent in another line, line break doesn't work for fillText
                                 ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                //ctx.fillText('' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
                             }
                         }
                     });
@@ -415,6 +423,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
+                            ctx.font = "14px Verdana";
                             ctx.fillStyle = '#000';
                             if (i == 3) { // Darker text color for lighter background
                                 ctx.fillStyle = '#444';
@@ -422,11 +431,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
                             //Don't Display If Legend is hide or value is 0
                             //if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                            ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
-                                useUnit: true,
-                                symbol: null,
-                                k: true
-                            }), model.x + x, model.y + y);
+                            ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
                             // Display percent in another line, line break doesn't work for fillText
                             ctx.fillText(percent, model.x + x, model.y + y + 15);
                             //}
@@ -477,6 +482,9 @@ if ($this->session->userdata('id_user_level') == 1) {
                 responsive: true,
                 legend: {
                     position: 'top',
+                    // labels: {
+                    //     fontSize: 16
+                    // },
                 },
                 title: {
                     display: false,

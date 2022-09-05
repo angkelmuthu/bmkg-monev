@@ -201,7 +201,7 @@
                         </div>
 
                         <!-- </div> -->
-                        <div class="col-xl-6">
+                        <div class="col-xl-5">
                             <div id="panel-10" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
@@ -229,8 +229,8 @@
                                                 foreach ($sumber_dana as $row) { ?>
                                                     <tr>
                                                         <td><?php echo $row->nama ?></td>
-                                                        <td class="text-right"><?php echo 'Rp. ' . $row->pagu ?></td>
-                                                        <td class="text-right"><?php echo 'Rp. ' . $row->realisasi ?></td>
+                                                        <td class="text-right"><?php echo $row->pagu ?></td>
+                                                        <td class="text-right"><?php echo $row->realisasi ?></td>
                                                         <td class="text-right"><?php echo $row->persen ?></td>
                                                     </tr>
                                                 <?php } ?>
@@ -240,7 +240,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-7">
                             <div id="panel-10" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
@@ -280,7 +280,7 @@
                                             <table class="table table-striped table-bordered" id="example">
                                                 <thead class="thead-themed">
                                                     <tr>
-                                                        <th>Sumber Dana</th>
+                                                        <th>Satuan Kerja</th>
                                                         <th>Pagu</th>
                                                         <th>Realisasi</th>
                                                         <th>%</th>
@@ -291,8 +291,8 @@
                                                     foreach ($satker as $row) { ?>
                                                         <tr>
                                                             <td><?php echo $row->kode . ' | ' . $row->nama ?></td>
-                                                            <td class="text-right"><?php echo 'Rp. ' . $row->pagu ?></td>
-                                                            <td class="text-right"><?php echo 'Rp. ' . $row->realisasi ?></td>
+                                                            <td class="text-right"><?php echo $row->pagu ?></td>
+                                                            <td class="text-right"><?php echo $row->realisasi ?></td>
                                                             <td class="text-right"><?php echo $row->persen ?></td>
                                                         </tr>
                                                     <?php } ?>
@@ -321,7 +321,7 @@
                                             <table class="table table-striped table-bordered" id="example2">
                                                 <thead class="thead-themed">
                                                     <tr>
-                                                        <th>Sumber Dana</th>
+                                                        <th>Kegiatan</th>
                                                         <th>Pagu</th>
                                                         <th>Realisasi</th>
                                                         <th>%</th>
@@ -332,8 +332,8 @@
                                                     foreach ($kegiatan as $row) { ?>
                                                         <tr>
                                                             <td><?php echo $row->kode_kegiatan . ' | ' . $row->nama ?></td>
-                                                            <td class="text-right"><?php echo 'Rp. ' . $row->pagu ?></td>
-                                                            <td class="text-right"><?php echo 'Rp. ' . $row->realisasi ?></td>
+                                                            <td class="text-right"><?php echo $row->pagu ?></td>
+                                                            <td class="text-right"><?php echo $row->realisasi ?></td>
                                                             <td class="text-right"><?php echo $row->persen ?></td>
                                                         </tr>
                                                     <?php } ?>
@@ -369,8 +369,8 @@
             data: {
                 // iris data from R
                 columns: [
-                    ['Pagu : <?php echo $bmkg_pagu ?>', <?php echo $bmkg_pagu ?>],
-                    ['Realisasi : <?php echo $bmkg_realisasi ?>', <?php echo $bmkg_realisasi ?>],
+                    ['Pagu : <?php echo angka($bmkg_pagu) ?>', <?php echo $bmkg_pagu ?>],
+                    ['Realisasi : <?php echo angka($bmkg_realisasi) ?>', <?php echo $bmkg_realisasi ?>],
                 ],
                 type: 'donut' //,
                 /*onclick: function (d, i) { console.log("onclick", d, i); },
@@ -390,8 +390,8 @@
             data: {
                 // iris data from R
                 columns: [
-                    ['Pagu : <?php echo $dukman_pagu ?>', <?php echo $dukman_pagu ?>],
-                    ['Realisasi : <?php echo $dukman_realisasi ?>', <?php echo $dukman_realisasi ?>],
+                    ['Pagu : <?php echo angka($dukman_pagu) ?>', <?php echo $dukman_pagu ?>],
+                    ['Realisasi : <?php echo angka($dukman_realisasi) ?>', <?php echo $dukman_realisasi ?>],
                 ],
                 type: 'donut' //,
                 /*onclick: function (d, i) { console.log("onclick", d, i); },
@@ -411,8 +411,8 @@
             data: {
                 // iris data from R
                 columns: [
-                    ['Pagu : <?php echo $pmkg_pagu ?>', <?php echo $pmkg_pagu ?>],
-                    ['Realisasi : <?php echo $pmkg_realisasi ?>', <?php echo $pmkg_realisasi ?>],
+                    ['Pagu : <?php echo angka($pmkg_pagu) ?>', <?php echo $pmkg_pagu ?>],
+                    ['Realisasi : <?php echo angka($pmkg_realisasi) ?>', <?php echo $pmkg_realisasi ?>],
                 ],
                 type: 'donut' //,
                 /*onclick: function (d, i) { console.log("onclick", d, i); },
@@ -607,7 +607,7 @@
                         callbacks: {
                             label: function(t, d) {
                                 var xLabel = d.datasets[t.datasetIndex].label;
-                                var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                                var yLabel = t.yLabel >= 1000 ? '' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
                                 return xLabel + ': ' + yLabel;
                             }
                         }
@@ -643,9 +643,9 @@
                                 fontSize: 11,
                                 callback: function(value, index, values) {
                                     if (parseInt(value) >= 1000) {
-                                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                        return '' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                                     } else {
-                                        return 'Rp. ' + value;
+                                        return '' + value;
                                     }
                                 }
                             }
@@ -671,8 +671,8 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    //ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                                    ctx.fillText('Rp. ' + dataset.data[i], model.x, y_pos);
+                                    ctx.fillText('' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                                    //ctx.fillText('' + dataset.data[i], model.x, y_pos);
                                 }
                             });
                         }
@@ -729,7 +729,7 @@
                         callbacks: {
                             label: function(t, d) {
                                 var xLabel = d.datasets[t.datasetIndex].label;
-                                var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                                var yLabel = t.yLabel >= 1000 ? '' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
                                 return xLabel + ': ' + yLabel;
                             }
                         }
@@ -765,9 +765,9 @@
                                 fontSize: 11,
                                 callback: function(value, index, values) {
                                     if (parseInt(value) >= 1000) {
-                                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                        return '' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                                     } else {
-                                        return 'Rp. ' + value;
+                                        return '' + value;
                                     }
                                 }
                             }
@@ -793,8 +793,8 @@
                                     // Note: The y value is reverse, it counts from top down
                                     if ((scale_max - model.y) / scale_max >= 0.93)
                                         y_pos = model.y + 20;
-                                    //ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
-                                    ctx.fillText('Rp. ' + dataset.data[i], model.x, y_pos);
+                                    ctx.fillText('' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
+                                    //ctx.fillText('' + dataset.data[i], model.x, y_pos);
                                 }
                             });
                         }
