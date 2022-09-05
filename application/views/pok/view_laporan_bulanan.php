@@ -628,15 +628,15 @@
 	foreach($status as $val) {
 		if($val=="Terkirim")
         {
-		  echo '<span class="badge badge-primary">Realisasi <?= $bulans[$bulan-1] ?> Sudah Terkirim</span>';
+		  echo '<span class="badge badge-primary">Realisasi  '.$bulans[$bulan-1].'  Sudah Terkirim</span>';
 		}
 		if($val=="Revisi")
         {
-		  echo '<span class="badge badge-danger">Realisasi <?= $bulans[$bulan-1] ?> Harus Di Revisi</span>';
+		  echo '<span class="badge badge-danger">Realisasi  '.$bulans[$bulan-1].'  Harus Di Revisi</span>';
 		}
 		if($val=="Final")
         {
-		  echo '<span class="badge badge-success">Realisasi <?= $bulans[$bulan-1] ?>Final</span>';
+		  echo '<span class="badge badge-success">Realisasi  '.$bulans[$bulan-1].' Final</span>';
 		}
 		
 		
