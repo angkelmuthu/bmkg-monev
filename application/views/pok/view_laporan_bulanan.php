@@ -636,7 +636,7 @@
 		}
 		if($val=="Final")
         {
-		  echo '<span class="badge badge-success">Realisasi <?= $bulans[$bulan-1] ?> Harus Di Revisi</span>';
+		  echo '<span class="badge badge-success">Realisasi <?= $bulans[$bulan-1] ?>Final</span>';
 		}
 		
 		
