@@ -36,6 +36,11 @@
         .c3-chart-arc text {
             fill: black;
         }
+
+        .c3-chart-arcs-title {
+            font-weight: bold !important;
+            font-size: 2em !important;
+        }
     </style>
 </head>
 
@@ -229,8 +234,8 @@
                                                 foreach ($sumber_dana as $row) { ?>
                                                     <tr>
                                                         <td><?php echo $row->nama ?></td>
-                                                        <td class="text-right"><?php echo $row->pagu ?></td>
-                                                        <td class="text-right"><?php echo $row->realisasi ?></td>
+                                                        <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                        <td class="text-right"><?php echo angka($row->realisasi) ?></td>
                                                         <td class="text-right"><?php echo $row->persen ?></td>
                                                     </tr>
                                                 <?php } ?>
@@ -291,8 +296,8 @@
                                                     foreach ($satker as $row) { ?>
                                                         <tr>
                                                             <td><?php echo $row->kode . ' | ' . $row->nama ?></td>
-                                                            <td class="text-right"><?php echo $row->pagu ?></td>
-                                                            <td class="text-right"><?php echo $row->realisasi ?></td>
+                                                            <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                            <td class="text-right"><?php echo angka($row->realisasi) ?></td>
                                                             <td class="text-right"><?php echo $row->persen ?></td>
                                                         </tr>
                                                     <?php } ?>
@@ -332,8 +337,8 @@
                                                     foreach ($kegiatan as $row) { ?>
                                                         <tr>
                                                             <td><?php echo $row->kode_kegiatan . ' | ' . $row->nama ?></td>
-                                                            <td class="text-right"><?php echo $row->pagu ?></td>
-                                                            <td class="text-right"><?php echo $row->realisasi ?></td>
+                                                            <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                            <td class="text-right"><?php echo angka($row->realisasi) ?></td>
                                                             <td class="text-right"><?php echo $row->persen ?></td>
                                                         </tr>
                                                     <?php } ?>

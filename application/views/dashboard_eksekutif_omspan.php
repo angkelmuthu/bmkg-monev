@@ -36,6 +36,11 @@
         .c3-chart-arc text {
             fill: black;
         }
+
+        .c3-chart-arcs-title {
+            font-weight: bold !important;
+            font-size: 2em !important;
+        }
     </style>
 </head>
 
