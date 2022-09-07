@@ -83,8 +83,9 @@ if ($this->session->userdata('id_user_level') == 1) {
             <div class="p-3 bg-info rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
                     <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                        <small class="m-0 l-h-n fw-500">Total Pagu Anggaran</small>
                         Rp. <?php echo angka($pagu) ?>
-                        <small class="m-0 l-h-n">Total Pagu Anggaran</small>
+
                     </h4>
                 </div>
             </div>
@@ -105,14 +106,16 @@ if ($this->session->userdata('id_user_level') == 1) {
                     <div class="row">
                         <div class="col-sm-7">
                             <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                                <small class="m-0 l-h-n fw-500">Realisasi Omspan</small>
                                 <?php echo 'Rp. ' . angka($realisasi_pagu_omspan) ?>
-                                <small class="m-0 l-h-n">Realisasi Omspan</small>
+
                             </h6>
                         </div>
                         <div class="col-sm-5">
                             <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                                <?php echo angka($realisasi_pagu_omspan / $pagu * 100) . '%'; ?>
-                                <small class="m-0 l-h-n">Serapan</small>
+                                <small class="m-0 l-h-n fw-500">Serapan</small>
+                                <?php echo round($realisasi_pagu_omspan / $pagu * 100, 2) . '%'; ?>
+
                             </h6>
                         </div>
                     </div>
@@ -126,14 +129,16 @@ if ($this->session->userdata('id_user_level') == 1) {
                     <div class="row">
                         <div class="col-sm-7">
                             <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                                <small class="m-0 l-h-n fw-500">Realisasi Inputan</small>
                                 <?php echo 'Rp. ' . angka($realisasi_pagu_inputan) ?>
-                                <small class="m-0 l-h-n">Realisasi Inputan</small>
+
                             </h6>
                         </div>
                         <div class="col-sm-5">
                             <h6 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                                <?php echo angka($realisasi_pagu_inputan / $pagu * 100) . '%'; ?>
-                                <small class="m-0 l-h-n">Serapan</small>
+                                <small class="m-0 l-h-n fw-500">Serapan</small>
+                                <?php echo round($realisasi_pagu_inputan / $pagu * 100, 2) . '%'; ?>
+
                             </h6>
                         </div>
                     </div>
@@ -144,8 +149,9 @@ if ($this->session->userdata('id_user_level') == 1) {
             <div class="p-3 bg-warning-600 rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
                     <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                        <?php echo angka($realisasi_fisik) ?>
-                        <small class="m-0 l-h-n">Realisasi Fisik</small>
+                        <small class="m-0 l-h-n fw-500">Realisasi Fisik</small>
+                        <?php echo round($realisasi_fisik, 2) ?>
+
                     </h4>
                 </div>
             </div>
@@ -157,6 +163,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                         <h2>
                             Pagu Anggaran Berdasarkan Program
                         </h2>
+                        <div class="panel-toolbar">
+                            <h5 class="m-0">
+                                Satuan Milyar
+                            </h5>
+                        </div>
                     </div>
                     <canvas id="kegiatan"></canvas>
                 </div>
@@ -167,6 +178,11 @@ if ($this->session->userdata('id_user_level') == 1) {
                         <h2>
                             Pagu Anggaran Berdasarkan Jenis Belanja
                         </h2>
+                        <div class="panel-toolbar">
+                            <h5 class="m-0">
+                                Satuan Milyar
+                            </h5>
+                        </div>
                     </div>
                     <canvas id="akun"></canvas>
                 </div>
@@ -178,9 +194,9 @@ if ($this->session->userdata('id_user_level') == 1) {
                             Pagu Anggaran & Realisai</span>
                         </h2>
                         <div class="panel-toolbar">
-                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                            <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                            <h5 class="m-0">
+                                Satuan Milyar
+                            </h5>
                         </div>
                     </div>
                     <div class="panel-container show">
@@ -196,19 +212,79 @@ if ($this->session->userdata('id_user_level') == 1) {
                             </ul>
                             <div class="tab-content p-3">
                                 <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
-                                    <div id="barChart_kegiatan">
+                                    <!-- <div id="barChart_kegiatan">
                                         <canvas style="width:100%; height:300px;"></canvas>
-                                    </div>
+                                    </div> -->
+                                    <table class="myTable table table-striped table-bordered" id=myTable2>
+                                        <thead class="thead-themed">
+                                            <tr>
+                                                <th>Kegiatan</th>
+                                                <th>Pagu</th>
+                                                <th>Realisasi</th>
+                                                <th>Serapan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($pagu_realisasi_kegiatan as $row) { ?>
+                                                <tr>
+                                                    <td><?php echo $row->kode_kegiatan . ' | ' . $row->nama_kegiatan ?></td>
+                                                    <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi / $row->pagu * 100) . '%'; ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
-                                    <div id="barChart_kro">
+                                    <!-- <div id="barChart_kro">
                                         <canvas style="width:100%; height:300px;"></canvas>
-                                    </div>
+                                    </div> -->
+                                    <table class="myTable table table-striped table-bordered" id=myTable2>
+                                        <thead class="thead-themed">
+                                            <tr>
+                                                <th>Output</th>
+                                                <th>Pagu</th>
+                                                <th>Realisasi</th>
+                                                <th>Serapan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($pagu_realisasi_kro as $row) { ?>
+                                                <tr>
+                                                    <td><?php echo $row->kode_kro . ' | ' . $row->nama_kro ?></td>
+                                                    <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                    <td class="text-right"><?php echo round($row->realisasi / $row->pagu * 100, 2) . '%'; ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
-                                    <div id="barChart_akun">
+                                    <!-- <div id="barChart_akun">
                                         <canvas style="width:100%; height:300px;"></canvas>
-                                    </div>
+                                    </div> -->
+                                    <table class="myTable table table-striped table-bordered" id=myTable2>
+                                        <thead class="thead-themed">
+                                            <tr>
+                                                <th>Akun</th>
+                                                <th>Pagu</th>
+                                                <th>Realisasi</th>
+                                                <th>Serapan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($pagu_realisasi_akun as $row) { ?>
+                                                <tr>
+                                                    <td><?php echo $row->kode_akun . ' | ' . $row->nama_akun ?></td>
+                                                    <td class="text-right"><?php echo angka($row->pagu) ?></td>
+                                                    <td class="text-right"><?php echo angka($row->realisasi) ?></td>
+                                                    <td class="text-right"><?php echo round($row->realisasi / $row->pagu * 100, 2) . '%'; ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="tab-pane fade" id="tab_justified-4" role="tabpanel">
                                     <div id="barChart_dana">
@@ -226,7 +302,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                                 </div>
                             </div> -->
                                 <div class="tab-pane fade" id="tab_justified-6" role="tabpanel">
-                                    <table class="table table-striped table-bordered" id=myTable>
+                                    <table class="myTable table table-striped table-bordered" id=myTable>
                                         <thead class="thead-themed">
                                             <tr>
                                                 <th>Satker</th>
@@ -247,7 +323,7 @@ if ($this->session->userdata('id_user_level') == 1) {
                                                     <td><?php echo $row->nama_akun ?></td>
                                                     <td class="text-right"><?php echo angka($row->pagu) ?></td>
                                                     <td class="text-right"><?php echo angka($row->realisasi) ?></td>
-                                                    <td class="text-right"><?php echo angka($row->realisasi / $row->pagu * 100) . '%'; ?></td>
+                                                    <td class="text-right"><?php echo round($row->realisasi / $row->pagu * 100, 2) . '%'; ?></td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -273,7 +349,9 @@ if ($this->session->userdata('id_user_level') == 1) {
 <!-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
 <script>
     $(document).ready(function() {
-        $('#myTable').DataTable();
+        // $('#myTable').DataTable();
+        // $('#myTable2').DataTable();
+        $('.myTable').DataTable();
         $('select').change(function() {
             this.form.submit();
         });
@@ -340,20 +418,18 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
+                            ctx.font = "14px Verdana";
                             ctx.fillStyle = '#000';
                             if (i == 3) { // Darker text color for lighter background
                                 ctx.fillStyle = '#444';
                             }
-                            var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
+                            var percent = String(parseFloat(dataset.data[i] / total * 100).toFixed(2)) + "%";
                             //Don't Display If Legend is hide or value is 0
                             if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                                ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
-                                    useUnit: true,
-                                    symbol: null,
-                                    k: true
-                                }), model.x + x, model.y + y);
+                                ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
                                 // Display percent in another line, line break doesn't work for fillText
                                 ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                //ctx.fillText('' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x, y_pos);
                             }
                         }
                     });
@@ -415,18 +491,15 @@ if ($this->session->userdata('id_user_level') == 1) {
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
+                            ctx.font = "14px Verdana";
                             ctx.fillStyle = '#000';
                             if (i == 3) { // Darker text color for lighter background
                                 ctx.fillStyle = '#444';
                             }
-                            var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
+                            var percent = String(parseFloat(dataset.data[i] / total * 100).toFixed(2)) + "%";
                             //Don't Display If Legend is hide or value is 0
                             //if (dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                            ctx.fillText('Rp. ' + toRupiah(dataset.data[i], {
-                                useUnit: true,
-                                symbol: null,
-                                k: true
-                            }), model.x + x, model.y + y);
+                            ctx.fillText('Rp. ' + dataset.data[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."), model.x + x, model.y + y);
                             // Display percent in another line, line break doesn't work for fillText
                             ctx.fillText(percent, model.x + x, model.y + y + 15);
                             //}
@@ -477,6 +550,9 @@ if ($this->session->userdata('id_user_level') == 1) {
                 responsive: true,
                 legend: {
                     position: 'top',
+                    // labels: {
+                    //     fontSize: 16
+                    // },
                 },
                 title: {
                     display: false,
@@ -1200,9 +1276,9 @@ if ($this->session->userdata('id_user_level') == 1) {
 
     /* initialize all charts */
     $(document).ready(function() {
-        barChart_kegiatan();
-        barChart_kro();
-        barChart_akun();
+        //barChart_kegiatan();
+        // barChart_kro();
+        // barChart_akun();
         barChart_dana();
         barChart_belanja();
         //barChart_lokasi();

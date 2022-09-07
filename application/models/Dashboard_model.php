@@ -98,7 +98,7 @@ class Dashboard_model extends CI_Model
 
     function pagu_realisasi_kegiatan($ta, $satker)
     {
-        $this->db->select('c.nama_kegiatan,
+        $this->db->select('c.kode_kegiatan,c.nama_kegiatan,
         sum(a.jumlah) as pagu,
         sum(ifnull(b.ang_januari,0))+sum(ifnull(b.ang_februari,0))+sum(ifnull(b.ang_maret,0))+sum(ifnull(b.ang_april,0))+sum(ifnull(b.ang_mei,0))+sum(ifnull(b.ang_juni,0))+sum(ifnull(b.ang_juli,0))+sum(ifnull(b.ang_agustus,0))+sum(ifnull(b.ang_september,0))+sum(ifnull(b.ang_oktober,0))+sum(ifnull(b.ang_november,0))+sum(ifnull(b.ang_desember,0)) as realisasi');
         $this->db->from('t_item a');
@@ -114,7 +114,7 @@ class Dashboard_model extends CI_Model
 
     function pagu_realisasi_kro($ta, $satker)
     {
-        $this->db->select('c.nama_kro,
+        $this->db->select('c.kode_kro,c.nama_kro,
         sum(a.jumlah) as pagu,
         sum(ifnull(b.ang_januari,0))+sum(ifnull(b.ang_februari,0))+sum(ifnull(b.ang_maret,0))+sum(ifnull(b.ang_april,0))+sum(ifnull(b.ang_mei,0))+sum(ifnull(b.ang_juni,0))+sum(ifnull(b.ang_juli,0))+sum(ifnull(b.ang_agustus,0))+sum(ifnull(b.ang_september,0))+sum(ifnull(b.ang_oktober,0))+sum(ifnull(b.ang_november,0))+sum(ifnull(b.ang_desember,0)) as realisasi');
         $this->db->from('t_item a');
@@ -146,7 +146,7 @@ class Dashboard_model extends CI_Model
 
     function pagu_realisasi_akun($ta, $satker)
     {
-        $this->db->select('c.nama_akun,
+        $this->db->select('c.kode_akun,c.nama_akun,
         sum(a.jumlah) as pagu,
         sum(ifnull(b.ang_januari,0))+sum(ifnull(b.ang_februari,0))+sum(ifnull(b.ang_maret,0))+sum(ifnull(b.ang_april,0))+sum(ifnull(b.ang_mei,0))+sum(ifnull(b.ang_juni,0))+sum(ifnull(b.ang_juli,0))+sum(ifnull(b.ang_agustus,0))+sum(ifnull(b.ang_september,0))+sum(ifnull(b.ang_oktober,0))+sum(ifnull(b.ang_november,0))+sum(ifnull(b.ang_desember,0)) as realisasi');
         $this->db->from('t_item a');
