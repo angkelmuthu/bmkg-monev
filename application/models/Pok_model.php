@@ -384,7 +384,7 @@ class Pok_model extends CI_Model
     }
     function get_status_kirim_grup($satker, $tahun, $bulan)
     {
-        $this->db->select('group_concat(status)as status');
+        $this->db->select('group_concat(status)as status,group_concat(keterangan)as keterangan');
         $this->db->where('kode_satker', $satker);
         $this->db->where('tahun', $tahun);
         $this->db->where('bulan', $bulan);

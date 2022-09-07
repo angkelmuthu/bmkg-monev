@@ -610,7 +610,7 @@
 					<td class="text-center" colspan=2>Total</td>                            
 					<td class="text-right"><?php echo $totalvolume; ?></td>                             
 					<td class="text-right"><?php echo angka($totalpagu); ?></td>                                
-					<td class="text-right"><?php echo $totalbobot; ?></td>                             
+					<td class="text-right"><?php echo ($totalpagu/$totalpagu)*100 ?></td>                             
 					<td class="text-right"><?php echo angka($totalkontrak); ?></td>                             
 					<td class="text-right"><?php echo angka($totalrealisasi); ?></td>                             
 					<td class="text-right"><?php echo $totalprosen; ?></td>                             
@@ -642,7 +642,8 @@
 		
 		
 	}
-
+	 echo '</br> Keterangan Revisi : <span class="badge badge-success">'.$keterangan.'</span>';
+ if ($this->session->userdata('id_user_level') == 1) { 
 			if($rowlast=="Terkirim")
 			{
 				echo '<button type="button" onClick="kirim_final('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Final</button>';
@@ -650,11 +651,11 @@
 			}
 			if($rowlast=="Revisi")
 			{
-				 echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
+				
 				echo '<button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
 				//echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
 			}
-			
+ }			
 	
 
 ?>

@@ -18,7 +18,7 @@
                                 <td><select class="form-control" name="ta" id="ta" required>
                                         <option value="">Pilih Tahun</option>
                                         <?php
-                                        for ($i = date('Y'); $i >= date('Y') - 10; $i -= 1) {
+                                       for ($i = date('Y'); $i <= date('Y') + 5; $i++) {
                                             echo "<option value='$i'> $i </option>";
                                         }
                                         ?>

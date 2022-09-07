@@ -528,7 +528,7 @@
                                                     <?php } ?>
                                                     <td class="text-center"><?php echo isset($item->volume) ? $item->volume : "0" ?></td>
                                                     <td class="text-right"><?php echo angka($item->jumlah) ?></td>
-                                                    <td class="text-right"><?php echo isset($list_program[0]->total) ? round(($item->jumlah/$list_program[0]->total)*100,2) : 0 ?></td>
+                                                    <td class="text-right"><?php echo isset($totalpagu) ? round(($item->jumlah/$totalpagu)*100,2) : 0 ?></td>
                                                     <td class="text-right"><?php echo angka($nominal) ?></td>
                                                     <td class="text-right"><?php echo  angka($realisasi) ?></td>
                                                     <td class="text-right"><?php 
@@ -573,7 +573,7 @@
 					<td class="text-center" colspan=2>Total</td>                            
 					<td class="text-right"><?php echo $totalvolume; ?></td>                             
 					<td class="text-right"><?php echo angka($totalpagu); ?></td>                                
-					<td class="text-right"><?php echo $totalbobot; ?></td>                             
+					<td class="text-right"><?php echo ($totalpagu/$totalpagu)*100 ?></td>                             
 					<td class="text-right"><?php echo angka($totalkontrak); ?></td>                             
 					<td class="text-right"><?php echo angka($totalrealisasi); ?></td>                             
 					<td class="text-right"><?php echo $totalprosen; ?></td>                             
@@ -609,6 +609,7 @@ if(!empty($list_program))
 		
 		
 	}
+		 echo '</br> Keterangan Revisi : <span class="badge badge-success">'.$keterangan.'</span>';
  if ($this->session->userdata('id_user_level') != 1) { 
 			if($rowlast=="Terkirim")
 			{
@@ -617,7 +618,7 @@ if(!empty($list_program))
 			}else if($rowlast=="Revisi")
 			{
 				echo '</br><button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
-				  echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
+				//  echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
 				//echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
 			}else if($rowlast=="Final")
 			{
@@ -635,7 +636,7 @@ if(!empty($list_program))
 				echo '<button type="button" onClick="revisi()" class="btn btn-block btn-danger">Revisi</button>';
 			}else if($rowlast=="Revisi")
 			{
-				 echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
+				// echo '</br> Keterangan Revisi : <span class="badge badge-danger">'.$getketerangan.'</span>';
 				echo '<button type="button" onClick="kirim('.$list_program[0]->id_program.')" class="btn btn-block btn-warning">Kirim</button>';
 				
 			}else if($rowlast=="Final")

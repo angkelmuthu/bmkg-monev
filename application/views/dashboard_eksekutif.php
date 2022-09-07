@@ -27,15 +27,21 @@
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/costume/default.css">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/bootstrap/css/sweetalert.css">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/statistics/c3/c3.css">
-    <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/statistics/chartjs/chartjs.css">
-
+   
     <script src="<?php echo base_url() ?>assets/bootstrap/js/sweetalert.min.js"></script>
     <!-- <link id="mytheme" rel="stylesheet" href="<?php echo base_url() ?>assets/smartadmin-slim/css/themes/cust-theme-5.css"> -->
     <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
     <style>
         .c3-chart-arc text {
             fill: black;
+			 font-size: 15px;
+			 margin-right: 3000px;
+			 padding-right: 300px;
+			
         }
+		.c3-chart-arc path {
+stroke-width: 6;
+} 
     </style>
 </head>
 
@@ -408,6 +414,7 @@
 
         var pmkg = c3.generate({
             bindto: "#pmkg",
+		
             data: {
                 // iris data from R
                 columns: [
@@ -419,6 +426,8 @@
                 onmouseover: function (d, i) { console.log("onmouseover", d, i); },
                 onmouseout: function (d, i) { console.log("onmouseout", d, i); }*/
             },
+
+			
             donut: {
                 title: "<?php echo $pmkg_persen ?>"
             },

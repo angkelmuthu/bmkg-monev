@@ -305,8 +305,11 @@ class Pok extends CI_Controller
 		if(!empty($row))
 		{
 			$get=$row->status;
+			$ket=$row->keterangan;
+			
 		}else{
 			$get="";
+			$ket="";
 		}
 		if(!empty($rowlast))
 		{
@@ -324,6 +327,7 @@ class Pok extends CI_Controller
             'tahun_anggaran' => $tahun,
             'kode_satker' => $satker,
             'row' => $get,
+            'keterangan' => $ket,
             'rowlast' => $getlast,
             'getketerangan' => $getketerangan,
         );
@@ -338,8 +342,10 @@ class Pok extends CI_Controller
 		if(!empty($row))
 		{
 			$get=$row->status;
+			$ket=$row->keterangan;
 		}else{
 			$get="";
+			$ket="";
 		}
 		if(!empty($rowlast))
 		{
@@ -355,6 +361,7 @@ class Pok extends CI_Controller
             'bulan' => $bulan,
             'tahun_anggaran' => $tahun,
             'kode_satker' => $satker,
+            'keterangan' => $ket,
             'row' => $get,
             'rowlast' => $getlast,
             'getketerangan' => $getketerangan,
@@ -1162,7 +1169,7 @@ class Pok extends CI_Controller
         $cek = $this->Pok_model->get_status_realisasi($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
 			//$this->output->enable_profiler(TRUE);
         $row = $this->Pok_model->get_kirim($_POST['satker'],$_POST['id'],$_POST['tahun'],$_POST['bulan']);
-		if (!empty($cek)) {
+	//	if (!empty($cek)) {
 			if (!empty($row)) {
 				$arr = array(
 				 'flag' => 0,
@@ -1192,10 +1199,10 @@ class Pok extends CI_Controller
 				}else{
 					echo "{'kode':'201','msg':'Realisasi gagal ".$_POST['status']."'}";
 				}
-		}else{
-			echo '{"kode":"201","msg":"Tidak dapat '.$_POST['status'].', anda belum menginput realisasi"}';
+		//}else{
+		//	echo '{"kode":"201","msg":"Tidak dapat '.$_POST['status'].', anda belum menginput realisasi"}';
 			
-		}
+	//	}
 		
     }
 	function final_realisasi()
