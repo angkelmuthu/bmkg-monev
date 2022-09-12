@@ -124,7 +124,7 @@ if ($this->session->userdata('id_user_level') == 1) {
             </div>
         </div>
         <div class="col-sm-6 col-xl-3">
-            <div class="p-3 bg-danger rounded overflow-hidden position-relative text-black mb-g">
+            <div class="p-3 bg-primary-100 rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
                     <div class="row">
                         <div class="col-sm-7">
