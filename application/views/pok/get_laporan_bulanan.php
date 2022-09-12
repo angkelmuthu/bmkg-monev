@@ -581,9 +581,9 @@
 					<td class="text-right"><?php echo ($totalpagu/$totalpagu)*100 ?></td>                             
 					<td class="text-right"><?php echo angka($totalkontrak); ?></td>                             
 					<td class="text-right"><?php echo angka($totalrealisasi); ?></td>                             
-					<td class="text-right"><?php echo $totalprosen; ?></td>                             
+					<td class="text-right"><?php echo round(($totalrealisasi/$totalpagu)*100,2); ?></td>                             
 					<td class="text-right"><?php echo $totalfisik; ?></td>           
-					<td class="text-right"><?php echo $totalseluruh; ?></td>                             
+					<td class="text-right"><?php echo ($totalfisik*($totalpagu/$totalpagu))/100; ?></td>                             
 					<td class="text-right"><?php echo angka($totalsisa1); ?></td>                             
 					<td class="text-right"><?php echo angka($totalsisa2); ?></td>                                 
 					<td class="text-right"></td>                             
