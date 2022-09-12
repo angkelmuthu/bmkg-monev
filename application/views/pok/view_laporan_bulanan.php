@@ -4,6 +4,12 @@
         z-index: 9999 !important;
     }
 </style>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"
+    xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+    <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+</head>
 <main id="js-page-content" role="main" class="page-content">
     <div class="row">
         <div class="col-xl-12">
@@ -44,25 +50,29 @@
 					 <center> <h2>LAPORAN BULANAN PELAKSANAAN KEGIATAN </h2></center>
 					 <center> <h3>TAHUN ANGGARAN <?= $tahun_anggaran ?></h3></center>
 					 <center> <h3> Posisi  : Bulan <?= $bulans[$bulan-1] ?> </h3></center>
-					  <h4><table>
-					 <tr>
+					  <div class="col-xl-4">
+					  <style>.noBorder {
+    border:none !important;
+} </style>
+					  <table border=0  class="table" style="border:hidden;">
+					 <tr style="border:hidden;">
 					 <td>NAMA SATKER </td><td>:</td><td><?= $list_program[0]->nama_satker ?></td>
 					 </tr>
-					 <tr>
+					 <tr style="border:hidden;">
 					 <td>DIPA NOMOR/TANGGAL </td><td>:</td><td></td>
 					 </tr>
-					 <tr>
+					 <tr style="border:hidden;">
 					 <td>PLAFON/PAGU ANGGARAN </td><td>:</td><td><?= angka($list_program[0]->total) ?></td>
 					 </tr>
-					 <tr>
+					 <tr style="border:hidden;">
 					 <td>ALAMAT SATKER</td><td>:</td><td><?= $list_program[0]->alamat ?></td>
 					 </tr>
-					  <tr>
+					  <tr style="border:hidden;">
 					 <td>NOMOR TELEPON</td><td>:</td><td><?= $list_program[0]->no_tlpn ?></td>
 					 </tr>
-					 </table></h4>
+					 </table></div>
 <div>
-    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
+    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example" border="1" style="border-collapse: collapse;" >
         <thead class="thead-themed">
             <tr>
                 <th class="text-center" rowspan="2">Kode</th>
@@ -343,7 +353,6 @@
                                             <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"> <?php echo $akun->nama_akun ?></td>
                                             <td></td>
                                             <td class="text-right"><?php echo angka($akun->total) ?></td>
-                                            <td class="text-right"></td>
                                             <td class="text-right"></td>
                                             <td class="text-right"></td>
                                             <td class="text-right"></td>
