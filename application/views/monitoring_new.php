@@ -200,7 +200,7 @@ if (!empty($_POST['kode_satker'])) {
                 </div>
             </div>
         </div>
-        <?php //$this->output->enable_profiler(true);
+        <?php $this->output->enable_profiler(false);
         ?>
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>

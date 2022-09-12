@@ -1,3 +1,8 @@
+<style>
+    .showTop {
+        display: table-row-group !important;
+    }
+</style>
 <?php
 if (!empty($_GET['ta'])) {
     $ta = $_GET['ta'];
@@ -71,36 +76,39 @@ if (!empty($_GET['lokasi'])) {
         </div>
     </form>
     <div class="row">
-        <!-- <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
+        <div class="col-sm-6 col-xl-4">
+            <div class="p-3 bg-info rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                        <?php echo angka($pagu) ?>
-                        <small class="m-0 l-h-n">Total Pagu Anggaran</small>
-                    </h3>
+                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                        <small class="m-0 l-h-n fw-500">Total Pagu Anggaran</small>
+                        Rp. <?php echo angka($pagu) ?>
+
+                    </h4>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-success rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                        <?php echo angka($realisasi_pagu) ?>
-                        <small class="m-0 l-h-n">Total Realisasi Anggaran</small>
-                    </h3>
+                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                        <small class="m-0 l-h-n fw-500">Realisasi Inputan</small>
+                        <?php echo 'Rp. ' . angka($realisasi_pagu_inputan) ?>
+
+                    </h4>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
+            <div class="p-3 bg-warning rounded overflow-hidden position-relative text-black mb-g">
                 <div class="">
-                    <h3 class="text-right display-5 d-block l-h-n m-0 fw-500">
-                        <?php echo angka($realisasi_fisik) ?>
-                        <small class="m-0 l-h-n">Total Realisasi Fisik</small>
-                    </h3>
+                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                        <small class="m-0 l-h-n fw-500">Serapan</small>
+                        <?php echo round($realisasi_pagu_inputan / $pagu * 100, 2) . '%'; ?>
+
+                    </h4>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
@@ -120,16 +128,33 @@ if (!empty($_GET['lokasi'])) {
                                             <th>Kode Satker</th>
                                             <th>Nama Satker</th>
                                             <th>Lokasi</th>
-                                            <th>Penjabat PPK</th>
+                                            <!-- <th>Penjabat PPK</th>
                                             <th>KPA</th>
                                             <th>Kontak</th>
-                                            <th>Email</th>
+                                            <th>Email</th> -->
                                             <th>Pagu</th>
                                             <th>Realisasi</th>
+                                            <th>Persentase</th>
                                             <th>Penyerapan</th>
-                                            <!-- <th>Status</th> -->
+                                            <th>Detil</th>
                                         </tr>
                                     </thead>
+                                    <tfoot class="showTop">
+                                        <tr>
+                                            <th>Kode Satker</th>
+                                            <th>Nama Satker</th>
+                                            <th>Lokasi</th>
+                                            <!-- <th>Penjabat PPK</th>
+                                            <th>KPA</th>
+                                            <th>Kontak</th>
+                                            <th>Email</th> -->
+                                            <th>Pagu</th>
+                                            <th>Realisasi</th>
+                                            <th>Persentase</th>
+                                            <th>Penyerapan</th>
+                                            <th>Detil</th>
+                                        </tr>
+                                    </tfoot>
                                     <tbody>
                                         <?php foreach ($monitoring as $dt) {
                                             if ($dt->pagu > 0) {
@@ -139,23 +164,28 @@ if (!empty($_GET['lokasi'])) {
                                             }
 
                                             if ($persen >= 50) {
+                                                $serap = "Penyarapan > 50%";
                                                 echo '<tr class="bg-info-500">';
                                             } elseif (($persen > 0) && ($persen <= 49)) {
+                                                $serap = "Penyarapan < 50%";
                                                 echo '<tr class="bg-success-500">';
                                             } else {
+                                                $serap = "Penyarapan 0%";
                                                 echo '<tr class="bg-warning-500">';
                                             }
                                         ?>
                                             <td><?php echo $dt->kode_satker ?></td>
                                             <td><?php echo $dt->nama_satker ?></td>
                                             <td><?php echo $dt->nama_lokasi ?></td>
-                                            <td><?php echo $dt->penjabat_ppk ?></td>
+                                            <!-- <td><?php echo $dt->penjabat_ppk ?></td>
                                             <td><?php echo $dt->kpa ?></td>
                                             <td><?php echo $dt->kontak ?></td>
-                                            <td><?php echo $dt->email ?></td>
+                                            <td><?php echo $dt->email ?></td> -->
                                             <td><?php echo 'Rp. ' . angka($dt->pagu) ?></td>
                                             <td><?php echo 'Rp. ' . angka($dt->realisasi) ?></td>
                                             <td><?php echo $persen ?>%</td>
+                                            <td><?php echo $serap ?>%</td>
+                                            <td><a href="<?php echo site_url('#'); ?>" class="btn btn-xs btn-default"><i class="fal fa-eye"></i></a></td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -178,7 +208,31 @@ if (!empty($_GET['lokasi'])) {
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#myTable').DataTable();
+        //$('#myTable').DataTable();
+        $('#myTable').DataTable({
+            initComplete: function() {
+                this.api()
+                    .columns([2, 6])
+                    .every(function() {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function(d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>');
+                            });
+                    });
+            },
+        });
         $('select').change(function() {
             this.form.submit();
         });

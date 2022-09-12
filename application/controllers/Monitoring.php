@@ -26,7 +26,13 @@ class Monitoring extends CI_Controller
         } else {
             $lokasi = '';
         }
-        $data['monitoring'] = $this->Monitoring_model->monitoring($ta, $lokasi);
+        $pagu = $this->Monitoring_model->ttl_pagu($ta);
+        $realisasi_inputan = $this->Monitoring_model->realisasi_pagu_inputan($ta);
+        $data = array(
+            'pagu' => $pagu->pagu,
+            'realisasi_pagu_inputan' => $realisasi_inputan->real_januari + $realisasi_inputan->real_februari + $realisasi_inputan->real_maret + $realisasi_inputan->real_april + $realisasi_inputan->real_mei + $realisasi_inputan->real_juni + $realisasi_inputan->real_juli + $realisasi_inputan->real_agustus + $realisasi_inputan->real_september + $realisasi_inputan->real_oktober + $realisasi_inputan->real_november + $realisasi_inputan->real_desember,
+            'monitoring' => $this->Monitoring_model->monitoring($ta, $lokasi),
+        );
         $this->template->load('template', 'monitoring', $data);
     }
 
