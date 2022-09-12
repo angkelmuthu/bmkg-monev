@@ -164,13 +164,13 @@ if (!empty($_GET['lokasi'])) {
                                             }
 
                                             if ($persen >= 50) {
-                                                $serap = "Penyarapan > 50%";
+                                                $serap = "Penyerapan > 50%";
                                                 echo '<tr class="bg-info-500">';
                                             } elseif (($persen > 0) && ($persen <= 49)) {
-                                                $serap = "Penyarapan < 50%";
+                                                $serap = "Penyerapan < 50%";
                                                 echo '<tr class="bg-success-500">';
                                             } else {
-                                                $serap = "Penyarapan 0%";
+                                                $serap = "Penyerapan 0%";
                                                 echo '<tr class="bg-warning-500">';
                                             }
                                         ?>
@@ -185,7 +185,7 @@ if (!empty($_GET['lokasi'])) {
                                             <td><?php echo 'Rp. ' . angka($dt->realisasi) ?></td>
                                             <td><?php echo $persen ?>%</td>
                                             <td><?php echo $serap ?>%</td>
-                                            <td><a href="<?php echo site_url('#'); ?>" class="btn btn-xs btn-default"><i class="fal fa-eye"></i></a></td>
+                                            <td><a href="<?php echo site_url('pok/realisasi_kegiatan/' . $dt->id_program); ?>" class="btn btn-xs btn-default"><i class="fal fa-eye"></i></a></td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -193,7 +193,7 @@ if (!empty($_GET['lokasi'])) {
                                 Keterangan : <span class="badge bg-info-500">Penyerapan > 50%</span> <span class="badge bg-success-500">Penyerapan < 50%</span> <span class="badge bg-warning-500">Penyerapan 0%</span>
                     </div>
                 </div>
-                <?php //$this->output->enable_profiler(TRUE);
+                <?php $this->output->enable_profiler(TRUE);
                 ?>
             </div>
         </div>
