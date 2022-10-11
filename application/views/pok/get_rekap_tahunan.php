@@ -11,6 +11,7 @@
 <head>
     <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
 </head>
+<div style="overflow:scroll; width:1300px; height:800px;">
     <table  border="1" style="border-collapse: collapse;" class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">
             <tr>
@@ -270,7 +271,7 @@ function ExportToExcel(mytblId){
     }
 </script>
   <script>
-          $(document).ready(function() {
+         /*  $(document).ready(function() {
             var table = $('#dt-basic-example').DataTable({
                 scrollY: "500px",
                 scrollX: true,
@@ -282,7 +283,7 @@ function ExportToExcel(mytblId){
                     rightColumns: 1
                 }
             });
-        });  
+        });   */
     </script>
 <script>
 

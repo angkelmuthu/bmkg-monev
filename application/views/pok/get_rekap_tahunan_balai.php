@@ -4,7 +4,7 @@
         z-index: 9999 !important;
     }
 </style>
-<div>
+<div id="divtabel" style="overflow:scroll; width:1300px; height:800px;">
     <table border="1" style="border-collapse: collapse;" class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">
             <tr>
@@ -329,8 +329,8 @@ function ExportToExcel(mytblId){
     }
 </script>
   <script>
-        /* $(document).ready(function() {
-            var table = $('#dt-basic-example').DataTable({
+       /*  $(document).ready(function() {
+            $('#divtabel').DataTable({
                 scrollY: "500px",
                 scrollX: true,
                 scrollCollapse: true,
@@ -341,7 +341,7 @@ function ExportToExcel(mytblId){
                     rightColumns: 1
                 }
             });
-        }); */
+        });  */
     </script>
 <script>
 
