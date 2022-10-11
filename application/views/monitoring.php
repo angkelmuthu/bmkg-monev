@@ -77,35 +77,35 @@ if (!empty($_GET['lokasi'])) {
     </form>
     <div class="row">
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-info rounded overflow-hidden position-relative text-black mb-g">
+            <div class="p-3 bg-info rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
-                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                    <h1 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <small class="m-0 l-h-n fw-500">Total Pagu Anggaran</small>
                         Rp. <?php echo angka($pagu) ?>
 
-                    </h4>
+                    </h1>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-success rounded overflow-hidden position-relative text-black mb-g">
+            <div class="p-3 bg-primary rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
-                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                    <h1 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <small class="m-0 l-h-n fw-500">Realisasi Inputan</small>
                         <?php echo 'Rp. ' . angka($realisasi_pagu_inputan) ?>
 
-                    </h4>
+                    </h1>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-xl-4">
-            <div class="p-3 bg-warning rounded overflow-hidden position-relative text-black mb-g">
+            <div class="p-3 bg-success-700 rounded overflow-hidden position-relative text-white mb-g">
                 <div class="">
-                    <h4 class="text-right display-5 d-block l-h-n m-0 fw-500">
+                    <h1 class="text-right display-5 d-block l-h-n m-0 fw-500">
                         <small class="m-0 l-h-n fw-500">Serapan</small>
                         <?php echo round($realisasi_pagu_inputan / $pagu * 100, 2) . '%'; ?>
 
-                    </h4>
+                    </h1>
                 </div>
             </div>
         </div>
@@ -122,78 +122,83 @@ if (!empty($_GET['lokasi'])) {
                 <div class="panel-container show">
                     <div class="panel-content">
                         Keterangan : <span class="badge bg-info-500">Penyerapan > 50%</span> <span class="badge bg-success-500">Penyerapan < 50%</span> <span class="badge bg-warning-500">Penyerapan 0%</span>
-                                <table class="table table-bordered table-hover w-100" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Kode Satker</th>
-                                            <th>Nama Satker</th>
-                                            <th>Lokasi</th>
-                                            <!-- <th>Penjabat PPK</th>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover w-100" id="myTable">
+                                        <thead class="bg-primary-500 text-white">
+                                            <tr>
+                                                <th class="text-center">Kode Satker</th>
+                                                <th class="text-center">Nama Satker</th>
+                                                <th class="text-center">Lokasi</th>
+                                                <!-- <th class="text-center">Penjabat PPK</th>
+                                            <th class="text-center">KPA</th>
+                                            <th class="text-center">Kontak</th>
+                                            <th class="text-center">Email</th> -->
+                                                <th class="text-center">Pagu</th>
+                                                <th class="text-center">Realisasi</th>
+                                                <!-- <th class="text-center">Persentase</th> -->
+                                                <th class="text-center">Penyerapan</th>
+                                                <th class="text-center">Detil</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot class="showTop">
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Lokasi</th>
+                                                <!-- <th>Penjabat PPK</th>
                                             <th>KPA</th>
                                             <th>Kontak</th>
                                             <th>Email</th> -->
-                                            <th>Pagu</th>
-                                            <th>Realisasi</th>
-                                            <th>Persentase</th>
-                                            <th>Penyerapan</th>
-                                            <th>Detil</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot class="showTop">
-                                        <tr>
-                                            <th>Kode Satker</th>
-                                            <th>Nama Satker</th>
-                                            <th>Lokasi</th>
-                                            <!-- <th>Penjabat PPK</th>
-                                            <th>KPA</th>
-                                            <th>Kontak</th>
-                                            <th>Email</th> -->
-                                            <th>Pagu</th>
-                                            <th>Realisasi</th>
-                                            <th>Persentase</th>
-                                            <th>Penyerapan</th>
-                                            <th>Detil</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($monitoring as $dt) {
-                                            if ($dt->pagu > 0) {
-                                                $persen = round($dt->realisasi / $dt->pagu * 100, 2);
-                                            } else {
-                                                $persen = 0;
-                                            }
+                                                <th></th>
+                                                <th></th>
+                                                <!-- <th>Persentase</th> -->
+                                                <th>Penyerapan</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <?php foreach ($monitoring as $dt) {
+                                                if ($dt->pagu > 0) {
+                                                    $persen = round($dt->realisasi / $dt->pagu * 100, 2);
+                                                } else {
+                                                    $persen = 0;
+                                                }
 
-                                            if ($persen >= 50) {
-                                                $serap = "Penyerapan > 50%";
-                                                echo '<tr class="bg-info-500">';
-                                            } elseif (($persen > 0) && ($persen <= 49)) {
-                                                $serap = "Penyerapan < 50%";
-                                                echo '<tr class="bg-success-500">';
-                                            } else {
-                                                $serap = "Penyerapan 0%";
-                                                echo '<tr class="bg-warning-500">';
-                                            }
-                                        ?>
-                                            <td><?php echo $dt->kode_satker ?></td>
-                                            <td><?php echo $dt->nama_satker ?></td>
-                                            <td><?php echo $dt->nama_lokasi ?></td>
-                                            <!-- <td><?php echo $dt->penjabat_ppk ?></td>
+                                                if ($persen >= 50) {
+                                                    $serap = "Penyerapan > 50%";
+                                                    //echo '<tr class="bg-info-500">';
+                                                    echo '<tr>';
+                                                } elseif (($persen > 0) && ($persen <= 49)) {
+                                                    $serap = "Penyerapan < 50%";
+                                                    //echo '<tr class="bg-success-500">';
+                                                    echo '<tr>';
+                                                } else {
+                                                    $serap = "Penyerapan 0%";
+                                                    //echo '<tr class="bg-warning-500">';
+                                                    echo '<tr>';
+                                                }
+                                            ?>
+                                                <td><?php echo $dt->kode_satker ?></td>
+                                                <td><?php echo $dt->nama_satker ?></td>
+                                                <td><?php echo $dt->nama_lokasi ?></td>
+                                                <!-- <td><?php echo $dt->penjabat_ppk ?></td>
                                             <td><?php echo $dt->kpa ?></td>
                                             <td><?php echo $dt->kontak ?></td>
                                             <td><?php echo $dt->email ?></td> -->
-                                            <td><?php echo 'Rp. ' . angka($dt->pagu) ?></td>
-                                            <td><?php echo 'Rp. ' . angka($dt->realisasi) ?></td>
-                                            <td><?php echo $persen ?>%</td>
-                                            <td><?php echo $serap ?>%</td>
-                                            <td><a href="<?php echo site_url('pok/realisasi_kegiatan/' . $dt->id_program); ?>" class="btn btn-xs btn-default"><i class="fal fa-eye"></i></a></td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                                                <td><?php echo 'Rp. ' . angka($dt->pagu) ?></td>
+                                                <td><?php echo 'Rp. ' . angka($dt->realisasi) ?></td>
+                                                <!-- <td><?php echo $persen ?>%</td> -->
+                                                <td><?php echo $serap ?>%</td>
+                                                <td><a href="<?php echo site_url('pok/realisasi_kegiatan/' . $dt->id_program); ?>" class="btn btn-xs btn-default"><i class="fal fa-eye"></i></a></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 Keterangan : <span class="badge bg-info-500">Penyerapan > 50%</span> <span class="badge bg-success-500">Penyerapan < 50%</span> <span class="badge bg-warning-500">Penyerapan 0%</span>
                     </div>
                 </div>
-                <?php $this->output->enable_profiler(TRUE);
+                <?php //$this->output->enable_profiler(TRUE);
                 ?>
             </div>
         </div>
@@ -210,9 +215,13 @@ if (!empty($_GET['lokasi'])) {
     $(document).ready(function() {
         //$('#myTable').DataTable();
         $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf', 'print'
+            ],
             initComplete: function() {
                 this.api()
-                    .columns([2, 6])
+                    .columns([2, 5])
                     .every(function() {
                         var column = this;
                         var select = $('<select><option value=""></option></select>')

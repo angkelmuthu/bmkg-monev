@@ -55,38 +55,38 @@
     </div>
 </div>
 <div>
-    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
-        <thead class="thead-themed">
+    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example" style="font-family: Arial, Helvetica, sans-serif;">
+        <thead class="bg-primary-500 text-white">
             <tr>
-                <th class="text-center" rowspan="2"></th>
-                <th class="text-center" rowspan="2">Kode</th>
-                <th class="text-center" rowspan="2">Program/Kegiatan/Output/Komponen/Sub Komponen/Akun/Detil</th>
-                <th class="text-center" colspan="2">Rincian Perhitungan</th>
-                <th class="text-center" rowspan="2">Harga satuan</th>
-                <th class="text-center" rowspan="2">PAGU</th>
+                <th class="text-center bg-primary-500 text-white" rowspan="2"></th>
+                <th class="text-center bg-primary-500 text-white" rowspan="2">Kode</th>
+                <th class="text-center bg-primary-500 text-white" rowspan="2">Program/Kegiatan/Output/Komponen/Sub Komponen/Akun/Detil</th>
+                <th class="text-center bg-primary-500 text-white" colspan="2">Rincian Perhitungan</th>
+                <th class="text-center bg-primary-500 text-white" rowspan="2">Harga satuan</th>
+                <th class="text-center bg-primary-500 text-white" rowspan="2">PAGU</th>
 
-                <th class="text-center" colspan="12">Rencana Penarikan</th>
+                <th class="text-center bg-primary-500 text-white" colspan="12">Rencana Penarikan</th>
                 <?php if ($this->session->userdata('id_user_level') != 1) { ?>
-                    <th class="text-center" rowspan="2"></th>
-                    <th class="text-center" rowspan="2" width="100px">Aksi</th>
+                    <th class="text-center bg-primary-500 text-white" rowspan="2"></th>
+                    <th class="text-center bg-primary-500 text-white" rowspan="2" width="100px">Aksi</th>
                 <?php } ?>
 
             </tr>
             <tr>
-                <th class="text-center">Vol</th>
-                <th class="text-center">Sat</th>
-                <th class="text-right">Januari</th>
-                <th class="text-right">Februari</th>
-                <th class="text-right">Maret</th>
-                <th class="text-right">April</th>
-                <th class="text-right">Mei</th>
-                <th class="text-right">Juni</th>
-                <th class="text-right">Juli</th>
-                <th class="text-right">Agustus</th>
-                <th class="text-right">September</th>
-                <th class="text-right">Oktober</th>
-                <th class="text-right">November</th>
-                <th class="text-right">Desember</th>
+                <th class="text-center bg-primary-500 text-white">Vol</th>
+                <th class="text-center bg-primary-500 text-white">Sat</th>
+                <th class="text-right bg-primary-500 text-white">Januari</th>
+                <th class="text-right bg-primary-500 text-white">Februari</th>
+                <th class="text-right bg-primary-500 text-white">Maret</th>
+                <th class="text-right bg-primary-500 text-white">April</th>
+                <th class="text-right bg-primary-500 text-white">Mei</th>
+                <th class="text-right bg-primary-500 text-white">Juni</th>
+                <th class="text-right bg-primary-500 text-white">Juli</th>
+                <th class="text-right bg-primary-500 text-white">Agustus</th>
+                <th class="text-right bg-primary-500 text-white">September</th>
+                <th class="text-right bg-primary-500 text-white">Oktober</th>
+                <th class="text-right bg-primary-500 text-white">November</th>
+                <th class="text-right bg-primary-500 text-white">Desember</th>
             </tr>
         </thead>
         <tbody>
@@ -368,7 +368,7 @@
                             <tr>
                                 <td class="text-center"><span class="badge badge-success">RO</span></td>
                                 <td class="text-right"><?php echo $ro->kode_ro ?></td>
-                                <td class="text-left"><i class="fal fa-angle-right ml-1 mr-1"> <?php echo $ro->nama_ro ?></td>
+                                <td class="text-left"><i class="fal fa-angle-right ml-1 mr-1"></i> <?php echo $ro->nama_ro ?></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -446,7 +446,7 @@
                                 <tr>
                                     <td class="text-center"><span class="badge badge-success">Komponen</span></td>
                                     <td class="text-right"><?php echo $komponen->kode_komponen ?></td>
-                                    <td class="text-left"><i class="fal fa-angle-right ml-2 mr-1"> <?php echo $komponen->nama_komponen ?></td>
+                                    <td class="text-left"><i class="fal fa-angle-right ml-2 mr-1"></i> <?php echo $komponen->nama_komponen ?></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -525,7 +525,7 @@
                                     <tr>
                                         <td class="text-center"><span class="badge badge-success">Sub Komponen</span></td>
                                         <td class="text-right"><?php echo $komponen_sub->kode_komponen_sub ?></td>
-                                        <td class="text-left"><i class="fal fa-angle-right ml-3 mr-1"> <?php echo $komponen_sub->nama_komponen_sub ?></td>
+                                        <td class="text-left"><i class="fal fa-angle-right ml-3 mr-1"></i> <?php echo $komponen_sub->nama_komponen_sub ?></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -603,7 +603,7 @@
                                         <tr>
                                             <td class="text-center"><span class="badge badge-success">Akun</span></td>
                                             <td class="text-right"><?php echo $akun->kode_akun ?></td>
-                                            <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"> <?php echo $akun->nama_akun ?></td>
+                                            <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"></i> <?php echo $akun->nama_akun ?></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -682,7 +682,7 @@
                                                 <tr>
                                                     <td class="text-center"><span class="badge badge-success">Judul Item</span></td>
                                                     <td class="text-right"></td>
-                                                    <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item_title->item_title ?></td>
+                                                    <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"></i> <?php echo $item_title->item_title ?></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -726,9 +726,9 @@
                                                     <td class="text-center"><span class="badge badge-success">Item</span></td>
                                                     <td class="text-right"></td>
                                                     <?php if (!empty($item->item_title)) { ?>
-                                                        <td class="text-left"><i class="fal fa-angle-right ml-6 mr-1"> <?php echo $item->item ?></td>
+                                                        <td class="text-left"><i class="fal fa-angle-right ml-6 mr-1"></i> <?php echo $item->item ?></td>
                                                     <?php } else { ?>
-                                                        <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item->item ?></td>
+                                                        <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"></i> <?php echo $item->item ?></td>
                                                     <?php } ?>
                                                     <td class="text-center"><?php echo $item->volume ?></td>
                                                     <td class="text-center"><?php echo $item->satuan ?></td>
