@@ -5,7 +5,13 @@
     }
 </style>
 <div>
-    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"
+    xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+    <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+</head>
+    <table  border="1" style="border-collapse: collapse;" class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">
             <tr>
                 <th class="text-center" rowspan="2">Kode</th>
@@ -250,6 +256,13 @@
 
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 <script type="text/javascript">
+
+function ExportToExcel(mytblId){
+       var htmltable= document.getElementById('dt-basic-example');
+       var html = htmltable.outerHTML;
+       window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+    }
+	
 function ExportToExcel(mytblId){
        var htmltable= document.getElementById('dt-basic-example');
        var html = htmltable.outerHTML;
@@ -257,7 +270,7 @@ function ExportToExcel(mytblId){
     }
 </script>
   <script>
-        $(document).ready(function() {
+          $(document).ready(function() {
             var table = $('#dt-basic-example').DataTable({
                 scrollY: "500px",
                 scrollX: true,
@@ -269,7 +282,7 @@ function ExportToExcel(mytblId){
                     rightColumns: 1
                 }
             });
-        });
+        });  
     </script>
 <script>
 

@@ -5,7 +5,7 @@
     }
 </style>
 <div>
-    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
+    <table border="1" style="border-collapse: collapse;" class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
         <thead class="thead-themed">
             <tr>
                 <th class="text-center" rowspan="2">Kode</th>
