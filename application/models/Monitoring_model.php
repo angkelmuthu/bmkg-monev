@@ -51,10 +51,11 @@ class Monitoring_model extends CI_Model
         a.penjabat_ppk,
         a.kode_lokasi,
         b.nama_lokasi,
+        ( SELECT id_program FROM t_program where kode_satker = a.kode_satker and tahun_anggaran=' . $ta . ' order by id_program ASC limit 1) as id_program,
         ( SELECT ifnull(SUM( jumlah),0 ) FROM v_item_realisasi WHERE kode_satker = a.kode_satker and tahun_anggaran=' . $ta . ') AS pagu,
         ( SELECT ifnull(SUM( real_januari )+ SUM( real_februari )+ SUM( real_maret )+ SUM( real_april )+ SUM( real_mei )+ SUM( real_juni )+ SUM( real_juli )+ SUM( real_agustus )+ SUM( real_september )+ SUM( real_oktober )+ SUM( real_november )+ SUM( real_desember ),0)
         FROM
-        v_pagu_realisasi_omspan
+        v_item_realisasi
         WHERE
             kode_satker = a.kode_satker and tahun_anggaran=' . $ta . '
         ) AS realisasi');
