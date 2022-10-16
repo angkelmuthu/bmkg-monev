@@ -43,6 +43,26 @@ class Pok extends CI_Controller
 		 $this->template->load('template', 'pok/refAdmin');
 		
     }
+	public function import_file_dja()
+    {
+         $post = $this->input->post();
+		 if(isset($post['submit'])){
+					    $targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/dja/";
+						$dir = $targetDir;	  
+						if (!is_dir($dir)) {
+							mkdir($dir, 0777, true);
+						}
+					
+						$tmpFile = $_FILES['impor']['tmp_name'];
+						$filename = $_FILES['impor']['name'];
+						$ext = pathinfo($filename, PATHINFO_EXTENSION);
+						$filename = $dir.'/'.$_FILES['impor']['name'];
+						move_uploaded_file($tmpFile,$filename);
+
+		 }
+		 $this->template->load('template', 'pok/import_file_dja');
+		
+    }
 	public function import_realisasi()
     {
          $post = $this->input->post();
