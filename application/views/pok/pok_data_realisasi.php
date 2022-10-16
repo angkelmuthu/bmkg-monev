@@ -49,70 +49,73 @@
     </div>
 </div>
 <div>
-    <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example">
-        <thead class="thead-themed">
-            <tr>
-                <th class="text-center" rowspan="2"></th>
-                <th class="text-center" rowspan="2">Kode</th>
-                <th class="text-center" rowspan="2">Program/Kegiatan/Output/Komponen/Sub Komponen/Akun/Detil</th>
-                <th class="text-center" colspan="2">Rincian Perhitungan</th>
-                <th class="text-center" rowspan="2">Harga satuan</th>
-                <th class="text-center" rowspan="2">PAGU</th>
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-striped" id="dt-basic-example" style="font-family: Arial, Helvetica, sans-serif;">
+            <thead class="bg-primary-500 text-white">
+                <tr>
+                    <th class="text-center" rowspan="2"></th>
+                    <th class="text-center" rowspan="2">Kode</th>
+                    <th class="text-center" rowspan="2">Program/Kegiatan/Output/Komponen/Sub Komponen/Akun/Detil</th>
+                    <th class="text-center" colspan="2">Rincian Perhitungan</th>
+                    <th class="text-center" rowspan="2">Harga satuan</th>
+                    <th class="text-center" rowspan="2">PAGU</th>
 
-                <th class="text-center" colspan="12">Realisasi</th>
-                <?php if ($this->session->userdata('id_user_level') != 1) { ?>
-                   <th class="text-center" rowspan="2"></th>
-                   <!--  <th class="text-center" rowspan="2" width="100px">Aksi</th> -->
-                <?php } ?>
+                    <th class="text-center" colspan="12">Realisasi</th>
+                    <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                        <th class="text-center" rowspan="2"></th>
+                        <!--  <th class="text-center" rowspan="2" width="100px">Aksi</th> -->
+                    <?php } ?>
 
-            </tr>
-            <tr>
-                <th class="text-center">Vol</th>
-                <th class="text-center">Sat</th>
-                <th class="text-right">Januari</th>
-                <th class="text-right">Februari</th>
-                <th class="text-right">Maret</th>
-                <th class="text-right">April</th>
-                <th class="text-right">Mei</th>
-                <th class="text-right">Juni</th>
-                <th class="text-right">Juli</th>
-                <th class="text-right">Agustus</th>
-                <th class="text-right">September</th>
-                <th class="text-right">Oktober</th>
-                <th class="text-right">November</th>
-                <th class="text-right">Desember</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="text-center"></td>
-                <td class="text-center">1</td>
-                <td class="text-center">2</td>
-                <td class="text-center">3</td>
-                <td class="text-center">4</td>
-                <td class="text-center">5</td>
-                <td class="text-center">6</td>
+                </tr>
+                <tr>
+                    <th class="text-center">Vol</th>
+                    <th class="text-center">Sat</th>
+                    <th class="text-right">Januari</th>
+                    <th class="text-right">Februari</th>
+                    <th class="text-right">Maret</th>
+                    <th class="text-right">April</th>
+                    <th class="text-right">Mei</th>
+                    <th class="text-right">Juni</th>
+                    <th class="text-right">Juli</th>
+                    <th class="text-right">Agustus</th>
+                    <th class="text-right">September</th>
+                    <th class="text-right">Oktober</th>
+                    <th class="text-right">November</th>
+                    <th class="text-right">Desember</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center"></td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">5</td>
+                    <td class="text-center">6</td>
 
-                <td class="text-center">7</td>
-                <td class="text-center">8</td>
-                <td class="text-center">9</td>
-                <td class="text-center">10</td>
-                <td class="text-center">11</td>
-                <td class="text-center">12</td>
-                <td class="text-center">13</td>
-                <td class="text-center">14</td>
-                <td class="text-center">15</td>
-                <td class="text-center">16</td>
-                <td class="text-center">17</td>
-                <td class="text-center">18</td>
-                <?php //if ($this->session->userdata('id_user_level') != 1) { ?>
-                   <td></td>
+                    <td class="text-center">7</td>
+                    <td class="text-center">8</td>
+                    <td class="text-center">9</td>
+                    <td class="text-center">10</td>
+                    <td class="text-center">11</td>
+                    <td class="text-center">12</td>
+                    <td class="text-center">13</td>
+                    <td class="text-center">14</td>
+                    <td class="text-center">15</td>
+                    <td class="text-center">16</td>
+                    <td class="text-center">17</td>
+                    <td class="text-center">18</td>
+                    <?php //if ($this->session->userdata('id_user_level') != 1) {
+                    ?>
+                    <td></td>
                     <!-- <td width="100px"></td>-->
-                <?php //} ?>
-            </tr>
-            <!-- program -->
-            <?php
-            $this->db->select('a.*,
+                    <?php //}
+                    ?>
+                </tr>
+                <!-- program -->
+                <?php
+                $this->db->select('a.*,
         (SELECT count(*) FROM t_kegiatan c
         WHERE`a`.`kode_dept` = `c`.`kode_dept`
         AND `a`.`kode_unit_kerja` = `c`.`kode_unit_kerja`
@@ -120,42 +123,42 @@
         AND `a`.`tahun_anggaran` = `c`.`tahun_anggaran`
         AND `a`.`kode_program` = `c`.`kode_program`) as anak
         ,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-            $this->db->from('t_program a');
-			$this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
-            $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-            $this->db->where('a.kode_dept', $kode_dept);
-            $this->db->where('a.kode_unit_kerja', $kode_unit_kerja);
-            $this->db->where('a.kode_satker', $kode_satker);
-            $this->db->where('a.tahun_anggaran', $tahun_anggaran);
-            $this->db->group_by('a.kode_program');
-            //$this->db->order_by('create_date', 'ASC');
-            //$q = $this->db->get();
-            //var_dump($q);
-            $list_program = $this->db->get()->result();
-            foreach ($list_program as $program) { ?>
-                <tr>
-                    <td class="text-center"><span class="badge badge-success">Program</span></td>
-                    <td class="text-right"><?php echo $program->kode_dept . '.' . $program->kode_unit_kerja . '.' . $program->kode_program ?></td>
-                    <td class="text-left fw-700"><?php echo $program->nama_program ?></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-right fw-700"><?php echo angka($program->total) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_januari) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_februari) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_maret) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_april) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_mei) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_juni) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_juli) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_agustus) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_september) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_oktober) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_november) ?></td>
-                    <td class="text-right fw-700"><?php echo angka($program->ttl_desember) ?></td>
-                    <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                $this->db->from('t_program a');
+                $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_program=b.kode_program', 'LEFT');
+                $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                $this->db->where('a.kode_dept', $kode_dept);
+                $this->db->where('a.kode_unit_kerja', $kode_unit_kerja);
+                $this->db->where('a.kode_satker', $kode_satker);
+                $this->db->where('a.tahun_anggaran', $tahun_anggaran);
+                $this->db->group_by('a.kode_program');
+                //$this->db->order_by('create_date', 'ASC');
+                //$q = $this->db->get();
+                //var_dump($q);
+                $list_program = $this->db->get()->result();
+                foreach ($list_program as $program) { ?>
+                    <tr>
+                        <td class="text-center"><span class="badge badge-success">Program</span></td>
+                        <td class="text-right"><?php echo $program->kode_dept . '.' . $program->kode_unit_kerja . '.' . $program->kode_program ?></td>
+                        <td class="text-left fw-700"><?php echo $program->nama_program ?></td>
                         <td></td>
-                       <!-- <td width="100px">
+                        <td></td>
+                        <td></td>
+                        <td class="text-right fw-700"><?php echo angka($program->total) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_januari) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_februari) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_maret) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_april) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_mei) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_juni) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_juli) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_agustus) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_september) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_oktober) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_november) ?></td>
+                        <td class="text-right fw-700"><?php echo angka($program->ttl_desember) ?></td>
+                        <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                            <td></td>
+                            <!-- <td width="100px">
                             <div class="text-center">
                                 <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#hapus-program-<?php echo $program->id_program ?>"><i class="fal fa-trash"></i></button>
                             </div>
@@ -188,48 +191,48 @@
                                 </div>
                             </div>
                         </td>-->
-                    <?php } ?>
-                </tr>
-                <!-- kegiatan -->
-                <?php
-                $this->db->select('a.*,
+                        <?php } ?>
+                    </tr>
+                    <!-- kegiatan -->
+                    <?php
+                    $this->db->select('a.*,
             (SELECT count(*) FROM t_output c
             WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
             ,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-                $this->db->from('t_kegiatan a');
-                $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-				$this->db->where('a.kode_program', $program->kode_program);
-                $this->db->where('a.kode_dept', $program->kode_dept);
-                $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
-                $this->db->where('a.kode_satker', $program->kode_satker);
-                $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                $this->db->group_by('a.kode_kegiatan');
-                $list_kegiatan = $this->db->get()->result();
-                foreach ($list_kegiatan as $kegiatan) { ?>
-                    <tr>
-                        <td class="text-center"><span class="badge badge-success">Kegiatan</span></td>
-                        <td class="text-right"><?php echo $kegiatan->kode_kegiatan ?></td>
-                        <td class="text-left fw-500"><?php echo $kegiatan->nama_kegiatan ?></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->total) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_januari) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_februari) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_maret) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_april) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_mei) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_juni) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_juli) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_agustus) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_september) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_oktober) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_november) ?></td>
-                        <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_desember) ?></td>
-                        <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                    $this->db->from('t_kegiatan a');
+                    $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
+                    $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                    $this->db->where('a.kode_program', $program->kode_program);
+                    $this->db->where('a.kode_dept', $program->kode_dept);
+                    $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
+                    $this->db->where('a.kode_satker', $program->kode_satker);
+                    $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
+                    $this->db->group_by('a.kode_kegiatan');
+                    $list_kegiatan = $this->db->get()->result();
+                    foreach ($list_kegiatan as $kegiatan) { ?>
+                        <tr>
+                            <td class="text-center"><span class="badge badge-success">Kegiatan</span></td>
+                            <td class="text-right"><?php echo $kegiatan->kode_kegiatan ?></td>
+                            <td class="text-left fw-500"><?php echo $kegiatan->nama_kegiatan ?></td>
                             <td></td>
-                          <!--  <td width="100px">
+                            <td></td>
+                            <td></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->total) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_januari) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_februari) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_maret) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_april) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_mei) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_juni) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_juli) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_agustus) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_september) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_oktober) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_november) ?></td>
+                            <td class="text-right fw-500"><?php echo angka($kegiatan->ttl_desember) ?></td>
+                            <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                <td></td>
+                                <!--  <td width="100px">
                                 <div class="text-center">
                                     <button type="button" kode_dept="<?php echo $kegiatan->kode_dept; ?>" kode_unit_kerja="<?php echo $kegiatan->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $kegiatan->kode_kegiatan; ?>" class="kro btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
@@ -264,50 +267,50 @@
                                     </div>
                                 </div>
                             </td>-->
-                        <?php } ?>
-                    </tr>
-                    <!-- kro -->
-                    <?php
-                    $this->db->select('a.*,
+                            <?php } ?>
+                        </tr>
+                        <!-- kro -->
+                        <?php
+                        $this->db->select('a.*,
                 (SELECT count(*) FROM t_output_sub c
                 WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
                 ,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-                    $this->db->from('t_output a');
-                    $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                    $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-					$this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
-                    $this->db->where('a.kode_program', $program->kode_program);
-                    $this->db->where('a.kode_dept', $program->kode_dept);
-                    $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
-                    $this->db->where('a.kode_satker', $program->kode_satker);
-                    $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                    $this->db->group_by('a.kode_kro');
-                    $list_kro = $this->db->get()->result();
+                        $this->db->from('t_output a');
+                        $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
+                        $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                        $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
+                        $this->db->where('a.kode_program', $program->kode_program);
+                        $this->db->where('a.kode_dept', $program->kode_dept);
+                        $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
+                        $this->db->where('a.kode_satker', $program->kode_satker);
+                        $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
+                        $this->db->group_by('a.kode_kro');
+                        $list_kro = $this->db->get()->result();
 
-                    foreach ($list_kro as $kro) { ?>
-                        <tr>
-                            <td class="text-center"><span class="badge badge-success">KRO</span></td>
-                            <td class="text-right"><?php echo $kro->kode_kro ?></td>
-                            <td class="text-left"><i class="fal fa-angle-right mr-1"></i><?php echo $kro->nama_kro ?></td>
-                            <td class="text-center"><?php echo $kro->volume ?></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-right"><?php echo angka($kro->total) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_januari) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_februari) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_maret) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_april) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_mei) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_juni) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_juli) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_agustus) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_september) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_oktober) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_november) ?></td>
-                            <td class="text-right"><?php echo angka($kro->ttl_desember) ?></td>
-                            <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                        foreach ($list_kro as $kro) { ?>
+                            <tr>
+                                <td class="text-center"><span class="badge badge-success">KRO</span></td>
+                                <td class="text-right"><?php echo $kro->kode_kro ?></td>
+                                <td class="text-left"><i class="fal fa-angle-right mr-1"></i><?php echo $kro->nama_kro ?></td>
+                                <td class="text-center"><?php echo $kro->volume ?></td>
                                 <td></td>
-                               <!-- <td>
+                                <td></td>
+                                <td class="text-right"><?php echo angka($kro->total) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_januari) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_februari) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_maret) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_april) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_mei) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_juni) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_juli) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_agustus) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_september) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_oktober) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_november) ?></td>
+                                <td class="text-right"><?php echo angka($kro->ttl_desember) ?></td>
+                                <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                    <td></td>
+                                    <!-- <td>
                                     <div class="text-center">
                                         <button type="button" kode_dept="<?php echo $kro->kode_dept; ?>" kode_unit_kerja="<?php echo $kro->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $kro->kode_kegiatan; ?>" kode_kro="<?php echo $kro->kode_kro; ?>" class="ro btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
@@ -342,50 +345,50 @@
                                         </div>
                                     </div>
                                 </td>-->
-                            <?php } ?>
-                        </tr>
-                        <!-- ro -->
-                        <?php
-                        $this->db->select('a.*,
+                                <?php } ?>
+                            </tr>
+                            <!-- ro -->
+                            <?php
+                            $this->db->select('a.*,
                     (SELECT count(*) FROM t_output_sub c
                     WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_ro=c.kode_ro and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
                     ,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-                        $this->db->from('t_output_sub a');
-                        $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                        $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-					    $this->db->where('a.kode_kro', $kro->kode_kro);
-                        $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
-                        $this->db->where('a.kode_program', $program->kode_program);
-                        $this->db->where('a.kode_dept', $program->kode_dept);
-                        $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
-                        $this->db->where('a.kode_satker', $program->kode_satker);
-                        $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                        $this->db->group_by('a.kode_ro');
-                        $list_ro = $this->db->get()->result();
-                        foreach ($list_ro as $ro) { ?>
-                            <tr>
-                                <td class="text-center"><span class="badge badge-success">RO</span></td>
-                                <td class="text-right"><?php echo $ro->kode_ro ?></td>
-                                <td class="text-left"><i class="fal fa-angle-right ml-1 mr-1"> <?php echo $ro->nama_ro ?></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="text-right"><?php echo angka($ro->total) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_januari) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_februari) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_maret) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_april) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_mei) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_juni) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_juli) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_agustus) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_september) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_oktober) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_november) ?></td>
-                                <td class="text-right"><?php echo angka($ro->ttl_desember) ?></td>
-                                <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                            $this->db->from('t_output_sub a');
+                            $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
+                            $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                            $this->db->where('a.kode_kro', $kro->kode_kro);
+                            $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
+                            $this->db->where('a.kode_program', $program->kode_program);
+                            $this->db->where('a.kode_dept', $program->kode_dept);
+                            $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
+                            $this->db->where('a.kode_satker', $program->kode_satker);
+                            $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
+                            $this->db->group_by('a.kode_ro');
+                            $list_ro = $this->db->get()->result();
+                            foreach ($list_ro as $ro) { ?>
+                                <tr>
+                                    <td class="text-center"><span class="badge badge-success">RO</span></td>
+                                    <td class="text-right"><?php echo $ro->kode_ro ?></td>
+                                    <td class="text-left"><i class="fal fa-angle-right ml-1 mr-1"></i> <?php echo $ro->nama_ro ?></td>
                                     <td></td>
-                                   <!-- <td width="100px">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right"><?php echo angka($ro->total) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_januari) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_februari) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_maret) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_april) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_mei) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_juni) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_juli) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_agustus) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_september) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_oktober) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_november) ?></td>
+                                    <td class="text-right"><?php echo angka($ro->ttl_desember) ?></td>
+                                    <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                        <td></td>
+                                        <!-- <td width="100px">
                                         <div class="text-center">
                                             <button type="button" kode_dept="<?php echo $ro->kode_dept; ?>" kode_unit_kerja="<?php echo $ro->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $ro->kode_kegiatan; ?>" kode_kro="<?php echo $ro->kode_kro; ?>" kode_ro="<?php echo $ro->kode_ro; ?>" class="komponen btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
@@ -420,51 +423,51 @@
                                             </div>
                                         </div>
                                     </td>-->
-                                <?php } ?>
-                            </tr>
-                            <!-- komponen -->
-                            <?php
-                            $this->db->select('a.*,
+                                    <?php } ?>
+                                </tr>
+                                <!-- komponen -->
+                                <?php
+                                $this->db->select('a.*,
                         (SELECT count(*) FROM t_komponen_sub c
                         WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_komponen=c.kode_komponen and a.kode_ro=c.kode_ro and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
                         ,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-                            $this->db->from('t_komponen a');
-                            $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                           $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-						   $this->db->where('a.kode_ro', $ro->kode_ro);
-                            $this->db->where('a.kode_kro', $kro->kode_kro);
-                            $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
-                            $this->db->where('a.kode_program', $program->kode_program);
-                            $this->db->where('a.kode_dept', $program->kode_dept);
-                            $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
-                            $this->db->where('a.kode_satker', $program->kode_satker);
-                            $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                            $this->db->group_by('a.kode_komponen');
-                            $list_komponen = $this->db->get()->result();
-                            foreach ($list_komponen as $komponen) { ?>
-                                <tr>
-                                    <td class="text-center"><span class="badge badge-success">Komponen</span></td>
-                                    <td class="text-right"><?php echo $komponen->kode_komponen ?></td>
-                                    <td class="text-left"><i class="fal fa-angle-right ml-2 mr-1"> <?php echo $komponen->nama_komponen ?></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-right"><?php echo angka($komponen->total) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_januari) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_februari) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_maret) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_april) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_mei) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_juni) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_juli) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_agustus) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_september) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_oktober) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_november) ?></td>
-                                    <td class="text-right"><?php echo angka($komponen->ttl_desember) ?></td>
-                                    <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                $this->db->from('t_komponen a');
+                                $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
+                                $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                                $this->db->where('a.kode_ro', $ro->kode_ro);
+                                $this->db->where('a.kode_kro', $kro->kode_kro);
+                                $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
+                                $this->db->where('a.kode_program', $program->kode_program);
+                                $this->db->where('a.kode_dept', $program->kode_dept);
+                                $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
+                                $this->db->where('a.kode_satker', $program->kode_satker);
+                                $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
+                                $this->db->group_by('a.kode_komponen');
+                                $list_komponen = $this->db->get()->result();
+                                foreach ($list_komponen as $komponen) { ?>
+                                    <tr>
+                                        <td class="text-center"><span class="badge badge-success">Komponen</span></td>
+                                        <td class="text-right"><?php echo $komponen->kode_komponen ?></td>
+                                        <td class="text-left"><i class="fal fa-angle-right ml-2 mr-1"></i> <?php echo $komponen->nama_komponen ?></td>
                                         <td></td>
-                                      <!--  <td width="100px">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right"><?php echo angka($komponen->total) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_januari) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_februari) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_maret) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_april) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_mei) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_juni) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_juli) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_agustus) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_september) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_oktober) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_november) ?></td>
+                                        <td class="text-right"><?php echo angka($komponen->ttl_desember) ?></td>
+                                        <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                            <td></td>
+                                            <!--  <td width="100px">
                                             <div class="text-center">
                                                 <button type="button" kode_dept="<?php echo $komponen->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen->kode_unit_kerja; ?>" kode_kegiatan="<?php echo $komponen->kode_kegiatan; ?>" kode_kro="<?php echo $komponen->kode_kro; ?>" kode_ro="<?php echo $komponen->kode_ro; ?>" kode_komponen="<?php echo $komponen->kode_komponen; ?>" class="komponen_sub btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
@@ -499,52 +502,52 @@
                                                 </div>
                                             </div>
                                         </td>-->
-                                    <?php } ?>
-                                </tr>
-                                <!-- komponen sub -->
-                                <?php
-                                $this->db->select('a.*,
+                                        <?php } ?>
+                                    </tr>
+                                    <!-- komponen sub -->
+                                    <?php
+                                    $this->db->select('a.*,
                             (SELECT count(*) FROM t_akun c
                             WHERE a.kode_dept=c.kode_dept and a.kode_unit_kerja=c.kode_unit_kerja and a.kode_satker=c.kode_satker and a.tahun_anggaran=c.tahun_anggaran and a.kode_komponen_sub=c.kode_komponen_sub and a.kode_komponen=c.kode_komponen and a.kode_ro=c.kode_ro and a.kode_kro=c.kode_kro and a.kode_kegiatan=c.kode_kegiatan and a.kode_program=c.kode_program) as anak
                             ,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-                                $this->db->from('t_komponen_sub a');
-                                $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                              $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-							  $this->db->where('a.kode_komponen', $komponen->kode_komponen);
-                                $this->db->where('a.kode_ro', $ro->kode_ro);
-                                $this->db->where('a.kode_kro', $kro->kode_kro);
-                                $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
-                                $this->db->where('a.kode_program', $program->kode_program);
-                                $this->db->where('a.kode_dept', $program->kode_dept);
-                                $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
-                                $this->db->where('a.kode_satker', $program->kode_satker);
-                                $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                                $this->db->group_by('a.kode_komponen_sub');
-                                $list_komponen_sub = $this->db->get()->result();
-                                foreach ($list_komponen_sub as $komponen_sub) { ?>
-                                    <tr>
-                                        <td class="text-center"><span class="badge badge-success">Sub Komponen</span></td>
-                                        <td class="text-right"><?php echo $komponen_sub->kode_komponen_sub ?></td>
-                                        <td class="text-left"><i class="fal fa-angle-right ml-3 mr-1"> <?php echo $komponen_sub->nama_komponen_sub ?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->total) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_januari) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_februari) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_maret) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_april) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_mei) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_juni) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_juli) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_agustus) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_september) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_oktober) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_november) ?></td>
-                                        <td class="text-right"><?php echo angka($komponen_sub->ttl_desember) ?></td>
-                                        <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                    $this->db->from('t_komponen_sub a');
+                                    $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
+                                    $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                                    $this->db->where('a.kode_komponen', $komponen->kode_komponen);
+                                    $this->db->where('a.kode_ro', $ro->kode_ro);
+                                    $this->db->where('a.kode_kro', $kro->kode_kro);
+                                    $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
+                                    $this->db->where('a.kode_program', $program->kode_program);
+                                    $this->db->where('a.kode_dept', $program->kode_dept);
+                                    $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
+                                    $this->db->where('a.kode_satker', $program->kode_satker);
+                                    $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
+                                    $this->db->group_by('a.kode_komponen_sub');
+                                    $list_komponen_sub = $this->db->get()->result();
+                                    foreach ($list_komponen_sub as $komponen_sub) { ?>
+                                        <tr>
+                                            <td class="text-center"><span class="badge badge-success">Sub Komponen</span></td>
+                                            <td class="text-right"><?php echo $komponen_sub->kode_komponen_sub ?></td>
+                                            <td class="text-left"><i class="fal fa-angle-right ml-3 mr-1"></i> <?php echo $komponen_sub->nama_komponen_sub ?></td>
                                             <td></td>
-                                        <!--    <td width="100px">
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->total) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_januari) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_februari) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_maret) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_april) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_mei) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_juni) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_juli) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_agustus) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_september) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_oktober) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_november) ?></td>
+                                            <td class="text-right"><?php echo angka($komponen_sub->ttl_desember) ?></td>
+                                            <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                                <td></td>
+                                                <!--    <td width="100px">
                                                 <div class="text-center">
                                                     <button type="button" kode_dept="<?php echo $komponen_sub->kode_dept; ?>" kode_unit_kerja="<?php echo $komponen_sub->kode_unit_kerja; ?>" kode_program="<?php echo $komponen_sub->kode_program; ?>" kode_kegiatan="<?php echo $komponen_sub->kode_kegiatan; ?>" kode_kro="<?php echo $komponen_sub->kode_kro; ?>" kode_ro="<?php echo $komponen_sub->kode_ro; ?>" kode_komponen="<?php echo $komponen_sub->kode_komponen; ?>" kode_komponen_sub="<?php echo $komponen_sub->kode_komponen_sub; ?>" class="akun btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
@@ -580,50 +583,50 @@
                                                     </div>
                                                 </div>
                                             </td>-->
-                                        <?php } ?>
-                                    </tr>
-                                    <!-- Akun-->
-                                    <?php
-                                    $this->db->select('a.*,count(b.id_item) as anak,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-                                    $this->db->from('t_akun a');
-                                    $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_akun=b.kode_akun and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
-                                    $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
-									$this->db->where('a.kode_komponen_sub', $komponen_sub->kode_komponen_sub);
-                                    $this->db->where('a.kode_komponen', $komponen->kode_komponen);
-                                    $this->db->where('a.kode_ro', $ro->kode_ro);
-                                    $this->db->where('a.kode_kro', $kro->kode_kro);
-                                    $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
-                                    $this->db->where('a.kode_program', $program->kode_program);
-                                    $this->db->where('a.kode_dept', $program->kode_dept);
-                                    $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
-                                    $this->db->where('a.kode_satker', $program->kode_satker);
-                                    $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
-                                    $this->db->group_by('a.kode_akun');
-                                    $list_akun = $this->db->get()->result();
-                                    foreach ($list_akun as $akun) { ?>
-                                        <tr>
-                                            <td class="text-center"><span class="badge badge-success">Akun</span></td>
-                                            <td class="text-right"><?php echo $akun->kode_akun ?></td>
-                                            <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"> <?php echo $akun->nama_akun ?></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-right"><?php echo angka($akun->total) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_januari) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_februari) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_maret) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_april) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_mei) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_juni) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_juli) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_agustus) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_september) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_oktober) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_november) ?></td>
-                                            <td class="text-right"><?php echo angka($akun->ttl_desember) ?></td>
-                                            <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                            <?php } ?>
+                                        </tr>
+                                        <!-- Akun-->
+                                        <?php
+                                        $this->db->select('a.*,count(b.id_item) as anak,sum(b.jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
+                                        $this->db->from('t_akun a');
+                                        $this->db->join('t_item b', 'a.kode_dept=b.kode_dept and a.kode_unit_kerja=b.kode_unit_kerja and a.kode_satker=b.kode_satker and a.tahun_anggaran=b.tahun_anggaran and a.kode_akun=b.kode_akun and a.kode_komponen_sub=b.kode_komponen_sub and a.kode_komponen=b.kode_komponen and a.kode_ro=b.kode_ro and a.kode_kro=b.kode_kro and a.kode_kegiatan=b.kode_kegiatan and a.kode_program=b.kode_program', 'LEFT');
+                                        $this->db->join('t_item_realisasi c', 'c.id_item=b.id_item', 'LEFT');
+                                        $this->db->where('a.kode_komponen_sub', $komponen_sub->kode_komponen_sub);
+                                        $this->db->where('a.kode_komponen', $komponen->kode_komponen);
+                                        $this->db->where('a.kode_ro', $ro->kode_ro);
+                                        $this->db->where('a.kode_kro', $kro->kode_kro);
+                                        $this->db->where('a.kode_kegiatan', $kegiatan->kode_kegiatan);
+                                        $this->db->where('a.kode_program', $program->kode_program);
+                                        $this->db->where('a.kode_dept', $program->kode_dept);
+                                        $this->db->where('a.kode_unit_kerja', $program->kode_unit_kerja);
+                                        $this->db->where('a.kode_satker', $program->kode_satker);
+                                        $this->db->where('a.tahun_anggaran', $program->tahun_anggaran);
+                                        $this->db->group_by('a.kode_akun');
+                                        $list_akun = $this->db->get()->result();
+                                        foreach ($list_akun as $akun) { ?>
+                                            <tr>
+                                                <td class="text-center"><span class="badge badge-success">Akun</span></td>
+                                                <td class="text-right"><?php echo $akun->kode_akun ?></td>
+                                                <td class="text-left"><i class="fal fa-angle-right ml-4 mr-1"></i> <?php echo $akun->nama_akun ?></td>
                                                 <td></td>
-                                              <!--  <td width="100px">
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-right"><?php echo angka($akun->total) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_januari) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_februari) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_maret) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_april) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_mei) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_juni) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_juli) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_agustus) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_september) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_oktober) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_november) ?></td>
+                                                <td class="text-right"><?php echo angka($akun->ttl_desember) ?></td>
+                                                <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                                    <td></td>
+                                                    <!--  <td width="100px">
                                                     <div class="text-center">
                                                         <button type="button" kode_dept="<?php echo $akun->kode_dept; ?>" kode_unit_kerja="<?php echo $akun->kode_unit_kerja; ?>" kode_program="<?php echo $akun->kode_program; ?>" kode_kegiatan="<?php echo $akun->kode_kegiatan; ?>" kode_kro="<?php echo $akun->kode_kro; ?>" kode_ro="<?php echo $akun->kode_ro; ?>" kode_komponen="<?php echo $akun->kode_komponen; ?>" kode_komponen_sub="<?php echo $akun->kode_komponen_sub; ?>" kode_akun="<?php echo $akun->kode_akun; ?>" class="item btn btn-xs btn-info"><i class="fal fa-plus-square"></i></button>
 
@@ -658,66 +661,15 @@
                                                         </div>
                                                     </div>
                                                 </td>-->
-                                            <?php } ?>
-                                        </tr>
-                                        <!-- Item-->
-                                        <?php
-                                        $this->db->select('a.*,sum(jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,
+                                                <?php } ?>
+                                            </tr>
+                                            <!-- Item-->
+                                            <?php
+                                            $this->db->select('a.*,sum(jumlah) as total,sum(c.ang_januari) as ttl_januari,sum(c.ang_februari) as ttl_februari,sum(c.ang_maret) as ttl_maret,sum(c.ang_april) as ttl_april,
 										sum(c.ang_mei) as ttl_mei,sum(c.ang_juni) as ttl_juni,sum(c.ang_juli) as ttl_juli,sum(c.ang_agustus) as ttl_agustus,sum(c.ang_september) as ttl_september,sum(c.ang_november) as ttl_november,
 										sum(c.ang_oktober) as ttl_oktober,sum(c.ang_desember) as ttl_desember');
-										$this->db->from('t_item a');
-                                        $this->db->join('t_item_realisasi c', 'c.id_item=a.id_item', 'LEFT');
-									    $this->db->where('kode_akun', $akun->kode_akun);
-                                        $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
-                                        $this->db->where('kode_komponen', $komponen->kode_komponen);
-                                        $this->db->where('kode_ro', $ro->kode_ro);
-                                        $this->db->where('kode_kro', $kro->kode_kro);
-                                        $this->db->where('kode_kegiatan', $kegiatan->kode_kegiatan);
-                                        $this->db->where('kode_program', $program->kode_program);
-                                        $this->db->where('kode_dept', $program->kode_dept);
-                                        $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
-                                        $this->db->where('kode_satker', $program->kode_satker);
-                                        $this->db->where('tahun_anggaran', $program->tahun_anggaran);
-                                        $this->db->group_by('item_title');
-                                        $this->db->order_by('id_item');
-                                        $list_item_title = $this->db->get()->result();
-										//$this->output->enable_profiler(TRUE);
-                                        foreach ($list_item_title as $item_title) {
-                                            if (!empty($item_title->item_title)) {
-                                        ?>
-                                                <tr>
-                                                    <td class="text-center"><span class="badge badge-success">Judul Item</span></td>
-                                                    <td class="text-right"></td>
-                                                    <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item_title->item_title ?></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="text-right"><?php echo angka($item_title->total) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_januari) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_februari) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_maret) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_april) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_mei) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_juni) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_juli) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_agustus) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_september) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_oktober) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_november) ?></td>
-                                                    <td class="text-right"><?php echo angka($item_title->ttl_desember) ?></td>
-                                                    <?php if ($this->session->userdata('id_user_level') != 1) { ?>
-                                                        <td></td>
-                                                      <!--  <td width="100px"></td>-->
-                                                    <?php } ?>
-                                                </tr>
-                                            <?php } ?>
-                                            <?php
-											$this->db->select('a.*,sum(jumlah) as total,sum(c.ang_januari) as januari,sum(c.ang_februari) as februari,sum(c.ang_maret) as maret,sum(c.ang_april) as april,
-										sum(c.ang_mei) as mei,sum(c.ang_juni) as juni,sum(c.ang_juli) as juli,sum(c.ang_agustus) as agustus,sum(c.ang_september) as september,sum(c.ang_november) as november,
-										sum(c.ang_oktober) as oktober,sum(c.ang_desember) as desember');
-										$this->db->from('t_item a');
-                                        $this->db->join('t_item_realisasi c', 'c.id_item=a.id_item', 'LEFT');
-                                            $this->db->where('a.item_title', $item_title->item_title);
+                                            $this->db->from('t_item a');
+                                            $this->db->join('t_item_realisasi c', 'c.id_item=a.id_item', 'LEFT');
                                             $this->db->where('kode_akun', $akun->kode_akun);
                                             $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
                                             $this->db->where('kode_komponen', $komponen->kode_komponen);
@@ -729,35 +681,87 @@
                                             $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
                                             $this->db->where('kode_satker', $program->kode_satker);
                                             $this->db->where('tahun_anggaran', $program->tahun_anggaran);
-                                            $this->db->group_by('a.id_item');
-                                            $list_item = $this->db->get()->result();
-                                            foreach ($list_item as $item) {
+                                            $this->db->group_by('item_title');
+                                            $this->db->order_by('id_item');
+                                            $list_item_title = $this->db->get()->result();
+                                            //$this->output->enable_profiler(TRUE);
+                                            foreach ($list_item_title as $item_title) {
+                                                if (!empty($item_title->item_title)) {
                                             ?>
-                                                <tr>
-                                                    <td class="text-center"><span class="badge badge-success">Item</span></td>
-                                                    <td class="text-right"></td>
-                                                    <?php if (!empty($item->item_title)) { ?>
-                                                        <td class="text-left"><i class="fal fa-angle-right ml-6 mr-1"> <?php echo $item->item ?></td>
-                                                    <?php } else { ?>
-                                                        <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"> <?php echo $item->item ?></td>
-                                                    <?php } ?>
-                                                    <td class="text-center"><?php echo $item->volume ?></td>
-                                                    <td class="text-center"><?php echo $item->satuan ?></td>
-                                                    <td class="text-right"><?php echo angka($item->harga_satuan) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->jumlah) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->januari) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->februari) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->maret) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->april) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->mei) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->juni) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->juli) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->agustus) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->september) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->oktober) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->november) ?></td>
-                                                    <td class="text-right"><?php echo angka($item->desember) ?></td>
-                                                    <?php //if ($this->session->userdata('id_user_level') != 1) { ?>
+                                                    <tr>
+                                                        <td class="text-center"><span class="badge badge-success">Judul Item</span></td>
+                                                        <td class="text-right"></td>
+                                                        <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"></i> <?php echo $item_title->item_title ?></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-right"><?php echo angka($item_title->total) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_januari) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_februari) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_maret) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_april) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_mei) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_juni) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_juli) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_agustus) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_september) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_oktober) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_november) ?></td>
+                                                        <td class="text-right"><?php echo angka($item_title->ttl_desember) ?></td>
+                                                        <?php if ($this->session->userdata('id_user_level') != 1) { ?>
+                                                            <td></td>
+                                                            <!--  <td width="100px"></td>-->
+                                                        <?php } ?>
+                                                    </tr>
+                                                <?php } ?>
+                                                <?php
+                                                $this->db->select('a.*,sum(jumlah) as total,sum(c.ang_januari) as januari,sum(c.ang_februari) as februari,sum(c.ang_maret) as maret,sum(c.ang_april) as april,
+										sum(c.ang_mei) as mei,sum(c.ang_juni) as juni,sum(c.ang_juli) as juli,sum(c.ang_agustus) as agustus,sum(c.ang_september) as september,sum(c.ang_november) as november,
+										sum(c.ang_oktober) as oktober,sum(c.ang_desember) as desember');
+                                                $this->db->from('t_item a');
+                                                $this->db->join('t_item_realisasi c', 'c.id_item=a.id_item', 'LEFT');
+                                                $this->db->where('a.item_title', $item_title->item_title);
+                                                $this->db->where('kode_akun', $akun->kode_akun);
+                                                $this->db->where('kode_komponen_sub', $komponen_sub->kode_komponen_sub);
+                                                $this->db->where('kode_komponen', $komponen->kode_komponen);
+                                                $this->db->where('kode_ro', $ro->kode_ro);
+                                                $this->db->where('kode_kro', $kro->kode_kro);
+                                                $this->db->where('kode_kegiatan', $kegiatan->kode_kegiatan);
+                                                $this->db->where('kode_program', $program->kode_program);
+                                                $this->db->where('kode_dept', $program->kode_dept);
+                                                $this->db->where('kode_unit_kerja', $program->kode_unit_kerja);
+                                                $this->db->where('kode_satker', $program->kode_satker);
+                                                $this->db->where('tahun_anggaran', $program->tahun_anggaran);
+                                                $this->db->group_by('a.id_item');
+                                                $list_item = $this->db->get()->result();
+                                                foreach ($list_item as $item) {
+                                                ?>
+                                                    <tr>
+                                                        <td class="text-center"><span class="badge badge-success">Item</span></td>
+                                                        <td class="text-right"></td>
+                                                        <?php if (!empty($item->item_title)) { ?>
+                                                            <td class="text-left"><i class="fal fa-angle-right ml-6 mr-1"></i> <?php echo $item->item ?></td>
+                                                        <?php } else { ?>
+                                                            <td class="text-left"><i class="fal fa-angle-right ml-5 mr-1"></i> <?php echo $item->item ?></td>
+                                                        <?php } ?>
+                                                        <td class="text-center"><?php echo $item->volume ?></td>
+                                                        <td class="text-center"><?php echo $item->satuan ?></td>
+                                                        <td class="text-right"><?php echo angka($item->harga_satuan) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->jumlah) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->januari) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->februari) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->maret) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->april) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->mei) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->juni) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->juli) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->agustus) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->september) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->oktober) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->november) ?></td>
+                                                        <td class="text-right"><?php echo angka($item->desember) ?></td>
+                                                        <?php //if ($this->session->userdata('id_user_level') != 1) {
+                                                        ?>
                                                         <td>
                                                             <button type="button" satker="<?php echo $program->kode_satker ?>" tahun="<?php echo $program->tahun_anggaran ?>" key="<?php echo $item->id_item ?>" program="<?php echo $program->id_program ?>" onClick="" class="realisasi btn btn-xs btn-success">Realisasi</button>
                                                         </td>
@@ -786,8 +790,10 @@
                                                                 </div>
                                                             </div>
                                                         </td>-->
-                                                    <?php //} ?>
-                                                </tr>
+                                                        <?php //}
+                                                        ?>
+                                                    </tr>
+                                                <?php } ?>
                                             <?php } ?>
                                         <?php } ?>
                                     <?php } ?>
@@ -796,9 +802,9 @@
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>
-            <?php } ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal kro -->
