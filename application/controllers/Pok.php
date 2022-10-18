@@ -43,24 +43,57 @@ class Pok extends CI_Controller
 		 $this->template->load('template', 'pok/refAdmin');
 		
     }
+	function hapus_file()
+	{
+		$targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/dja/";
+		$filename = $targetDir.'/'.$_POST['nama'];
+						if (file_exists($filename)) 
+						{ 
+							unlink($targetDir.$_POST['nama']);
+							$cek=exec('rm '.$filename);
+						}
+	}
 	public function import_file_dja()
     {
          $post = $this->input->post();
+		 $targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/dja/";
+		 if (is_dir($targetDir)) {
+          $files = array_diff(scandir($targetDir), array('.', '..'));
+		 }else{
+			$files="";
+		 }
 		 if(isset($post['submit'])){
-					    $targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/dja/";
+					   
 						$dir = $targetDir;	  
 						if (!is_dir($dir)) {
 							mkdir($dir, 0777, true);
-						}
-					
+						}			
 						$tmpFile = $_FILES['impor']['tmp_name'];
 						$filename = $_FILES['impor']['name'];
 						$ext = pathinfo($filename, PATHINFO_EXTENSION);
 						$filename = $dir.'/'.$_FILES['impor']['name'];
-						move_uploaded_file($tmpFile,$filename);
+						if($ext=='zip')
+						{
+							if (file_exists($filename)) 
+							{ 
+								unlink($targetDir.$_FILES['impor']['name']);
+								$cek=exec('rm '.$filename);
+							}
+							move_uploaded_file($tmpFile,$filename);
+							 $arr = array(
+										'tgl_import' => date('Y-m-d H:i:s'),
+										'user' => $this->session->userdata('kode_satker'),
+										'nama_file' => $_FILES['impor']['name']
+									);
+							$this->db->insert('log_import_dja', $arr);
+						}
+						header("location: import_file_dja");
 
 		 }
-		 $this->template->load('template', 'pok/import_file_dja');
+		 $data = array(
+            'file' => $files,
+         );
+		 $this->template->load('template', 'pok/import_file_dja',$data);
 		
     }
 	public function import_realisasi()
