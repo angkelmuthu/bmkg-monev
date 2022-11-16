@@ -300,7 +300,7 @@ function total_nominal(bulan,nominal)
 	if(nominal=="")
 	{
 		nominal=0;
-		$("#nominal_kontrak_"+bulan).val("0");
+		//$("#nominal_kontrak_"+bulan).val("0");
 	}
 	 total_akhir=(parseInt(totalawal.replace(".", ""))-parseInt(pengurang))+parseInt(nominal);
 	 if(parseInt(total_akhir)>parseInt(pagu))
@@ -323,7 +323,7 @@ function total_ang(bulan,nominal)
 	if(nominal=="")
 	{
 		nominal=0;
-		$("#anggaran_"+bulan).val("0");
+		//$("#anggaran_"+bulan).val("0");
 	}
 	 total_akhir=(parseInt(totalawal.replace(".", ""))-parseInt(pengurang))+parseInt(nominal);
 	 if(parseInt(total_akhir)>parseInt(pagu))
@@ -345,7 +345,7 @@ function total_fis(bulan,nominal)
 	if(nominal=="")
 	{
 		nominal=0;
-		$("#fisik_"+bulan).val("0");
+		//$("#fisik_"+bulan).val("0");
 	}
 	if(nominal)
 	{
