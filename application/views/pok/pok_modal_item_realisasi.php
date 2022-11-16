@@ -345,7 +345,7 @@ function total_fis(bulan,nominal)
 	if(nominal=="")
 	{
 		nominal=0;
-		//$("#fisik_"+bulan).val("0");
+		///$("#fisik_"+bulan).val("0");
 	}
 	if(nominal)
 	{
