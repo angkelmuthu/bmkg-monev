@@ -43,6 +43,16 @@ class Pok extends CI_Controller
 		 $this->template->load('template', 'pok/refAdmin');
 		
     }
+	function exe_file()
+	{
+		
+		//unlink($targetDir.$_POST['nama']);
+		//$cek=exec('rm ');
+		$targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/";
+		contents = file_get_contents($targetDir.'/pentaho/import_file_dja.sh');
+		echo shell_exec($contents);
+	
+	}
 	function hapus_file()
 	{
 		$targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/dja/";
@@ -72,7 +82,7 @@ class Pok extends CI_Controller
 						$filename = $_FILES['impor']['name'];
 						$ext = pathinfo($filename, PATHINFO_EXTENSION);
 						$filename = $dir.'/'.$_FILES['impor']['name'];
-						if($ext=='zip')
+						if($ext=='zip' || $ext=='rar')
 						{
 							if (file_exists($filename)) 
 							{ 

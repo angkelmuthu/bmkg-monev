@@ -15,12 +15,14 @@
 					<form  method="post" enctype="multipart/form-data"  class="form-horizontal" role="form" onsubmit="return confSubmit();">
                         <table class="table table-clean">
 							<tr>
-                                <td>File DJA (Hanya File ZIP)</td>
+                                <td>File DJA (Hanya File ZIP dan RAR)</td>
                                 <td><input type="file" id="impor"  class="btn btn-warning" name="impor"></td>
                             </tr>
 							<tr>
 							<td> </td>
-							<td><button type="submit" class="btn btn-block btn-success" name='submit' value='import'>Import</button></td>
+							<td><button type="submit" class="btn btn-block btn-success" name='submit' value='import'>Import</button>
+							<button class="btn btn-block btn-danger" onclick="exe()"  id="delete" >Execute</button>
+							</td>
 							</tr>
 
                         </table>
@@ -70,6 +72,34 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/kostum.js"></script>
 
 <script>
+function exe()
+  {
+					 swal({
+					  title: "Akan mengeksekusi file dja terakhir ?",
+						  text: "Data akan di ubah dengan yang baru",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#DD6B55",
+					  confirmButtonText: "Ya, Hapus",
+					  cancelButtonText: "Tidak",
+					  closeOnConfirm: false,
+					  closeOnCancel: false
+					},
+					function(isConfirm){
+					  if (isConfirm) {
+						  
+					       jQuery.post('<?php echo site_url('pok/exe_file')?>',{},function(data) {
+								swal(data);
+								location.reload(); 
+							}); 
+					  } else {
+						swal("File Tidak Jadi Di ubah");
+					  }
+					});
+
+
+
+  }
   function hapus(nama)
   {
 					 swal({
