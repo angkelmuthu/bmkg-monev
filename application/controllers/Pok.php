@@ -49,7 +49,7 @@ class Pok extends CI_Controller
 		//unlink($targetDir.$_POST['nama']);
 		//$cek=exec('rm ');
 		$targetDir =$_SERVER['DOCUMENT_ROOT']."/upload/";
-		contents = file_get_contents($targetDir.'/pentaho/import_file_dja.sh');
+		$contents = file_get_contents($targetDir.'/pentaho/import_file_dja.sh');
 		echo shell_exec($contents);
 	
 	}
