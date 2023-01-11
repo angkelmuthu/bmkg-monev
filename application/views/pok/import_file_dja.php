@@ -21,12 +21,13 @@
 							<tr>
 							<td> </td>
 							<td><button type="submit" class="btn btn-block btn-success" name='submit' value='import'>Import</button>
-							<button class="btn btn-block btn-danger" onclick="exe()"  id="delete" >Execute</button>
+							
 							</td>
 							</tr>
 
                         </table>
 					</form>
+					<button class="btn btn-block btn-danger" onclick="exe()"  id="exe" >Execute</button>
 					 <div class="ajax-loader text-center">
                             <img id="loading-pok" style="display:none;" src="<?php echo base_url() ?>assets/smartadmin/img/loading.gif" class="img-responsive" />
 					</div>
@@ -80,9 +81,8 @@ function exe()
 					  type: "warning",
 					  showCancelButton: true,
 					  confirmButtonColor: "#DD6B55",
-					  confirmButtonText: "Ya, Hapus",
+					  confirmButtonText: "Ya, Eksekusi",
 					  cancelButtonText: "Tidak",
-					  closeOnConfirm: false,
 					  closeOnCancel: false
 					},
 					function(isConfirm){
